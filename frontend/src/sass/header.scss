@@ -1,0 +1,16 @@
+#logoGroupomania{
+    width: 50%;
+    margin: auto;
+    height: 35px;
+    background-color: $blanc;
+    mask: url(../assets/logoGroupomania.svg);
+    -webkit-mask:url(../assets/logoGroupomania.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 100%;
+        @include tablette{
+        width: 25%;
+        }
+        @include ecran{
+        width: 12%;
+        }
+}

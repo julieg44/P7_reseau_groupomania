@@ -1,0 +1,11 @@
+button{
+    width: 50%;
+    height: 30px;
+    font-weight: 700;
+    border: none;
+    color: $blanc;      
+    @include tablette_ecran{
+        width: 25%;
+        height: 35px;
+    }
+}

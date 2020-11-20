@@ -1,0 +1,33 @@
+// variables SCSS
+
+ $groupomania_bleu: #0e2040;
+ $groupomania_rouge:#c2595d;
+ $blanc: #fff;
+ $text-noir:#000;
+ $gris1:#dedbdb;
+ $gris2:#c0bdbd;
+ $textpetit:0.8rem;
+ $texttitre:2rem;
+ 
+ /// mediaqueries
+$breakpoints: (
+  tablette : 769px,
+  mobile : 570px);
+
+
+@mixin ecran {
+  @media screen and (min-width : map-get($breakpoints, tablette)){
+    @content
+  }
+}
+@mixin tablette {
+  @media screen and (min-width : map-get($breakpoints, mobile)) and (max-width : map-get($breakpoints, tablette )){
+    @content
+  }
+}
+
+@mixin tablette_ecran {
+  @media screen and (min-width : map-get($breakpoints, mobile)){
+    @content
+  }
+}
