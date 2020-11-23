@@ -9,15 +9,14 @@
             <div id="createAccount">
                 <form id="createUser">
                     <div id="formText">
-                        <div id="creationEmail"><label>Votre email</label><input type="email"></div>
-                        <div id="creationPassword"><label>Votre mot de passe</label><input type="text"></div>
+                        <div id="creationUsername"><label>Votre nom d'utilisateur</label><input type="text" v-model="username"></div>
+                        <div id="creationEmail"><label>Votre email</label><input type="email" v-model="email"></div>
+                        <div id="creationPassword"><label>Votre mot de passe</label><input type="text" v-model="password"></div>
                     </div>
                     <div id="formImg"><img src="../assets/avatar.jpg" alt="avatar"/></div>
                 </form>
-                <!-- <div id="boutons"> -->
-                    <router-link to="/"><BtnAnnuler/></router-link><span id="retour-mobile"><br></span>
-                    <BtnValider/>
-                <!-- </div> -->
+                <router-link to="/"><BtnAnnuler/></router-link><span id="retour-mobile"><br></span>
+                <BtnValider @click.prevent="signup()"/>
             </div> 
         </div>
     </section> 
@@ -28,11 +27,23 @@
 import Header from '@/components/Header.vue'
 import BtnValider from '@/components/BtnValider.vue'
 import BtnAnnuler from '@/components/BtnAnnuler.vue'
+import { mapActions } from 'vuex';
 
 
 export default {
     name:'signUp',
-    components: { Header, BtnValider, BtnAnnuler
+    components: { 
+        Header, BtnValider, BtnAnnuler
+    },
+    methods: {
+        ...mapActions(['signup']),
+        signup(){
+            this.$store.dispatch('signup', {
+                username:this.username,
+                email:this.email,
+                password:this.password
+            })
+        }
     }
 }
 
@@ -106,7 +117,7 @@ h1{
 }
 
 
-#creationEmail, #creationPassword{
+#creationUsername, #creationEmail, #creationPassword{
     margin-bottom: 5%;
     @include tablette_ecran{
     margin-bottom: 0;
