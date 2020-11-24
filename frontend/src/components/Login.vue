@@ -2,10 +2,11 @@
 <div id='content'>
     <h1> Connectez-vous</h1>
     <form>
-        <div id="username"><input placeholder="Votre nom d'utilisateur" v-model="Username"></div>
+        <!-- <div id="username"><input placeholder="Votre nom d'utilisateur" v-model="username"></div> -->
+        <div id="email"><input placeholder="Votre email" v-model="email"></div>
         <div id="password"><input placeholder="Votre mot de passe" v-model="password"></div>
         <div id="connectEcran">
-            <BtnConnexion @click.prevent="signup()"/>
+            <BtnConnexion @click.prevent="login()"/>
             <router-link to="/signUp">
             <p id='newAccount'>Pas encore de compte ?</p>
             </router-link>
@@ -17,17 +18,26 @@
 <script>
 import BtnConnexion from '@/components/BtnConnexion.vue'
 
+import { mapActions } from 'vuex';
+
+
 export default {
     name:'login',
     components: { 
         BtnConnexion,
     },
-    methods:{
-        submit(){
-
-        }
+    data(){
+    return {email:"", password:""}
     },
-
+    methods: {
+        ...mapActions(['login']),
+        login(){
+            this.$store.dispatch('login', {
+                email:this.email,
+                password:this.password
+            })
+        }
+    }
 }
 
 </script>
@@ -63,7 +73,7 @@ form{
 
 
 
-#username, #password{ 
+#email, #password{ 
     input{
     width:100%;
     height: 30px;

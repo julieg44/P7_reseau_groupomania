@@ -16,7 +16,7 @@
                     <div id="formImg"><img src="../assets/avatar.jpg" alt="avatar"/></div>
                 </form>
                 <router-link to="/"><BtnAnnuler/></router-link><span id="retour-mobile"><br></span>
-                <BtnValider @click.prevent="signup()"/>
+                <BtnValider @click="signup()"/>
             </div> 
         </div>
     </section> 
@@ -27,6 +27,7 @@
 import Header from '@/components/Header.vue'
 import BtnValider from '@/components/BtnValider.vue'
 import BtnAnnuler from '@/components/BtnAnnuler.vue'
+
 import { mapActions } from 'vuex';
 
 
@@ -34,6 +35,9 @@ export default {
     name:'signUp',
     components: { 
         Header, BtnValider, BtnAnnuler
+    },
+    data(){
+    return {username:"", email:"", password:""}
     },
     methods: {
         ...mapActions(['signup']),

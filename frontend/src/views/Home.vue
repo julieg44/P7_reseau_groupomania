@@ -1,5 +1,6 @@
 <template>
   <div>
+    <PopAlert/>
     <header>
       <Header/>
     </header>
@@ -13,12 +14,14 @@
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
 import Login from '@/components/Login.vue'
+import PopAlert from '@/components/PopAlert.vue'
+
 
 
 export default {
   name: 'Home',
   components: {
-    Header, Login
+    Header, Login, PopAlert
   }
 }
 </script>

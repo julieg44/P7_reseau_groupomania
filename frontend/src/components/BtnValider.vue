@@ -1,7 +1,9 @@
 <template>
-  <button v-on="$listeners">
-    <slot>Valider</slot>
-  </button>
+  <router-link to="/">
+    <button v-on="$listeners">
+      <slot>Valider</slot>
+    </button>
+  </router-link>  
 </template>
 
 <script>
