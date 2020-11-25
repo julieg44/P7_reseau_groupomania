@@ -17,7 +17,6 @@ import Login from '@/components/Login.vue'
 import PopAlert from '@/components/PopAlert.vue'
 
 
-
 export default {
   name: 'Home',
   components: {
@@ -44,4 +43,5 @@ section {
   background-color: $gris1;
   height: 980px;
 }
+
 </style>

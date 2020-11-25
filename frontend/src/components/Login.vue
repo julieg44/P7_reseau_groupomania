@@ -1,5 +1,5 @@
 <template>
-<div id='content'>
+<div class='content'>
     <h1> Connectez-vous</h1>
     <form>
         <!-- <div id="username"><input placeholder="Votre nom d'utilisateur" v-model="username"></div> -->
@@ -46,7 +46,7 @@ export default {
 
 @import "../sass/main.scss";
 
-#content{
+.content{
     max-width: 980px;
     margin: auto;
 }
@@ -105,5 +105,6 @@ form{
         align-items: baseline;
     }
 }
+
 
 </style>

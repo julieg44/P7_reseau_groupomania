@@ -1,7 +1,7 @@
 <template>
   <!-- <router-link :to="{name:'Main',params:{id:Userid}}"> -->
     <button v-on="$listeners">
-      <slot>Connexion</slot>
+      <slot>Envoyer</slot>
     </button>
   <!-- </router-link> -->
 </template>
@@ -9,7 +9,7 @@
 <script>
 
 export default {
-  name: 'BtnConnexion',
+  name: 'BtnPost',
 }
 </script>
 

@@ -33,7 +33,7 @@ function customAlert (){
       document.getElementById('popup-text').innerHTML = dialog;
       let buttonAlert = document.getElementById('fermer');
       buttonAlert.addEventListener ('click', function(){
-          window.location.href = '/'
+          window.location.href = '/main'
       })
   }
   this.ok = function(){
@@ -53,14 +53,12 @@ export default new Vuex.Store({
   },
   actions: {
     signup(context, payload){
-      console.log(payload)
       let user = { email:payload.email, username:payload.username, password:payload.password, isAdmin:false };
-      console.log(user)
       axios.post('http://localhost:3000/api/auth/signup', user)
         .then(function (response) {
           console.log(response.data);
           let userCreated = response.data.data;
-          let newUser = new User (userCreated.email, userCreated.username, userCreated.password, userCreated.id);
+          let newUser = new User (userCreated.email, userCreated.username, userCreated.password);
             console.log(newUser)
             context.commit('AddUser', newUser)
             let alert = new customAlert();
@@ -74,11 +72,11 @@ export default new Vuex.Store({
         .then(function (response) {
           console.log(response);
           })
-        .catch(function (response){
-          error => response.status(500).json({ error });
-          let alert = new customAlert();
-          alert.render("utilisateur ou mot de passe incorrect")
-        })
+        // .catch(function (response){
+        //   error => response.status(500).json({ error });
+        //   let alert = new customAlert();
+        //   alert.render("utilisateur ou mot de passe incorrect")
+        // })
     }
   },  
   modules: {

@@ -1,1 +1,13 @@
-<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="comment-alt" class="svg-inline--fa fa-comment-alt fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M448 0H64C28.7 0 0 28.7 0 64v288c0 35.3 28.7 64 64 64h96v84c0 9.8 11.2 15.5 19.1 9.7L304 416h144c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64z"></path></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" viewBox="0 0 622 542" style="enable-background:new 0 0 622 542;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:30;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M543,15H79c-35.3,0-64,28.7-64,64v288c0,35.3,28.7,64,64,64h176v84c0,9.8,11.2,15.5,19.1,9.7L399,431h144
+	c35.3,0,64-28.7,64-64V79C607,43.7,578.3,15,543,15z"/>
+<g>
+	<path d="M328.4,81.6v125.2H449v32.5H328.4v126.4h-34.8V239.3H173.1v-32.5h120.6V81.6H328.4z"/>
+</g>
+</svg>

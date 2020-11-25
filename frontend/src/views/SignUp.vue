@@ -16,7 +16,9 @@
                     <div id="formImg"><img src="../assets/avatar.jpg" alt="avatar"/></div>
                 </form>
                 <router-link to="/"><BtnAnnuler/></router-link><span id="retour-mobile"><br></span>
+                <router-link :to="{name:'Main',params:{id:_id}}">
                 <BtnValider @click="signup()"/>
+                </router-link>
             </div> 
         </div>
     </section> 
