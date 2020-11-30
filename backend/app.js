@@ -1,6 +1,7 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const userRoutes = require('./routes/user');
+const profilRoutes = require('./routes/profil')
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -20,6 +21,7 @@ const sequelize = new Sequelize ('groupomania', 'julie','marty',{
 app.use(bodyParser.json());
 
 app.use('/api/auth', userRoutes); 
+app.use('/api/profil', profilRoutes); 
 
 
 

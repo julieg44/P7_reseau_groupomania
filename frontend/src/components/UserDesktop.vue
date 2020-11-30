@@ -5,7 +5,7 @@
                 <!-- cartouche info profil User desktop -->
                 <div id="encartProfil">
                     <div id="photoProfil"><img src="../assets/avatar.png" alt="photo de profil" /></div>
-                    <h2 class="nomProfil">Jean michel Motsuperlong</h2>
+                    <h2 class="nomProfil"> Jean Michel</h2>
                     <p id="infosProfil">
                         Email :<br>
                         <br />
@@ -45,12 +45,43 @@
 // @ is an alias to /src
 import BtnPost from '@/components/BtnPost.vue'
 import BtnAddMedia from '@/components/BtnAddMedia.vue'
+import { mapState } from "vuex"
 
 export default {
   name: 'UserDesktop',
   components: {
-    BtnPost, BtnAddMedia
-  }
+    BtnPost, 
+    BtnAddMedia
+  },
+
+  computed: {
+    ...mapState ({
+    users: "users",
+    selectedUser: "selectedUser",
+    token: "token",
+    }),
+    username(){
+      return this.selectedUser.username
+    },
+    email(){
+      return this.selectedUser.email
+    },
+    password(){
+      return this.selectedUser.password
+    },
+  },
+//   created(){
+//       this.$store.dispatch('loadUser',{self:this})
+//   },
+    created(){
+    this.$store.dispatch('loadUser',{self:this})
+    this.$store.dispatch('setLoggedUser',{self:this})
+
+    // this.selectedUser=this.$store.getters.findOne(this.$route.params.id);
+    // console.log(selectedUser)
+    // console.log(this.$route.params.id)
+  },
+
 }
 </script>
 
@@ -162,14 +193,15 @@ export default {
 
         .bienvenue {
             display: flex;
-            justify-content: flex-end;
+            justify-content: flex-start;
 
             h1 {
                 color: $groupomania_rouge;
-                text-align: center;
-                font-size: $texttitrepetit;
+                text-align: left;
+                font-size: $textmoyen;
                 font-weight: 700;
                 margin-right: 15%;
+                width: 85%;
             }
 
             .iconPerso {
