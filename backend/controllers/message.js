@@ -9,7 +9,10 @@ exports.allMessage = (req, res, next) => {
 }
 
 exports.oneMessage = (req, res, next) => {
-    Models.Message.findOne({ where: { id: req.params.id } })
+    Models.Message.findOne({ 
+        where: { id: req.params.id },
+        include:[Models.Comment, Models.Like]
+    })
     .then (message => res.status (200).json(message))
     .catch(error => res.status (404).json ({error}))
 }
@@ -34,6 +37,8 @@ exports.createMessage = (req, res, next) => {
         UserId: req.body.UserId,
         title: req.body.title,
         content: req.body.content,
+        nbLikes: req.body.nbLikes,
+        nbDislikes: req.body.nbDislikes,
         attachment: null,
     })
     .then(Message => res.status(201).json({
@@ -44,7 +49,7 @@ exports.createMessage = (req, res, next) => {
 
 exports.getUserMessage = (req, res, next) => {
     console.log(req.params.idUser)
-    Models.Message.findOne({ where: { idUser: req.params.idUser } })
+    Models.Message.findAll({ where: { UserId: req.params.idUser} })
     .then (message => res.status (200).json(message))
     .catch(error => res.status (404).json ({error}))
 }

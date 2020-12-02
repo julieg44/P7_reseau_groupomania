@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Message.init({
-    idUsers: DataTypes.INTEGER,
+    UserId: DataTypes.INTEGER,
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     nbLikes: DataTypes.INTEGER,

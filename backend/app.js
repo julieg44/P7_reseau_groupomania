@@ -26,8 +26,8 @@ app.use(bodyParser.json());
 
 app.use('/api/user', userRoutes); 
 app.use('/api/message', messageRoutes);
-// app.use ('api/comment', commentRoutes);
-// app.use ('api/like', likeRoutes);
+app.use ('/api/comment', commentRoutes);
+app.use ('/api/like', likeRoutes);
 
 
 
