@@ -15,15 +15,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:{
           allowNull: false
         }
-      })
+      });
+      models.Like.belongsTo(models.Message, {
+        foreignKey:{
+          allowNull: false
+        }
+      });
     }
   };
   Like.init({
-    idMessages: DataTypes.INTEGER,
     idUsers: DataTypes.INTEGER,
-    likeValue: DataTypes.INTEGER,
-    messageId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    idMessages: DataTypes.INTEGER,
+    likeValue: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Like',

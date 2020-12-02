@@ -15,14 +15,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:{
           allowNull: false
         }
-      })
+      });
+      models.Comment.belongsTo(models.Message, {
+        foreignKey:{
+          allowNull: false
+        }
+      });
     }
   };
   Comment.init({
     idUsers: DataTypes.INTEGER,
     idMessages: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    messageId: DataTypes.INTEGER,
     content: DataTypes.STRING
   }, {
     sequelize,

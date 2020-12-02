@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references:{
           model: 'Users',
-          key: 'id'
+          key: 'id',
         }
       },
       idMessages: {
@@ -21,16 +21,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         references:{
           model: 'Messages',
-          key: 'id'
+          key: 'id',
         }
-      },
-      userId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      messageId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
       },
       content: {
         allowNull: false,

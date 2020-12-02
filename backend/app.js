@@ -1,12 +1,16 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const userRoutes = require('./routes/user');
-const profilRoutes = require('./routes/profil')
+const messageRoutes = require('./routes/message');
+const commentRoutes = require('./routes/comment');
+const likeRoutes = require('./routes/like');
+
+
 const bodyParser = require('body-parser');
 
 const app = express();
 
-const sequelize = new Sequelize ('groupomania', 'julie','marty',{
+const sequelize = new Sequelize ('groupomania_development', 'julie','marty',{
    host:'localhost',
    dialect: 'mysql'
  });
@@ -20,8 +24,11 @@ const sequelize = new Sequelize ('groupomania', 'julie','marty',{
 
 app.use(bodyParser.json());
 
-app.use('/api/auth', userRoutes); 
-app.use('/api/profil', profilRoutes); 
+app.use('/api/user', userRoutes); 
+app.use('/api/message', messageRoutes);
+// app.use ('api/comment', commentRoutes);
+// app.use ('api/like', likeRoutes);
+
 
 
 
