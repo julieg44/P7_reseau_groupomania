@@ -81,7 +81,7 @@ form{
     border: none;
     margin-bottom: 3%;
     text-align: center;
-    color: $gris2;
+    color: $gris3;
     font-size: $textpetit;
     @include tablette_ecran{
         height: 35px;   

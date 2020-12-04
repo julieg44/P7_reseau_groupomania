@@ -5,23 +5,25 @@
                 <!-- cartouche info profil User desktop -->
                 <div id="encartProfil">
                     <div id="photoProfil"><img src="../assets/avatar.png" alt="photo de profil" /></div>
-                    <h2 class="nomProfil"> Jean Michel</h2>
+                    <h2 class="nomProfil"> {{ fullName }}</h2>
                     <p id="infosProfil">
                         Email :<br>
+                        {{ profilAffiche.email}}
                         <br />
                         Mot de passe :<br />
+                        *********
                         <br />
                     </p>
-                    <ul class="icons">
-                        <li class="deconnect"></li>
-                        <li class="modif"></li>
-                        <li class="destroy"></li>
-                    </ul>
+                    <div id="align-boutons">
+                        <BtnDeconnect @click="deconnect()"/>
+                        <BtnModifyUser @click="modifyUser()"/>
+                        <BtnSupUser @click="supUser(profilAffiche.id)"/>
+                    </div>
                 </div>
                 <!-- partie post -->
                 <div class="encartPost">
                     <div class="bienvenue">
-                        <h1>Bonjour Jean-Michel !</h1>
+                        <h1>Bonjour {{ fullName }} !</h1>
                         <div class="iconPerso">
                             <div class="notification"></div>
                             <div class="search"></div>
@@ -45,13 +47,27 @@
 // @ is an alias to /src
 import BtnPost from '@/components/BtnPost.vue'
 import BtnAddMedia from '@/components/BtnAddMedia.vue'
-import { mapState } from "vuex"
+import BtnSupUser from '@/components/BtnSupUser.vue'
+import BtnDeconnect from '@/components/BtnDeconnect.vue'
+import BtnModifyUser from '@/components/BtnModifyUser.vue'
+import { mapState } from "vuex";
+import { mapActions } from 'vuex';
+
+
 
 export default {
   name: 'UserDesktop',
   components: {
     BtnPost, 
-    BtnAddMedia
+    BtnAddMedia,
+    BtnSupUser,
+    BtnDeconnect,
+    BtnModifyUser
+  },
+  data(){
+      return {
+          profilAffiche : null
+      }
   },
 
   computed: {
@@ -60,26 +76,20 @@ export default {
     selectedUser: "selectedUser",
     token: "token",
     }),
-    username(){
-      return this.selectedUser.username
-    },
-    email(){
-      return this.selectedUser.email
-    },
-    password(){
-      return this.selectedUser.password
-    },
-  },
-//   created(){
-//       this.$store.dispatch('loadUser',{self:this})
-//   },
-    created(){
-    this.$store.dispatch('loadUser',{self:this})
-    this.$store.dispatch('setLoggedUser',{self:this})
+    fullName(){
+              console.log(this.profilAffiche)
 
-    // this.selectedUser=this.$store.getters.findOne(this.$route.params.id);
-    // console.log(selectedUser)
-    // console.log(this.$route.params.id)
+        return this.profilAffiche.username
+    }
+    
+  },
+
+   methods: {
+   ...mapActions (['supUser', 'deconnect', 'modifyUser']),
+  },
+
+  created(){
+    this.profilAffiche = this.$store.dispatch('loadUser',{id:this.$route.params.id})
   },
 
 }
@@ -128,46 +138,10 @@ export default {
         margin-left: 5%;
     }
 
-    ul {
-        display: flex;
-        justify-content: space-between;
-        width: 40%;
-        margin-left: 5%;
-        height: 12%;
-        padding: 0;
+    #align-boutons {
+        width: 100%;
         position: absolute;
-        bottom: 0;
-    }
-
-    .deconnect {
-        width: 25%;
-        // margin-right: 12%;
-        background-color: $groupomania_rouge;
-        mask: url(../assets/power_off.svg);
-        -webkit-mask: url(../assets/power_off.svg);
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 100%;
-    }
-
-    .modif {
-        width: 30%;
-        // margin-right: 12%;
-        background-color: $groupomania_rouge;
-        mask: url(../assets/user_edit.svg);
-        -webkit-mask: url(../assets/user_edit.svg);
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 100%;
-
-    }
-
-    .destroy {
-        width: 21%;
-        // margin-right: 12%;
-        background-color: $groupomania_rouge;
-        -webkit-mask: url(../assets/trash.svg);
-        mask: url(../assets/trash.svg);
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 100%;
+        bottom: 20px;
     }
 
     #photoProfil {

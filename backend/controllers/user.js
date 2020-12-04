@@ -15,7 +15,7 @@ exports.signup = (req, res, next) => {
          })
         .then(User => res.status(201).json({ 
           message: 'Utilisateur créé !',
-          data: User, 
+          username: User.username, 
         }))
         .catch(error => res.json({
           error: true,
@@ -39,6 +39,7 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             user: user,
+            userId: user.id,
             token: jwt.sign(
               { userId: user.id },
               'RANDOM_TOKEN_SECRET',

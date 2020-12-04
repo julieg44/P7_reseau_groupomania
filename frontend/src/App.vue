@@ -4,13 +4,19 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
+    <!-- @todo => <header/> -->
     <router-view/>
   </div>
 </template>
 
 <script>
+///@todo export…
+export default {
 
-
+  created(){
+    this.$store.dispatch('tryLogin')
+  },
+}
 </script>
 
 <style lang="scss">
