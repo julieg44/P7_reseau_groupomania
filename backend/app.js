@@ -8,6 +8,8 @@ const likeRoutes = require('./routes/like');
 
 const bodyParser = require('body-parser');
 
+const path = require('path');
+
 const app = express();
 
 const sequelize = new Sequelize ('groupomania_development', 'julie','marty',{
@@ -23,6 +25,8 @@ const sequelize = new Sequelize ('groupomania_development', 'julie','marty',{
 }); 
 
 app.use(bodyParser.json());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/user', userRoutes); 
 app.use('/api/message', messageRoutes);

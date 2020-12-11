@@ -2,7 +2,7 @@
     <div id="cartoucheProfil">
         <div id="photo">
             <div id="taille-photo">
-                <img id="principale" src="" alt="photo de profil" />
+                <img id="principale" :src="user.photo" alt="photo de profil" />
                 <img id="cache"  src= "../assets/avatar-cache.png"  alt="cache-photo" />
             </div>
         </div>
@@ -59,18 +59,18 @@ export default {
    methods: {
     ...mapActions (['supUser', 'deconnect', 'modifyUser']),
 
-    async loadProfil() {
-         let user = this.$store.dispatch('loadUser', { id:this.$route.params.id })
-            .then (function (user){
-                    return user;    
-            })
-            this.user = user
-    }
+   async loadProfil() {
+    let user = await this.$store.dispatch('loadUser', { id:this.$route.params.id })
+        .then (function (response){
+            return response;
+        })
+    return this.user = user;    
+   }
   },
 
-created(){
-        console.log('trop tot')
-        this.user =  this.loadProfil() 
+    created(){
+    console.log('trop tot')
+        this.loadProfil() 
   },
 
 
@@ -171,6 +171,7 @@ created(){
                 width: 60%;
                 margin: 0;
                margin-top: 10%;
+               height: 147px;
             }
         }
             

@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
   console.log(req.body);
-  console.log(req.file);
+  console.log(req.file)
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
         Models.User.create({ 
@@ -13,7 +13,7 @@ exports.signup = (req, res, next) => {
           username:req.body.username,
           password: hash,
           isAdmin: false,
-          photo:`${req.protocol}://${req.get('host')}/images/${req.body.photo}`
+          photo:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
          })
         .then(User => res.status(201).json({ 
           message: 'Utilisateur créé !',

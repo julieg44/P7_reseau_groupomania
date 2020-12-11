@@ -18,31 +18,31 @@ Vue.use(Vuex)
 let urlApi = "http://localhost:3000"
 
 // alerte
-function customAlert (){
-  this.render = function(dialog){
-      let winW = window.innerWidth;
-      let winH = window.innerHeight;
-      let popup = document.getElementById ('popup');
-      let popupContent = document.getElementById ('popup-content');
-      popup.style.display = 'block';
-      popup.style.height = winH + 'px';
-      popupContent.style.left = (winW/2) - (980 * .5) + 'px';
-      if (winW < 569){
-          popupContent.style.left = (winW/2) - (260 * .5) + 'px';
-      }
-      popupContent.style.display = "block";
-      document.getElementById('popup-head').innerHTML = ' <button id="fermer"> X </button> ';
-      document.getElementById('popup-text').innerHTML = dialog;
-      let buttonAlert = document.getElementById('fermer');
-      buttonAlert.addEventListener ('click', function(){
-        window.location.href = '/'
-      })
-  }
-  this.ok = function(){
-      document.getElementById('popup').style.display = 'none';
-      document.getElementById('popup-content').style.display = 'none';
-  }
-}
+// function customAlert (){
+//   this.render = function(dialog){
+//       let winW = window.innerWidth;
+//       let winH = window.innerHeight;
+//       let popup = document.getElementById ('popup');
+//       let popupContent = document.getElementById ('popup-content');
+//       popup.style.display = 'block';
+//       popup.style.height = winH + 'px';
+//       popupContent.style.left = (winW/2) - (980 * .5) + 'px';
+//       if (winW < 569){
+//           popupContent.style.left = (winW/2) - (260 * .5) + 'px';
+//       }
+//       popupContent.style.display = "block";
+//       document.getElementById('popup-head').innerHTML = ' <button id="fermer"> X </button> ';
+//       document.getElementById('popup-text').innerHTML = dialog;
+//       let buttonAlert = document.getElementById('fermer');
+//       buttonAlert.addEventListener ('click', function(){
+//         window.location.href = '/'
+//       })
+//   }
+//   this.ok = function(){
+//       document.getElementById('popup').style.display = 'none';
+//       document.getElementById('popup-content').style.display = 'none';
+//   }
+// }
 
 export default new Vuex.Store({
   state: {
@@ -102,21 +102,21 @@ export default new Vuex.Store({
         return user;
     },
 
-    signup(context, payload){
-      localStorage.clear()
-      console.log(payload)
-      let user = { email:payload.email, username:payload.username, password:payload.password, isAdmin:false, photo:payload.photo };
-      axios.post(urlApi+'/api/user/signup', user)
-        .then(function (response) {
-          console.log(response)
-          // let userCreated = response.data.data;
-          // let newUser = new User (userCreated.email, userCreated.username, userCreated.password, userCreated.isAdmin, userCreated.id);
-          //   console.log(newUser)
-          //   context.commit('setLogged', newUser)
-            let alert = new customAlert();
-            alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
-          })
-    },
+    // signup(context, payload){
+    //   localStorage.clear()
+    //   console.log(payload)
+    //   let user = { email:payload.email, username:payload.username, password:payload.password, isAdmin:false, photo:payload.photo };
+    //   axios.post(urlApi+'/api/user/signup', user)
+    //     .then(function (response) {
+    //       console.log(response)
+    //       // let userCreated = response.data.data;
+    //       // let newUser = new User (userCreated.email, userCreated.username, userCreated.password, userCreated.isAdmin, userCreated.id);
+    //       //   console.log(newUser)
+    //       //   context.commit('setLogged', newUser)
+    //         let alert = new customAlert();
+    //         alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+    //       })
+    // },
 
     deconnect(){
       localStorage.clear()

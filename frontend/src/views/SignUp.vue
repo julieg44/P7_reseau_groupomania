@@ -32,6 +32,36 @@ import BtnAnnuler from '@/components/BtnAnnuler.vue'
 
 
 import { mapActions } from 'vuex';
+const axios = require('axios');
+let urlApi = "http://localhost:3000"
+
+// alerte
+function customAlert (){
+  this.render = function(dialog){
+      let winW = window.innerWidth;
+      let winH = window.innerHeight;
+      let popup = document.getElementById ('popup');
+      let popupContent = document.getElementById ('popup-content');
+      popup.style.display = 'block';
+      popup.style.height = winH + 'px';
+      popupContent.style.left = (winW/2) - (980 * .5) + 'px';
+      if (winW < 569){
+          popupContent.style.left = (winW/2) - (260 * .5) + 'px';
+      }
+      popupContent.style.display = "block";
+      document.getElementById('popup-head').innerHTML = ' <button id="fermer"> X </button> ';
+      document.getElementById('popup-text').innerHTML = dialog;
+      let buttonAlert = document.getElementById('fermer');
+      buttonAlert.addEventListener ('click', function(){
+        window.location.href = '/'
+      })
+  }
+  this.ok = function(){
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('popup-content').style.display = 'none';
+  }
+}
+
 
 
 export default {
@@ -44,21 +74,44 @@ export default {
     },
     methods: {
         ...mapActions(['signup']),
+
         onFileSelected(event){
             this.selectedFile = event.target.files[0]
         },
-        signup(){
-            const fd = new FormData();
-            fd.append('image', this.selectedFile, this.selectedFile.name),
-            console.log(fd)
+        // signup(){
+        //     const fd = new FormData();
+        //     fd.append('image', this.selectedFile, this.selectedFile.name),
+        //     console.log(fd)
+        //     console.log(this.selectedFile)
+        //     debugger;
+        //     this.$store.dispatch('signup', {
+        //         username:this.username,
+        //         email:this.email,
+        //         password:this.password,
+        //         photo:this.selectedFile
+        //     })
+        // },
+            signup(){
             console.log(this.selectedFile)
-            debugger;
-            this.$store.dispatch('signup', {
-                username:this.username,
-                email:this.email,
-                password:this.password,
-                photo:fd
-            })
+            const fd = new FormData()
+            fd.append ('image', this.selectedFile, this.selectedFile.name)
+            fd.append ('username', this.username)
+            fd.append('email', this.email)
+            fd.append('password', this.password)
+            console.log(fd)
+                axios.post(urlApi+'/api/user/signup', fd)
+                .then(function (response) {
+                console.log(response)
+            let alert = new customAlert();
+            alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+    //       })
+        })
+                // this.$store.dispatch('signup', {
+            //     username:this.username,
+            //     email:this.email,
+            //     password:this.password,
+            //     photo:this.selectedFile
+            // })
         },
     },
 }
