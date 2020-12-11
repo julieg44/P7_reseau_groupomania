@@ -38,7 +38,7 @@ header{
     }
 }
 
-section {
+#login {
   padding-top: 10%;
   background-color: $gris1;
   height: 980px;

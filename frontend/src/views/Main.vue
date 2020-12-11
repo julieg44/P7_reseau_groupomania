@@ -1,36 +1,42 @@
 <template>
   <div>
-    <PopAlert/>
+    <PopAlert />
     <header>
-      <Header/>
+      <Header />
     </header>
-    <!-- Mobile -->
-    <UserMobile/>
-
-    <!-- desktop -->
-
-    <UserDesktop/>
-
-<!--messages -->
-    <section id="message">
-
+    <section id="section-user">
+      <div id='content-user'>
+        <EncartProfil />
+        <div id="content-post">
+          <EncartBienvenue />
+          <EncartPost />
+        </div>
+      </div>
     </section>
 
-  </div>  
+
+    <!--messages -->
+    
+      <Post/>
+
+
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
 import PopAlert from '@/components/PopAlert.vue'
-import UserDesktop from '@/components/UserDesktop.vue'
-import UserMobile from '@/components/UserMobile.vue'
+import EncartProfil from '@/components/EncartProfil.vue'
+import EncartBienvenue from '@/components/EncartBienvenue.vue'
+import EncartPost from '@/components/EncartPost.vue'
+import Post from '@/components/Post.vue'
 
 
 export default {
   name: 'Main',
   components: {
-    Header, PopAlert, UserDesktop, UserMobile
+    Header, PopAlert, EncartProfil, EncartPost , EncartBienvenue, Post
   }
 }
 </script>
@@ -38,11 +44,58 @@ export default {
 <style lang="scss">
 
 @import "../sass/main.scss";
-#message{
-    background-color: $blanc;
-    height: 980px;
-    margin-top: -80%;
-    @include tablette_ecran{
-        display: none;
-    }
+
+
+
+#section-user{
+  background-color: $blanc;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  @include tablette_ecran{ 
+    background-color: $gris1;
+  }
 }
+
+#content-user{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  position:relative;
+    @include tablette_ecran{
+    display: flex;
+    flex-direction: row;
+    max-width: 980px;
+    margin: auto;
+    align-items: initial;
+  }
+}
+#content-post{
+  position: absolute;
+  @include tablette_ecran{ 
+    position: relative;
+    flex-direction: column;
+    margin: auto;
+    align-items: initial;
+    display: flex;
+    width: 75%;
+  }
+}
+
+
+#content-user{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  position:relative;
+    @include tablette_ecran{
+    display: flex;
+    flex-direction: row;
+    max-width: 980px;
+    margin: auto;
+    align-items: initial;
+  }
+}
+
+</style>

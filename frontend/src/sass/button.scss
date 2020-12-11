@@ -9,3 +9,12 @@ button{
         height: 35px;
     }
 }
+
+.button-user{
+    background-color: $groupomania_rouge_clair;
+    width: 20%;
+    margin: 0;
+    @include tablette_ecran{
+        background-color: $blanc;
+    }
+  }

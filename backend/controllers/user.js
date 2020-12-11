@@ -4,18 +4,20 @@ const jwt = require('jsonwebtoken');
 
 
 exports.signup = (req, res, next) => {
-  console.log(req)
+  console.log(req.body);
+  console.log(req.file);
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
         Models.User.create({ 
           email:req.body.email,
           username:req.body.username,
           password: hash,
-          isAdmin: false
+          isAdmin: false,
+          photo:`${req.protocol}://${req.get('host')}/images/${req.body.photo}`
          })
         .then(User => res.status(201).json({ 
           message: 'Utilisateur créé !',
-          username: User.username, 
+          user: User, 
         }))
         .catch(error => res.json({
           error: true,
@@ -38,7 +40,7 @@ exports.login = (req, res, next) => {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
           res.status(200).json({
-            user: user,
+            // user: user,
             userId: user.id,
             token: jwt.sign(
               { userId: user.id },
@@ -62,6 +64,7 @@ exports.allUser = (req, res, next) => {
 
 exports.getOneUser = (req, res, next) => {
   console.log(req.params.id)
+  console.log(req.body)
   Models.User.findOne({ where: { id: req.params.id } })
   .then (user => res.status (200).json(user))
   .catch(error => res.status (404).json ({error}))

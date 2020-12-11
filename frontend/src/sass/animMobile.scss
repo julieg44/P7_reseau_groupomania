@@ -1,24 +1,33 @@
 //// animation menu mobile////
-#cartoucheProfil, #wrapPost {
+#cartoucheProfil, #cartouchePost {
     z-index: 10;
     transition: transform .4s cubic-bezier(.25, .1, .25, 1);
     // transition: transform ;
     @include tablette_ecran{
-      display: none;
+        transform: none;
     }
   }
   
   #cartoucheProfil:not(:target){ 
     transform: translate3d(-400px, -500px, 0);
+    @include tablette_ecran{
+        transform: none;
+      }
   }
   
-  #wrapPost:not(:target) {
+  #cartouchePost:not(:target) {
     transform: translate3d(-400px, -500px, 0);
+    @include tablette_ecran{
+        transform: none;
+      }
   }
   
   #cartoucheProfil:target,
-  #wrapPost:target {
+  #cartouchePost:target {
     transform: translate3d(0, 0, 0);
+    @include tablette_ecran{
+        transform: none;
+      }
   }
   
   #openProfil,
@@ -42,16 +51,16 @@
   
   #cartoucheProfil:target #open,
   #cartoucheProfil:not(:target) #close,
-  #wrapPost:target #open,
-  #wrapPost:not(:target) #close {
+  #cartouchePost:target #open,
+  #cartouchePost:not(:target) #close {
     display: none;
     @include tablette_ecran{
-      display: flex;
-    }
+        display: block;
+      }
   }
   
   // #cartoucheProfil:target #open,
-  // #wrapPost:target #open {
+  // #cartouchepost:target #open {
   //   display: none;
   // }
   

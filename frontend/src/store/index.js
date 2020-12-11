@@ -51,12 +51,9 @@ export default new Vuex.Store({
     token: null,
   },
   mutations: {
-    AddUser(state, newUser){
-      state.users.push(newUser);
-      console.log(state.users)
-    },
-    LoggedUser(state, user){
-      state.selectedUser = user;
+
+    LoggedUserId(state, userId){
+      state.selectedUser = userId;
       console.log(state.selectedUser)
     },
     LoggedToken(state, token){
@@ -67,10 +64,9 @@ export default new Vuex.Store({
   actions: {
     tryLogin(context){
      let token = JSON.parse(localStorage.getItem('usertoken'))
-     let user = JSON.parse(localStorage.getItem('userData'))
-     context.commit('LoggedUser', user)
+     let user = JSON.parse(localStorage.getItem('userId'))
+     context.commit('LoggedUserId', user)
      context.commit('LoggedToken',token)
-
     },
 
     login(context, payload){
@@ -79,56 +75,46 @@ export default new Vuex.Store({
         .then(function (response) {
           let userlogged = response.data
           localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
-          localStorage.setItem('userData',JSON.stringify(userlogged.user))
-          context.commit('LoggedUser', userlogged.user)
+          localStorage.setItem('userId',JSON.stringify(userlogged.userId))
+          context.commit('LoggedUserId', userlogged.userId)
           context.commit('LoggedToken', userlogged.token)
           console.log(localStorage)
-          window.location.href = '/main/'+ userlogged.user.id;
+          debugger;
+          window.location.href = '/main/'+ userlogged.userId;
         })
     },
 
-    loadUser(context, payload){
-      // let usertoken = JSON.parse(localStorage.getItem('usertoken'))
+    async loadUser(context, payload){
       let token = 'Bearer '+ this.state.token;
+      let user = await axios.get(urlApi + '/api/user/' + payload.id, {
+        headers: { 'Authorization': token }}
+      )
 
-      console.log('trop tot')
-
-      // context.commit('LoggedUser', JSON.parse(localStorage.getItem('userData')))
-
-      axios.get(urlApi + '/api/user/' + payload.id, {
-        headers: { 'Authorization': token }})
         .then(function (response) {
           // handle success 
-
-
-          console.log('trop tard')
-
-
-          console.log(response.data)
-          // context.commit('LoggedUser', response.data)
-          return response.data.username
+          return (response.data);
         })
         .catch(function (error) {
           // handle error
           console.log(error);
         })
-        .then(function () {
-          // always executed
-        });
+        console.log(user)
+        return user;
     },
 
     signup(context, payload){
       localStorage.clear()
-      console.log(context)
-      let user = { email:payload.email, username:payload.username, password:payload.password, isAdmin:false };
+      console.log(payload)
+      let user = { email:payload.email, username:payload.username, password:payload.password, isAdmin:false, photo:payload.photo };
       axios.post(urlApi+'/api/user/signup', user)
         .then(function (response) {
+          console.log(response)
           // let userCreated = response.data.data;
           // let newUser = new User (userCreated.email, userCreated.username, userCreated.password, userCreated.isAdmin, userCreated.id);
           //   console.log(newUser)
           //   context.commit('setLogged', newUser)
             let alert = new customAlert();
-            alert.render("Bienvenue " + response.data.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+            alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
           })
     },
 
@@ -157,18 +143,39 @@ export default new Vuex.Store({
   },
 
   // getters: {
-  //   findOne:(state)=>(id)=>{
-  //     let indiv = null;
-  //     console.log(id);
-  //     console.log(state.users[0])
-  //     state.users.forEach(item => {
-  //       console.log(item)
-  //       if (id === item._id){
-  //         console.log('salut')
-  //          indiv = item 
-  //       }
-  //     })
-  //     return indiv;
-  //   }
+  //   loadUser:(state) => (payload)=>{
+  //     // let usertoken = JSON.parse(localStorage.getItem('usertoken'))
+  //     let token = 'Bearer '+ state.token;
+  //     console.log(token);
+  //     // console.log(payload)
+  //     console.log(this.state.token)
+  //     console.log('trop tot')
+
+  //     // context.commit('LoggedUser', JSON.parse(localStorage.getItem('userData')))
+
+ 
+  //     axios.get(urlApi + '/api/user/' + payload.id, {
+  //       headers: { 'Authorization': token }})
+
+
+
+  
+  //       .then(function (response) {
+  //         // handle success 
+  //         console.log('trop tard')
+
+  //         console.log(response.data)
+
+  //         return (response.data);
+  //       })
+  //       .catch(function (error) {
+  //         // handle error
+  //         console.log(error);
+  //       })
+  //       .then(function () {
+  //         // always executed
+  //       })
+
+  //   },
   // },
 })

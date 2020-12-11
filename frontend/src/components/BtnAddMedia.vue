@@ -23,8 +23,6 @@ export default {
     color:$groupomania_rouge;
     font-weight: 400;
     border: solid 1px $groupomania_rouge;
-    margin-top: 3%;
-    margin-bottom: 3%;
     .plus{
         font-size: 3rem;
     }

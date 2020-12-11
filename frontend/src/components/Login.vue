@@ -12,7 +12,7 @@
             </router-link>
         </div>
     </form>
-</div>   
+</div>              
 </template>
 
 <script>
@@ -51,9 +51,6 @@ export default {
     margin: auto;
 }
 
-#login{
-    background-color: $gris1;
-}
 
 h1{
     font-size: $texttitre;

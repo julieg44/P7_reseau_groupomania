@@ -3,12 +3,13 @@
  $groupomania_bleu: #0e2040;
  $groupomania_rouge:#c2595d;
  $groupomania_rouge_clair:#fcf1f2;
+ $groupomania_bleu_clair:#f0f5fc;
  $blanc: #fff;
  $text-noir:#000;
  $gris1:#dedbdb;
  $gris2:#c0bdbd;
  $gris3:#373636;
- $textpetit:0.8rem;
+ $textpetit:0.9rem;
  $textmoyen:1.2rem;
  $texttitre:2rem;
  $texttitrepetit:1.7rem;
@@ -19,19 +20,23 @@ $breakpoints: (
   mobile : 570px);
 
 
+
+  @mixin tablette_ecran {
+    @media screen and (min-width : map-get($breakpoints, mobile)){
+      @content
+    }
+  }  
+
+
 @mixin ecran {
   @media screen and (min-width : map-get($breakpoints, tablette)){
     @content
   }
 }
+
 @mixin tablette {
-  @media screen and (min-width : map-get($breakpoints, mobile)) and (max-width : map-get($breakpoints, tablette )){
+  @media screen and (min-width : map-get($breakpoints, mobile))and(max-width : map-get($breakpoints, tablette )){
     @content
   }
 }
 
-@mixin tablette_ecran {
-  @media screen and (min-width : map-get($breakpoints, mobile)){
-    @content
-  }
-}

@@ -3,22 +3,22 @@
     <header>
         <Header/>
     </header>
-    <section>
-        <div id='content'>
+    <section id="signUp">
+        <div class='content'>
             <h1> Créez votre compte</h1>
             <div id="createAccount">
-                <form id="createUser">
+                <form id="createUser" enctype="multipart/form-data">
                     <div id="formText">
                         <div id="creationUsername"><label>Votre nom d'utilisateur</label><input type="text" v-model="username"></div>
                         <div id="creationEmail"><label>Votre email</label><input type="email" v-model="email"></div>
                         <div id="creationPassword"><label>Votre mot de passe</label><input type="text" v-model="password"></div>
                     </div>
-                    <div id="formImg"><img src="../assets/avatar.jpg" alt="avatar"/></div>
+                    <div id="formImg"><img src="../assets/avatar.jpg" alt="avatar"/>
+                        <input type="file" @change="onFileSelected"/>
+                    </div>
                 </form>
                 <router-link to="/"><BtnAnnuler/></router-link><span id="retour-mobile"><br></span>
-                <!-- <router-link :to="{name:'Main',params:{id:_id}}"> -->
                 <BtnValider @click="signup()"/>
-                <!-- </router-link> -->
             </div> 
         </div>
     </section> 
@@ -30,6 +30,7 @@ import Header from '@/components/Header.vue'
 import BtnValider from '@/components/BtnValider.vue'
 import BtnAnnuler from '@/components/BtnAnnuler.vue'
 
+
 import { mapActions } from 'vuex';
 
 
@@ -39,18 +40,27 @@ export default {
         Header, BtnValider, BtnAnnuler
     },
     data(){
-    return {username:"", email:"", password:""}
+    return {username:"", email:"", password:"", photo:"", selectedFile:null}
     },
     methods: {
         ...mapActions(['signup']),
+        onFileSelected(event){
+            this.selectedFile = event.target.files[0]
+        },
         signup(){
+            const fd = new FormData();
+            fd.append('image', this.selectedFile, this.selectedFile.name),
+            console.log(fd)
+            console.log(this.selectedFile)
+            debugger;
             this.$store.dispatch('signup', {
                 username:this.username,
                 email:this.email,
-                password:this.password
+                password:this.password,
+                photo:fd
             })
-        }
-    }
+        },
+    },
 }
 
 </script>
@@ -60,12 +70,13 @@ export default {
 @import "../sass/main.scss";
 
 
-section {
+#signUp {
   background-color: $gris1;
   height: 980px;
+  padding-top: 10%;
 }
 
-#content{
+.content{
     max-width: 980px;
     margin: auto;
 }
@@ -111,14 +122,24 @@ h1{
 
 #formImg {
     margin-bottom: 15%;
+    @include tablette_ecran{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 5%;
+
+    }
     img{
     width: 80%;
-    @include tablette{
-        width: 70%;
-    }
-    }
     @include tablette_ecran{
+        width: 55%;
         margin-bottom: 4%;
+    }
+    }
+    input{
+        background-color: #fff;
+        border: none;
+        text-decoration: none;
     }
 }
 

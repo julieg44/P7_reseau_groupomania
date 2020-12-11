@@ -1,6 +1,6 @@
 <template>
   <!-- <router-link :to="{name:'Main',params:{id:Userid}}"> -->
-    <button v-on="$listeners">
+    <button class="envoyer" v-on="$listeners">
       <slot>Envoyer</slot>
     </button>
   <!-- </router-link> -->
@@ -17,27 +17,9 @@ export default {
 
 @import "../sass/main.scss";
 
-  button{
-    width: 50%;
-    height: 30px;
-    background-color: $groupomania_rouge;
-    color:#fff;
-    font-weight: 700;
-    border: none;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    @include tablette_ecran{
-        width: 25%;
-        margin-top: 0;
-        margin-bottom: 0;
-        margin-left: 3%;
-    }
-}
 
-  button{
+  .envoyer{
       background-color: $groupomania_rouge;
-      margin-top: 3%;
-      margin-bottom: 3%;
       @include tablette_ecran{
           margin-top: 0;
           margin-bottom: 0;
