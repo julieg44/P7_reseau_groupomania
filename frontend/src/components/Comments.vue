@@ -2,7 +2,7 @@
     <div id="comments">
         <img src="../assets/avatar.png" />
         <h1> Jean Michel</h1>
-        <p> blablablabla</p>
+        <p> {{ content }}</p>
     </div>
 </template>
 
@@ -18,6 +18,12 @@ export default {
   components: {
 
   },
+    props: {
+        
+    content: {
+        type: String,
+        },
+    },
 
 
   computed: {

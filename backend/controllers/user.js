@@ -77,13 +77,24 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
-  console.log(req.body.username)
-  Models.User.update({ ...req.body },{ where: { id: req.params.id } , returning: true, plain: true})
+  console.log(req.body)
+  console.log(req.file)
+  bcrypt.hash(req.body.password, 10)
+  .then(hash => {
+    Models.User.update({ 
+      email:req.body.email,
+      username:req.body.username,
+      password: hash,
+      isAdmin: false,
+      photo:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+     },{ where: { id: req.params.id } , returning: true, plain: true})
+
     .then (function(){
       Models.User.findOne({ where: { id: req.params.id } })
       .then (user => res.status (200).json({data: user, message: 'ok'}))
       })
     .catch(error => res.status(400).json({ error }));
+  })
 };
 
 

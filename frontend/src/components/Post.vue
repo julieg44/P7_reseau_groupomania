@@ -1,20 +1,20 @@
 <template>
-    <section id="filPost">
         <div id="message">
             <div id="message-top">
                 <img src="../assets/avatar.png"/>
-                <h1> Jean Michel</h1>
-                <p> date</p>  
+                <h1> {{ title }}</h1>
+                <p> {{ createdAt }}</p>  
             </div> 
-            <img src=""/>
-            <p class="contenuComment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tempus ultricies volutpat. Vivamus eu vestibulum leo, quis aliquet velit. Pellentesque eleifend hendrerit dui et commodo. Etiam feugiat nibh at tellus placerat, vel laoreet dui posuere. Donec molestie vitae quam ac tincidunt.</p> 
+            <h2 id="title">{{ title }}</h2>
+            <img v-if="attachment" :src="attachment"/>
+            <p class="contenuComment">{{ content }}</p> 
             <Likes/>
-            <Comments/>
-            <Comments/>
+            <Comments v-for="item in comments" 
+            :content="item.content" 
+            :key="item.blabla"/>
             <AddComment/>
 
         </div>
-    </section>
 </template>
 
 
@@ -26,12 +26,34 @@ import Comments from '@/components/Comments.vue'
 import Likes from '@/components/Likes.vue'
 import AddComment from '@/components/AddComment.vue'
 
-
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Post',
   components: {
       Comments, Likes, AddComment
+  },
+
+      props: {
+            
+        title: {
+            type: String,
+        },
+        content: {
+            type: String,
+        },
+        createdAt: {
+            type: String,
+        },
+        attachment:{
+            type: String,
+        }
+    },
+
+  data() {
+    return {
+      comments: null
+    }
   },
 
 
@@ -42,11 +64,23 @@ export default {
 
    methods: {
 
-  },
+       ...mapActions(['loadComments']),
 
-    created(){
+       async loadComments() {
+           let comments = await this.$store.dispatch('loadComments')
+               .then(function (response) {
+                   console.log(response)
+                   return response;
+               })
+           return this.comments = comments;
+       }
 
-  },
+   },
+
+    created() {
+        this.loadComments()
+        console.log(this.comments)
+    },
 }
 
 
@@ -54,7 +88,7 @@ export default {
 
 <style lang="scss">@import "../sass/main.scss";
 
-#filPost {
+
     #message {
         width: 95%;
         margin: auto;
@@ -94,11 +128,17 @@ export default {
             margin-top: 2%;
             margin-bottom: 4%;
         }
+        #title{
+            font-size: $textpetit;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 0;
+            color: $groupomania_bleu;
+        }
     }
 
     @include tablette_ecran {
-        max-width: 980px;
-        margin: auto;
+
 
         #message {
             width: 80%;
@@ -112,6 +152,6 @@ export default {
             }
         }
     }
-}
+
 
 </style>

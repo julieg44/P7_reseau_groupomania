@@ -1,5 +1,5 @@
 <template>
-    <div id="cartoucheProfil">
+    <div id="cartoucheProfil" v-if="user">
         <div id="photo">
             <div id="taille-photo">
                 <img id="principale" :src="user.photo" alt="photo de profil" />
@@ -18,7 +18,9 @@
         </p>
         <div id="actionProfil">
             <BtnDeconnect @click="deconnect()" />
-            <BtnModifyUser @click="modifyUser()" />
+            <router-link :to="_modify">
+            <BtnModifyUser @click="modifyUser(user.id)" />
+            </router-link>
             <BtnSupUser @click="supUser(user.id)" />
         </div>
     </div>
@@ -35,43 +37,48 @@ import { mapActions } from 'vuex';
 
 
 export default {
-  name: 'EncartProfil',
-  components: {
-    BtnSupUser,
-    BtnDeconnect,
-    BtnModifyUser
-  },
-  data(){
-      return {
-          user : null
-      }
-  },
+    name: 'EncartProfil',
+    components: {
+        BtnSupUser,
+        BtnDeconnect,
+        BtnModifyUser
+    },
+    data() {
+        return {
+            user: null
+        }
+    },
 
-  computed: {
-    ...mapState ({
-    users: "users",
-    selectedUser: "selectedUser",
-    token: "token",
-    }),  
-  },
+    computed: {
+        ...mapState({
+            users: "users",
+            selectedUser: "selectedUser",
+            token: "token",
+        }),
+        _modify() {
+            return '/modifyUser/' + this.user.id;
+        }
+    },
 
 
-   methods: {
-    ...mapActions (['supUser', 'deconnect', 'modifyUser']),
+    methods: {
+        ...mapActions(['supUser', 'deconnect']),
 
-   async loadProfil() {
-    let user = await this.$store.dispatch('loadUser', { id:this.$route.params.id })
-        .then (function (response){
-            return response;
-        })
-    return this.user = user;    
-   }
-  },
+        async loadProfil() {
+            let user = await this.$store.dispatch('loadUser', {
+                    id: this.$route.params.id
+                })
+                .then(function (response) {
+                    return response;
+                })
+            return this.user = user;
+        }
+    },
 
-    created(){
-    console.log('trop tot')
-        this.loadProfil() 
-  },
+    created() {
+        this.loadProfil()
+        console.log(this.user)
+    },
 
 
 
@@ -119,9 +126,7 @@ export default {
         margin-bottom: 25%;
         position: relative;
 
-        #taille-photo{
 
-        }
 
         img {
             width: 40%;

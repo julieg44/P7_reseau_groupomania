@@ -33,13 +33,14 @@ exports.modifyMessage = (req, res, next) => {
 }
 
 exports.createMessage = (req, res, next) => {
+    console.log(req.body)
     Models.Message.create({
         UserId: req.body.UserId,
         title: req.body.title,
         content: req.body.content,
         nbLikes: req.body.nbLikes,
         nbDislikes: req.body.nbDislikes,
-        attachment: null,
+        attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     })
     .then(Message => res.status(201).json({
         message:'Post créé',

@@ -1,5 +1,5 @@
 <template>
-    <div class="bienvenue">
+    <div class="bienvenue" v-if="user">
         <h1>Bonjour {{ user.username }} !</h1>
         <div class="iconPerso">
             <div class="notification"></div>
@@ -54,7 +54,6 @@ export default {
   },
 
     created(){
-    console.log('trop tot')
         this.loadProfil() 
   },
 

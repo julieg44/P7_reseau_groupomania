@@ -54,11 +54,9 @@ export default new Vuex.Store({
 
     LoggedUserId(state, userId){
       state.selectedUser = userId;
-      console.log(state.selectedUser)
     },
     LoggedToken(state, token){
       state.token = token;
-      console.log(state.token);
     }, 
   },
   actions: {
@@ -78,8 +76,6 @@ export default new Vuex.Store({
           localStorage.setItem('userId',JSON.stringify(userlogged.userId))
           context.commit('LoggedUserId', userlogged.userId)
           context.commit('LoggedToken', userlogged.token)
-          console.log(localStorage)
-          debugger;
           window.location.href = '/main/'+ userlogged.userId;
         })
     },
@@ -102,6 +98,36 @@ export default new Vuex.Store({
         return user;
     },
 
+    async loadMessages(){
+      let token = 'Bearer '+ this.state.token;
+      let message = await axios.get(urlApi + '/api/message',{
+        headers: { 'Authorization': token }}
+      )
+        .then(function(response){
+          return (response.data);
+        })
+        .catch(function (error){
+          console.log(error);
+        })
+        console.log(message)
+        return message;
+    },
+
+    async loadComments(){
+      let token = 'Bearer '+ this.state.token;
+      let comment = await axios.get(urlApi + '/api/comment/message/3',{
+        headers: { 'Authorization': token }}
+      )
+        .then(function(response){
+          return (response.data);
+        })
+        .catch(function (error){
+          console.log(error);
+        })
+        console.log(comment)
+        return comment;
+    },
+
     // signup(context, payload){
     //   localStorage.clear()
     //   console.log(payload)
@@ -118,14 +144,12 @@ export default new Vuex.Store({
     //       })
     // },
 
+
     deconnect(){
       localStorage.clear()
       window.location.href = '/';
     },
 
-    modifyUser(){
-
-    },
 
     supUser(context){
       //@todo  => alert sure ??
@@ -142,40 +166,4 @@ export default new Vuex.Store({
   modules: {
   },
 
-  // getters: {
-  //   loadUser:(state) => (payload)=>{
-  //     // let usertoken = JSON.parse(localStorage.getItem('usertoken'))
-  //     let token = 'Bearer '+ state.token;
-  //     console.log(token);
-  //     // console.log(payload)
-  //     console.log(this.state.token)
-  //     console.log('trop tot')
-
-  //     // context.commit('LoggedUser', JSON.parse(localStorage.getItem('userData')))
-
- 
-  //     axios.get(urlApi + '/api/user/' + payload.id, {
-  //       headers: { 'Authorization': token }})
-
-
-
-  
-  //       .then(function (response) {
-  //         // handle success 
-  //         console.log('trop tard')
-
-  //         console.log(response.data)
-
-  //         return (response.data);
-  //       })
-  //       .catch(function (error) {
-  //         // handle error
-  //         console.log(error);
-  //       })
-  //       .then(function () {
-  //         // always executed
-  //       })
-
-  //   },
-  // },
 })
