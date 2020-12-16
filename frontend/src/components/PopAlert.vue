@@ -11,18 +11,12 @@
 </template>
 
 <script>
-
-
-
-
-
 export default {
-    name: 'popAlert',
+    name: 'popAlert'
 }
 </script>
 
 <style lang="scss">
-
 #popup{
     display: none;
     opacity: .8;

@@ -73,7 +73,6 @@ export default {
     display: flex;
     justify-content: flex-start;
     margin-top: 5%;
-    padding: 2%;
 
     h1 {
         color: $groupomania_rouge;
@@ -99,7 +98,6 @@ export default {
         display: flex;
         justify-content: flex-start;
         margin-top: 5%;
-        padding: 0;
         h1{
         margin-bottom: 5%;
         }

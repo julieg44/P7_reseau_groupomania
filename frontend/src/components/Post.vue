@@ -11,7 +11,7 @@
             <Likes/>
             <Comments v-for="item in comments" 
             :content="item.content" 
-            :key="item.id"/>
+            :key="item.blabla"/>
             <AddComment/>
 
         </div>
@@ -35,10 +35,6 @@ export default {
   },
 
       props: {
-
-        id: {
-            type: Number,
-        },
             
         title: {
             type: String,
@@ -51,12 +47,11 @@ export default {
         },
         attachment:{
             type: String,
-        },
+        }
     },
 
   data() {
     return {
-    //   comments: null,
       comments: null
     }
   },
@@ -78,9 +73,9 @@ export default {
                    return response;
                })
            return this.comments = comments;
-       },
-    },
-   
+       }
+
+   },
 
     created() {
         this.loadComments()

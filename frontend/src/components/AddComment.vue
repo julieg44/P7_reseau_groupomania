@@ -1,8 +1,8 @@
 <template>
     <div id="AddComments">
         <img src="../assets/avatar.png" />
-        <input class="addcomment" type='text' placeholder="blablabla"/>
-        <BtnPlus @click="PostComment()"/>
+        <input type='text' placeholder="blablabla"/>
+        <BtnAddComment @click="PostComment()"/>
 
     </div>
 </template>
@@ -12,13 +12,13 @@
 // @ is an alias to /src
 
 
-import BtnPlus from '@/components/UI/Btn/BtnPlus.vue'
+import BtnAddComment from '@/components/BtnAddComment.vue'
 
 
 export default {
   name: 'AddComment',
   components: {
-      BtnPlus
+      BtnAddComment
   },
 
 
@@ -66,7 +66,7 @@ export default {
         margin-right: 3%;
     }
 
-    .addcomment {
+    input {
         text-align: left;
         font-size: 0.7rem;
         border: none;

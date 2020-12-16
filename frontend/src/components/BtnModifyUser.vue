@@ -12,16 +12,15 @@ export default {
 
 <style lang="scss">
 
-@import "../../../sass/variables.scss";
-@import "../../../sass/button.scss";
+@import "../sass/main.scss";
 
 #modif-icon {
 
   width: 75%;
   height: 25px;
   background-color: $groupomania_rouge;
-  mask: url(../../../assets/user_edit.svg);
-  -webkit-mask: url(../../../assets/user_edit.svg);
+  mask: url(../assets/user_edit.svg);
+  -webkit-mask: url(../assets/user_edit.svg);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 100%;
 

@@ -7,10 +7,6 @@
         transform: none;
     }
   }
-
-  // section#filPost{
-  //   transition: transform .4s cubic-bezier(.25, .1, .25, 1);
-  // }
   
   #cartoucheProfil:not(:target){ 
     transform: translate3d(-400px, -500px, 0);
@@ -33,14 +29,6 @@
         transform: none;
       }
   }
-
-  // section#filPost:target {
-  //   transform: translate3d(0px, -230px, 0);
-  // }
-
-  // section#filPost:not(:target) {
-  //   transform: translate3d(0px, -230px, 0);
-  // }
   
   #openProfil,
   #closeProfil {
