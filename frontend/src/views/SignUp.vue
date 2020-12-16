@@ -12,14 +12,20 @@
                     <div id="formText">
                         <div id="creationUsername"><label>Votre nom d'utilisateur</label><input type="text" v-model="username"></div>
                         <div id="creationEmail"><label>Votre email</label><input type="email" v-model="email"></div>
-                        <div id="creationPassword"><label>Votre mot de passe</label><input type="text" v-model="password"></div>
+                        <div id="creationPassword"><label>Votre mot de passe</label><input type="password" v-model="password"></div>
                     </div>
-                    <div id="formImg"><img src="../assets/avatar.jpg" alt="avatar"/>
-                        <input type="file" @change="onFileSelected"/>
+                    <div id="formImg">
+                        <img src="../assets/avatar.jpg" alt="avatar"/>
+                        <div class="upload_file_container">
+                            <label for="file">
+                                Sélectionner une photo
+                            </label>
+                            <input class="inputfile" type="file" name="photo" @change="onFileSelected" />
+                        </div>
                     </div>
                 </form>
-                <router-link to="/"><BtnAnnuler/></router-link><span id="retour-mobile"><br></span>
-                <BtnValider @click="signup()"/>
+                <router-link to="/"><BtnBleu> Annuler </BtnBleu></router-link><span id="retour-mobile"><br></span>
+                <BtnRouge @click="signup()"> Valider </BtnRouge>
             </div> 
         </div>
     </section> 
@@ -28,8 +34,8 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import BtnValider from '@/components/BtnValider.vue'
-import BtnAnnuler from '@/components/BtnAnnuler.vue'
+import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
+import BtnBleu from '@/components/UI/Btn/BtnBleu.vue'
 import PopAlert from '@/components/PopAlert.vue'
 
 
@@ -69,7 +75,7 @@ function customAlert (){
 export default {
     name:'signUp',
     components: { 
-        Header, BtnValider, BtnAnnuler, PopAlert
+        Header, BtnRouge, BtnBleu, PopAlert
     },
     data(){
     return {username:"", email:"", password:"", photo:"", selectedFile:null}
@@ -80,41 +86,21 @@ export default {
         onFileSelected(event){
             this.selectedFile = event.target.files[0]
         },
-        // signup(){
-        //     const fd = new FormData();
-        //     fd.append('image', this.selectedFile, this.selectedFile.name),
-        //     console.log(fd)
-        //     console.log(this.selectedFile)
-        //     debugger;
-        //     this.$store.dispatch('signup', {
-        //         username:this.username,
-        //         email:this.email,
-        //         password:this.password,
-        //         photo:this.selectedFile
-        //     })
-        // },
-            signup(){
+
+        signup() {
             console.log(this.selectedFile)
             const fd = new FormData()
-            fd.append ('image', this.selectedFile, this.selectedFile.name)
-            fd.append ('username', this.username)
+            fd.append('image', this.selectedFile, this.selectedFile.name)
+            fd.append('username', this.username)
             fd.append('email', this.email)
             fd.append('password', this.password)
             console.log(fd)
-                axios.post(urlApi+'/api/user/signup', fd)
+            axios.post(urlApi + '/api/user/signup', fd)
                 .then(function (response) {
-                console.log(response)
-                debugger;
-            let alert = new customAlert();
-            alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
-    //       })
-        })
-                // this.$store.dispatch('signup', {
-            //     username:this.username,
-            //     email:this.email,
-            //     password:this.password,
-            //     photo:this.selectedFile
-            // })
+                    console.log(response)
+                    let alert = new customAlert();
+                    alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+                })
         },
     },
 }
@@ -183,8 +169,28 @@ h1{
         flex-direction: column;
         align-items: center;
         margin-bottom: 5%;
-
     }
+    .upload_file_container {
+    width: 60%;
+    height: 25px;
+    position: relative;
+    background-color: $gris2;
+    padding: 3px;
+    color: #fff;
+    font-family: 'roboto';
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: auto;
+    margin-bottom: 15%;
+    @include tablette_ecran{
+        width: 72%;
+        }
+    }
+///// @todo stylisation input /////
+
+    // .inputfile {
+    //     display: none;
+    // }
     img{
     width: 80%;
     @include tablette_ecran{

@@ -9,16 +9,22 @@
             <div id="createAccount">
                 <form id="createUser" enctype="multipart/form-data">
                     <div id="formText">
-                        <div id="creationUsername"><label>Votre nom d'utilisateur</label><input type="text" v-model="username"></div>
-                        <div id="creationEmail"><label>Votre email</label><input type="email" v-model="email"></div>
-                        <div id="creationPassword"><label>Votre mot de passe</label><input type="text" v-model="password"></div>
+                        <div id="creationUsername"><label>Votre nom d'utilisateur</label><input class="inputtext" type="text" v-model="username"></div>
+                        <div id="creationEmail"><label>Votre email</label><input class="inputemail" type="email" v-model="email"></div>
+                        <div id="creationPassword"><label>Votre mot de passe</label><input class="inputpassword" type="password" v-model="password"></div>
                     </div>
-                    <div id="formImg"><img src="../assets/avatar.jpg" alt="avatar"/>
-                        <input type="file" @change="onFileSelected"/>
+                    <div id="formImg">
+                        <img src="../assets/avatar.jpg" alt="avatar"/>
+                        <div class="upload_file_container">
+                            <label for="file">
+                                Sélectionner une photo
+                            </label>
+                            <input class="inputfile" type="file" name="photo" @change="onFileSelected" />
+                        </div>
                     </div>
                 </form>
-                <router-link to="/"><BtnAnnuler/></router-link><span id="retour-mobile"><br></span>
-                <BtnValider @click="modifyUser()"/>
+                <router-link :to="_goBack"><BtnBleu label="Annuler"/></router-link><span id="retour-mobile"><br></span>
+                <BtnRouge @click="modifyUser()" label="Modifier" />
             </div> 
         </div>
     </section> 
@@ -27,8 +33,8 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import BtnValider from '@/components/BtnValider.vue'
-import BtnAnnuler from '@/components/BtnAnnuler.vue'
+import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
+import BtnBleu from '@/components/UI/Btn/BtnBleu.vue'
 
 import { mapState } from "vuex";
 
@@ -41,7 +47,7 @@ let urlApi = "http://localhost:3000"
 export default {
     name:'ModifyUser',
     components: { 
-        Header, BtnValider, BtnAnnuler
+        Header, BtnRouge, BtnBleu
     },
     computed:{
             ...mapState ({
@@ -49,6 +55,9 @@ export default {
             selectedUser: "selectedUser",
             token: "token",
         }),
+        _goBack() {
+            return '/main/' + this.$route.params.id;
+        }
     },
     data(){
     return {username:"", email:"", password:"", photo:"", selectedFile:null, user:null}
@@ -77,17 +86,12 @@ export default {
                 this.password = this.user.password
             }
 
-            console.log(this.selectedFile)
             const fd = new FormData()
             fd.append('image', this.selectedFile, this.selectedFile.name)
             fd.append('username', this.username)
             fd.append('email', this.email)
             fd.append('password', this.password)
-            console.log(fd)
 
-            console.log(this.$route.params.id)
-            console.log(localStorage)
-            debugger;
             axios.put(urlApi + '/api/user/' + this.$route.params.id, fd, {
                     headers: {
                         'Authorization': token
@@ -177,19 +181,41 @@ h1{
 
 #formImg {
     margin-bottom: 15%;
-    @include tablette_ecran{
+    margin: auto;
+        @include tablette_ecran {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 5%;
-
+        margin-bottom: 3%;
     }
+    .upload_file_container {
+        width: 60%;
+        height: 25px;
+        position: relative;
+        background-color: $gris2;
+        padding: 3px;
+        color: #fff;
+        font-family: 'roboto';
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin: auto;
+        margin-bottom: 15%;
+        @include tablette_ecran{
+        width: 72%;
+        }
+    }
+    ///// @todo stylisation input /////
+
+    // .inputfile {
+    //     display: none;
+    // }
+    
     img{
     width: 80%;
     @include tablette_ecran{
         width: 55%;
         margin-bottom: 4%;
-    }
+        }
     }
     input{
         background-color: #fff;
@@ -215,7 +241,7 @@ h1{
 
 
 
-input{
+.inputtext, .inputemail, .inputpassword{
     width:100%;
     height: 30px;
     background-color:$gris1;

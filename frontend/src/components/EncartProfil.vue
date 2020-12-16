@@ -19,7 +19,7 @@
         <div id="actionProfil">
             <BtnDeconnect @click="deconnect()" />
             <router-link :to="_modify">
-            <BtnModifyUser @click="modifyUser(user.id)" />
+            <BtnModifyUser/>
             </router-link>
             <BtnSupUser @click="supUser(user.id)" />
         </div>
@@ -28,13 +28,14 @@
 
 <script>
 // @ is an alias to /src
-import BtnSupUser from '@/components/BtnSupUser.vue'
-import BtnDeconnect from '@/components/BtnDeconnect.vue'
-import BtnModifyUser from '@/components/BtnModifyUser.vue'
+import BtnSupUser from '@/components/UI/Btn/BtnSupUser.vue'
+import BtnDeconnect from '@/components/UI/Btn/BtnDeconnect.vue'
+import BtnModifyUser from '@/components/UI/Btn/BtnModifyUser.vue'
 import { mapState } from "vuex";
 import { mapActions } from 'vuex';
 
-
+const axios = require('axios');
+let urlApi = "http://localhost:3000"
 
 export default {
     name: 'EncartProfil',
@@ -65,14 +66,34 @@ export default {
         ...mapActions(['supUser', 'deconnect']),
 
         async loadProfil() {
-            let user = await this.$store.dispatch('loadUser', {
-                    id: this.$route.params.id
+                let user = await this.$store.dispatch('loadUser', {
+                        id: this.$route.params.id
+                    })
+                    .then(function (response) {
+                        return response;
+                    })
+                return this.user = user;
+            },
+
+        deconnect() {
+            localStorage.clear()
+            window.location.href = '/';
+        },
+
+
+        supUser() {
+            //@todo  => alert sure ??
+
+            let token = 'Bearer ' + JSON.parse(localStorage.getItem('usertoken'));
+            axios.delete(urlApi + '/api/user/' + this.user.id, {
+                    headers: {
+                        'Authorization': token
+                    }
                 })
-                .then(function (response) {
-                    return response;
+                .then(function () {
+                    window.location.href = '/'
                 })
-            return this.user = user;
-        }
+        },
     },
 
     created() {
@@ -176,7 +197,7 @@ export default {
                 width: 60%;
                 margin: 0;
                margin-top: 10%;
-               height: 147px;
+            //    height: 147px;
             }
         }
             

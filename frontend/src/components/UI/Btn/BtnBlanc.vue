@@ -1,22 +1,24 @@
 <template>
-  <!-- <router-link :to="{name:'Main',params:{id:Userid}}"> -->
     <button class="addmedia" v-on="$listeners">
         <slot name="plus">+</slot>
-        <slot name="text"> Ajouter une image</slot>
+        <slot name="text"> {{ label }}</slot>
     </button>
-  <!-- </router-link> -->
 </template>
 
 <script>
 
 export default {
-  name: 'BtnAddMedia',
+  name: 'BtnBlanc',
+  props:{
+    label:{type: String, required:true}
+  }
 }
 </script>
 
 <style lang="scss">
 
-@import "../sass/main.scss";
+@import "../../../sass/variables.scss";
+@import "../../../sass/button.scss";
 
   .addmedia{
     background-color: $blanc;
@@ -28,9 +30,6 @@ export default {
     }
     @include tablette_ecran{
         width: 25%;
-        margin-top: 0;
-        margin-bottom: 0;
-        margin-left: 3%;
     }
 }
 

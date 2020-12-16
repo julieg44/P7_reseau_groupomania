@@ -22,7 +22,7 @@
       :createdAt="item.createdAt" 
       :content="item.content"
       :attachment="item.attachment"
-      :key="item.blabla" />
+      :key="item.id" />
     </section>
 
 
@@ -45,7 +45,7 @@ import { mapActions } from 'vuex';
 export default {
   name: 'Main',
   components: {
-    Header, EncartProfil, EncartPost , EncartBienvenue, Post
+    Header, EncartProfil, EncartPost , EncartBienvenue, Post,
   },
   data() {
     return {
@@ -64,8 +64,7 @@ export default {
                    return response;
                })
            return this.messages = messages;
-       }
-
+       },
    },
 
     created() {
