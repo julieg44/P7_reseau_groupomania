@@ -12,16 +12,16 @@ export default {
 
 <style lang="scss">
 
-@import "../sass/main.scss";
-
+@import "../../../sass/variables.scss";
+@import "../../../sass/button.scss";
 
 #deconnect-icon {
 
     width: 65%;
     height: 25px;
     background-color: $groupomania_rouge;
-    mask: url(../assets/power_off.svg);
-    -webkit-mask: url(../assets/power_off.svg);
+    mask: url(../../../assets/power_off.svg);
+    -webkit-mask: url(../../../assets/power_off.svg);
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-size: 100%;
         @include tablette_ecran{

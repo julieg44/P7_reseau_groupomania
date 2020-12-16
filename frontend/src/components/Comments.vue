@@ -23,6 +23,9 @@ export default {
     content: {
         type: String,
         },
+    id: {
+        type: Number,
+    },
     },
 
 

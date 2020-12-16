@@ -1,26 +1,28 @@
 <template>
-  <!-- <router-link to="/"> -->
-    <button v-on="$listeners">
-      <slot>Valider</slot>
+    <button id="boutonrouge" v-on="$listeners">
+      <slot>{{ label }}</slot>
     </button>
-  <!-- </router-link>   -->
 </template>
 
 <script>
 
 export default {
-  name: 'BtnValider',
+  name: 'BtnRouge',
+  props:{
+    label:{type:String, required:true}
+    },
 }
 </script>
 
 <style lang="scss">
 
-@import "../sass/main.scss";
+@import "../../../sass/variables.scss";
+@import "../../../sass/button.scss";
 
-  button{
+
+  #boutonrouge{
       background-color: $groupomania_rouge;
-      margin-top: 3%;
-      margin-bottom: 3%;
+
       @include tablette_ecran{
           margin-top: 0;
           margin-bottom: 0;

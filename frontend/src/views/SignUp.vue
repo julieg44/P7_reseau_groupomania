@@ -8,18 +8,24 @@
         <div class='content'>
             <h1> Créez votre compte</h1>
             <div id="createAccount">
-                <form id="createUser" enctype="multipart/form-data">
+                                <form id="createUser" enctype="multipart/form-data">
                     <div id="formText">
-                        <div id="creationUsername"><label>Votre nom d'utilisateur</label><input type="text" v-model="username"></div>
-                        <div id="creationEmail"><label>Votre email</label><input type="email" v-model="email"></div>
-                        <div id="creationPassword"><label>Votre mot de passe</label><input type="text" v-model="password"></div>
+                        <div id="creationUsername"><label>Votre nom d'utilisateur</label><input class="inputtext" type="text" v-model="username"></div>
+                        <div id="creationEmail"><label>Votre email</label><input class="inputemail" type="email" v-model="email"></div>
+                        <div id="creationPassword"><label>Votre mot de passe</label><input class="inputpassword" type="password" v-model="password"></div>
                     </div>
-                    <div id="formImg"><img src="../assets/avatar.jpg" alt="avatar"/>
-                        <input type="file" @change="onFileSelected"/>
+                    <div id="formImg">
+                        <img src="../assets/avatar.jpg" alt="avatar"/>
+                        <div class="upload_file_container">
+                            <label for="file">
+                                Sélectionner une photo
+                            </label>
+                            <input class="inputfile" type="file" name="photo" @change="onFileSelected" />
+                        </div>
                     </div>
                 </form>
-                <router-link to="/"><BtnAnnuler/></router-link><span id="retour-mobile"><br></span>
-                <BtnValider @click="signup()"/>
+                <router-link to="/"><BtnBleu label="Annuler"/></router-link><span id="retour-mobile"><br></span>
+                <BtnRouge @click="signup()" label="Valider"/>
             </div> 
         </div>
     </section> 
@@ -28,8 +34,8 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import BtnValider from '@/components/BtnValider.vue'
-import BtnAnnuler from '@/components/BtnAnnuler.vue'
+import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
+import BtnBleu from '@/components/UI/Btn/BtnBleu.vue'
 import PopAlert from '@/components/PopAlert.vue'
 
 
@@ -67,54 +73,41 @@ function customAlert (){
 
 
 export default {
-    name:'signUp',
-    components: { 
-        Header, BtnValider, BtnAnnuler, PopAlert
+    name: 'signUp',
+    components: {
+        Header,
+        BtnRouge,
+        BtnBleu,
+        PopAlert
     },
-    data(){
-    return {username:"", email:"", password:"", photo:"", selectedFile:null}
+    data() {
+        return {
+            username: "",
+            email: "",
+            password: "",
+            photo: "",
+            selectedFile: null
+        }
     },
     methods: {
         ...mapActions(['signup']),
 
-        onFileSelected(event){
+        onFileSelected(event) {
             this.selectedFile = event.target.files[0]
         },
-        // signup(){
-        //     const fd = new FormData();
-        //     fd.append('image', this.selectedFile, this.selectedFile.name),
-        //     console.log(fd)
-        //     console.log(this.selectedFile)
-        //     debugger;
-        //     this.$store.dispatch('signup', {
-        //         username:this.username,
-        //         email:this.email,
-        //         password:this.password,
-        //         photo:this.selectedFile
-        //     })
-        // },
-            signup(){
-            console.log(this.selectedFile)
+
+        signup() {
             const fd = new FormData()
-            fd.append ('image', this.selectedFile, this.selectedFile.name)
-            fd.append ('username', this.username)
+            fd.append('image', this.selectedFile, this.selectedFile.name)
+            fd.append('username', this.username)
             fd.append('email', this.email)
             fd.append('password', this.password)
-            console.log(fd)
-                axios.post(urlApi+'/api/user/signup', fd)
+            axios.post(urlApi + '/api/user/signup', fd)
                 .then(function (response) {
-                console.log(response)
-                debugger;
-            let alert = new customAlert();
-            alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
-    //       })
-        })
-                // this.$store.dispatch('signup', {
-            //     username:this.username,
-            //     email:this.email,
-            //     password:this.password,
-            //     photo:this.selectedFile
-            // })
+                    let alert = new customAlert();
+                    alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+                })
+
         },
     },
 }
@@ -127,17 +120,17 @@ export default {
 
 
 #signUp {
-  background-color: $gris1;
-  height: 980px;
-  padding-top: 10%;
+    background-color: $gris1;
+    height: 980px;
+    padding-top: 10%;
 }
 
-.content{
+.content {
     max-width: 980px;
     margin: auto;
 }
 
-#createAccount{
+#createAccount {
     width: 90%;
     background-color: #fff;
     // padding: 2% 2% 2% 2%;
@@ -145,32 +138,35 @@ export default {
     padding-bottom: 2%;
     margin: auto;
     margin-top: 30px;
-    @include tablette_ecran{
+
+    @include tablette_ecran {
         padding-top: 2%;
     }
 }
 
-h1{
+h1 {
     font-size: $texttitre;
     text-align: center;
-    color:$text-noir;
+    color: $text-noir;
     font-weight: 100;
     margin-bottom: 5%;
 }
 
-#createUser{
+#createUser {
     width: 90%;
     margin: auto;
-    @include tablette_ecran{
+
+    @include tablette_ecran {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 }
 
-#formText{
+#formText {
     margin-bottom: 15%;
-    @include tablette_ecran{
+
+    @include tablette_ecran {
         margin-bottom: 0;
         width: 70%;
     }
@@ -178,21 +174,47 @@ h1{
 
 #formImg {
     margin-bottom: 15%;
-    @include tablette_ecran{
+
+    @include tablette_ecran {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-bottom: 5%;
 
     }
-    img{
-    width: 80%;
-    @include tablette_ecran{
-        width: 55%;
-        margin-bottom: 4%;
+
+    .upload_file_container {
+        width: 60%;
+        height: 25px;
+        position: relative;
+        background-color: $gris2;
+        padding: 3px;
+        color: #fff;
+        font-family: 'roboto';
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin: auto;
+        margin-bottom: 15%;
+
+        @include tablette_ecran {
+            width: 72%;
+        }
     }
+
+    ///// @todo stylisation input /////
+    // .inputfile {
+    //     display: none;
+    // }
+    img {
+        width: 80%;
+
+        @include tablette_ecran {
+            width: 55%;
+            margin-bottom: 4%;
+        }
     }
-    input{
+
+    input {
         background-color: #fff;
         border: none;
         text-decoration: none;
@@ -200,31 +222,36 @@ h1{
 }
 
 
-#creationUsername, #creationEmail, #creationPassword{
+#creationUsername,
+#creationEmail,
+#creationPassword {
     margin-bottom: 5%;
-    @include tablette_ecran{
-    margin-bottom: 0;
-    display: flex;
-    align-items: baseline;
-        label{
+
+    @include tablette_ecran {
+        margin-bottom: 0;
+        display: flex;
+        align-items: baseline;
+
+        label {
             font-size: $textpetit;
             width: 40%;
             text-align: left;
-            }
         }
+    }
 }
 
 
 
-input{
-    width:100%;
+input {
+    width: 100%;
     height: 30px;
-    background-color:$gris1;
+    background-color: $gris1;
     border: none;
     margin-bottom: 3%;
     text-align: center;
     color: $text-noir;
-    @include tablette_ecran{
+
+    @include tablette_ecran {
         height: 35px;
         width: 100%;
         margin-bottom: 5%;
@@ -232,8 +259,8 @@ input{
 }
 
 
-#retour-mobile{
-    @include tablette_ecran{
+#retour-mobile {
+    @include tablette_ecran {
         display: none;
     }
 }

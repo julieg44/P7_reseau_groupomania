@@ -11,7 +11,7 @@
             <Likes/>
             <Comments v-for="item in comments" 
             :content="item.content" 
-            :key="item.blabla"/>
+            :key="item.id"/>
             <AddComment/>
 
         </div>
@@ -35,7 +35,10 @@ export default {
   },
 
       props: {
-            
+
+        id: {
+            type: Number,
+        },    
         title: {
             type: String,
         },

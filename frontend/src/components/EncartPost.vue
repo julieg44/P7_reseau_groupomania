@@ -9,7 +9,7 @@
                 <div class="align-boutons">
                     <input id="fichier" type="file" @change="onFileSelected"/>
                     <!-- <BtnAddMedia /> -->
-                    <BtnPost @click="poster()"/>
+                    <BtnRouge @click="poster()" label="Envoyer"/>
                 </div>
             </form>
         </div>
@@ -18,7 +18,7 @@
 
 <script>
 // @ is an alias to /src
-import BtnPost from '@/components/BtnPost.vue'
+import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 // import BtnAddMedia from '@/components/BtnAddMedia.vue'
 import { mapState } from "vuex";
 import { mapActions } from 'vuex';
@@ -30,7 +30,7 @@ let urlApi = "http://localhost:3000";
 export default {
   name: 'EncartPost',
   components: {
-    BtnPost, 
+    BtnRouge, 
     // BtnAddMedia,
   },
   data(){
@@ -57,7 +57,7 @@ export default {
 
     poster() {
         let fd = new FormData()
-        fd.append('image', this.selectedFile, this.selectedFile.name)
+        // fd.append('image', this.selectedFile, this.selectedFile.name)
 
         fd.append('UserId', this.user.id)
         fd.append('title', this.title)
@@ -97,46 +97,7 @@ export default {
 
 
 #cartouchePost {
-    p {
-        color: $gris3;
-        font-size: 1rem;
-        font-weight: 300;
-        text-align: left;
-        margin-top: 3%;
-    }
-
-    #post {
-        background-color: $gris1;
-        margin-top: 2%;
-        padding: 4% 4% 4% 4%;
-        text-align: right;
-    }
-    #post-form{
-        width: 100%;
-        input {
-            border: none;
-            color: $gris3;
-            width: 100%;
-            margin-top: 3%;
-        }
-        #contentpost{
-            height: 95px;
-        }
-        #titrepost{
-            height:30px;
-        }
-
-    }
-    .align-boutons{
-    display: flex;
-    justify-content: flex-end;
-        #fichier{
-            width: 40%;
-        }
-    }
-
-
-
+    padding: 2%;
 
     @include tablette_ecran {
         width: 100%;
@@ -144,33 +105,75 @@ export default {
         flex-direction: column;
         justify-content: flex-end;
         margin-top: 0;
+        padding: 0;
+    }
 
-        p {
+    p {
+        color: $gris3;
+        font-size: 1rem;
+        font-weight: 300;
+        text-align: left;
+        margin-top: 3%;
+
+        @include tablette_ecran {
             margin-top: 0;
         }
+    }
 
-        .post-icon {
-            display: none;
-        }
+    #post {
+        background-color: $gris1;
+        margin-top: 2%;
+        padding: 4% 4% 4% 4%;
+        text-align: right;
 
-        #post {
+        @include tablette_ecran {
             background-color: $blanc;
-            margin-top: 2%;
             height: 250px;
             padding: 2% 2% 2% 2%;
-            text-align: right;
         }
-        #titrepost{
-            height:40px;
+    }
+
+    #post-form {
+        width: 100%;
+
+        @include tablette_ecran {
+            height: 150px;
         }
 
         input {
             border: none;
             color: $gris3;
             width: 100%;
+            margin-top: 3%;
+
+            @include tablette_ecran {
+                background-color: $blanc;
+                text-align: left;
+                margin-top: 0;
+            }
         }
-        #contentpost{
-            height: 40%;
+
+        #contentpost {
+            height: 95px;
+
+            @include tablette_ecran {
+                height: 150px;
+            }
+        }
+
+        #titrepost {
+            height: 30px;
+
+            @include tablette_ecran {
+                height: 40px;
+            }
+        }
+    }
+
+    .align-boutons {
+
+        #fichier {
+            width: 40%;
         }
     }
 }

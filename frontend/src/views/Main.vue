@@ -22,7 +22,7 @@
       :createdAt="item.createdAt" 
       :content="item.content"
       :attachment="item.attachment"
-      :key="item.blabla" />
+      :key="item.id" />
     </section>
 
 
