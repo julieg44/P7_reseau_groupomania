@@ -109,11 +109,37 @@ export default new Vuex.Store({
         .catch(function (error){
           console.log(error);
         })
-        console.log(message)
         return message;
     },
 
+    // async loadComments(){
+
+    //   let token = 'Bearer '+ this.state.token;
+    //   let message = await axios.get(urlApi + '/api/message',{
+    //     headers: { 'Authorization': token }}
+    //   )
+    //   .then(function(response){
+    //     let messages = response.data
+    //     for (let i=0 ; i< messages.length; i++){
+    //       axios.get(urlApi + '/api/comment/message/' + messages[i].id, {
+    //         headers: { 'Authorization': token }}
+    //         )
+    //     }
+          
+    //     })
+    //     .then(function(response){
+    //       console.log(response)
+    //       // return (response.data);
+    //     })
+    //     return message;
+
+
+    //   }
+
+    
+
     async loadComments(){
+
       let token = 'Bearer '+ this.state.token;
       let comment = await axios.get(urlApi + '/api/comment/message/3',{
         headers: { 'Authorization': token }}
@@ -145,22 +171,22 @@ export default new Vuex.Store({
     // },
 
 
-    deconnect(){
-      localStorage.clear()
-      window.location.href = '/';
-    },
+    // deconnect(){
+    //   localStorage.clear()
+    //   window.location.href = '/';
+    // },
 
 
-    supUser(context){
-      //@todo  => alert sure ??
-      console.log(context.state.selectedUser.id)
-      let token = 'Bearer ' + context.state.token;
-      axios.delete(urlApi+'/api/user/' + context.state.selectedUser.id, {
-        headers: { 'Authorization': token }}) 
-        .then(function () {
-        window.location.href = '/'
-        })
-    },  
+    // supUser(context){
+    //   //@todo  => alert sure ??
+    //   console.log(context.state.selectedUser.id)
+    //   let token = 'Bearer ' + context.state.token;
+    //   axios.delete(urlApi+'/api/user/' + context.state.selectedUser.id, {
+    //     headers: { 'Authorization': token }}) 
+    //     .then(function () {
+    //     window.location.href = '/'
+    //     })
+    // },  
   },  
 
   modules: {

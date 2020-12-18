@@ -57,7 +57,7 @@ export default {
 
     poster() {
         let fd = new FormData()
-        // fd.append('image', this.selectedFile, this.selectedFile.name)
+        fd.append('image', this.selectedFile, this.selectedFile.name)
 
         fd.append('UserId', this.user.id)
         fd.append('title', this.title)

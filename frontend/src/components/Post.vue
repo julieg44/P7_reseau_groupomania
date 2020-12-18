@@ -9,8 +9,8 @@
             <img v-if="attachment" :src="attachment"/>
             <p class="contenuComment">{{ content }}</p> 
             <Likes/>
-            <Comments v-for="item in comments" 
-            :content="item.content" 
+            <Comments v-for="item in toto" 
+            :toto="item.content" 
             :key="item.id"/>
             <AddComment/>
 
@@ -20,12 +20,16 @@
 
 <script>
 // @ is an alias to /src
+// const axios = require('axios');
+// let urlApi = "http://localhost:3000"
+
 
 
 import Comments from '@/components/Comments.vue'
 import Likes from '@/components/Likes.vue'
 import AddComment from '@/components/AddComment.vue'
 
+import { mapState } from 'vuex';
 import { mapActions } from 'vuex';
 
 export default {
@@ -50,40 +54,124 @@ export default {
         },
         attachment:{
             type: String,
+        },
+        toto:{
+            type: Array,
         }
     },
 
-  data() {
-    return {
-      comments: null
-    }
-  },
+//   data() {
+//     return {
+//       comments: null
+//     }
+//   },
+//   data() {
+      
+//     return {
+//       messages: null, 
+//       commentaires: null,
+//     }
+//   },
 
 
-  computed: {
- 
-  },
+    computed: {
+        ...mapState({
+            users: "users",
+            selectedUser: "selectedUser",
+            token: "token",
+        }),
+    },
 
 
    methods: {
 
-       ...mapActions(['loadComments']),
+       ...mapActions(['loadMessages']),
 
-       async loadComments() {
-           let comments = await this.$store.dispatch('loadComments')
-               .then(function (response) {
-                   console.log(response)
-                   return response;
-               })
-           return this.comments = comments;
-       }
+    //    async loadComments() {
+    //        let comments = await this.$store.dispatch('loadComments')
+    //            .then(function (response) {
+    //                console.log(response)
+    //                return response;
+    //            })
+    //        return this.comments = comments;
+    //    }
+    //    async loadMessages() {
+    //        let messages = await this.$store.dispatch('loadMessages')
+    //            .then(function (response) {
+    //                console.log(response)
+    //                return response;
+    //            })
+    //        return this.messages = messages;
+    //    },
 
+    //    async loadComments(){
+    //         let token = JSON.parse(localStorage.getItem('usertoken'))
+    //             let messages = await axios.get(urlApi + '/api/message/3',{
+    //                 headers: { 'Authorization': token }}
+    //             )
+    //            .then(function (response) {
+    //                console.log(response.data.Comments)
+    //                return response.data.Comments;
+    //            })
+    //         return this.commentaires = messages.Comments 
+    //    }
+
+    //        async loadComments(){
+    //         let token = 'Bearer '+ JSON.parse(localStorage.getItem('usertoken'));
+    //             let commentaires = await axios.get(urlApi + '/api/message/',{
+    //                 headers: { 'Authorization': token }}
+    //             )
+    //            .then(function (response) {
+    //                let allmessage = response.data
+    //                 console.log("youpi")
+    //                for(let i = 0; i<allmessage.length; i++){
+    //                    console.log("un comment")
+    //                    console.log(allmessage[i].Comments)
+    //                    let Onemessage = allmessage[i].Comments
+    //                    for(let i = 0; i<Onemessage.length; i++){ 
+    //                         console.log(Onemessage[i])
+    //                         if (allmessage[i].id === Onemessage[i].MessageId){
+    //                             console.log("yes")
+    //                             return this.commentaires = "caca"
+    //                         }
+    //                    }
+    //                }                   
+    //            })
+    //         return this.commentaires = commentaires 
+    //    }
+
+    //     async loadComments(){
+    //         let token = 'Bearer '+ JSON.parse(localStorage.getItem('usertoken'));
+    //             let commentaires = await axios.get(urlApi + '/api/message/',{
+    //                 headers: { 'Authorization': token }}
+    //             )
+    //            .then(function (response) {
+    //                let allmessage = response.data
+    //                 console.log("youpi")
+    //                for(let i = 0; i<allmessage.length; i++){
+    //                    console.log("un comment")
+    //                    console.log(allmessage[i].Comments)
+    //                    let Onemessage = allmessage[i].Comments
+    //                    for(let i = 0; i<Onemessage.length; i++){ 
+    //                         console.log(Onemessage[i])
+    //                         if (allmessage[i].id === Onemessage[i].MessageId){
+    //                             console.log("yes")
+    //                             return this.commentaires = "caca"
+    //                         }
+    //                    }
+    //                }                   
+    //            })
+    //         return this.commentaires = commentaires 
+    //    }
    },
 
-    created() {
-        this.loadComments()
-        console.log(this.comments)
-    },
+
+
+    // created() {
+    //     this.loadMessages()
+    //     this.loadComments()
+    // },
+
 }
 
 

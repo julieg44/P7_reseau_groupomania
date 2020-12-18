@@ -2,7 +2,9 @@ const Models = require('../models');
 
 
 exports.allMessage = (req, res, next) => {
-    Models.Message.findAll()
+    Models.Message.findAll({
+        include:[Models.Comment, Models.Like]
+    })
       .then(results => {
       res.json(results);
       })

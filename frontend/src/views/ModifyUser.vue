@@ -24,7 +24,7 @@
                     </div>
                 </form>
                 <router-link :to="_goBack"><BtnBleu label="Annuler"/></router-link><span id="retour-mobile"><br></span>
-                <BtnRouge @click="modifyUser()" label="Modifier" />
+                <BtnRouge @click.prevent="modifyUser()" label="Modifier" />
             </div> 
         </div>
     </section> 
@@ -75,6 +75,7 @@ export default {
 
         onFileSelected(event) {
             this.selectedFile = event.target.files[0]
+            console.log(this.selectedFile)
         },
 
         modifyUser() {
@@ -85,22 +86,20 @@ export default {
             if (this.username === "") {
                 this.username = this.user.username
             }
-            if (this.selectedFile === "") {
-                this.selectedFile = this.user.photo
-            }
             if (this.email === "") {
                 this.email = this.user.email
             }
-            if (this.password === "") {
-                this.password = this.user.password
-            }
+            // if (this.password === "") {
+            //     this.password = this.user.password
+            // }
 
             const fd = new FormData()
+            if(this.selectedFile !== null){
             fd.append('image', this.selectedFile, this.selectedFile.name)
+            }
             fd.append('username', this.username)
             fd.append('email', this.email)
-            fd.append('password', this.password)
-
+            // fd.append('password', this.password)
             axios.put(urlApi + '/api/user/' + this.$route.params.id, fd, {
                     headers: {
                         'Authorization': token

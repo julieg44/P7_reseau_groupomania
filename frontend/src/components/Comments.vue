@@ -2,7 +2,7 @@
     <div id="comments">
         <img src="../assets/avatar.png" />
         <h1> Jean Michel</h1>
-        <p> {{ content }}</p>
+        <p> {{ toto }}</p>
     </div>
 </template>
 
@@ -18,14 +18,15 @@ export default {
   components: {
 
   },
+
     props: {
         
-    content: {
+    toto: {
         type: String,
         },
     id: {
         type: Number,
-    },
+        },
     },
 
 

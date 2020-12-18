@@ -17,12 +17,15 @@
 
     <!--messages -->
     <section id="filPost" v-if="messages">
-      <Post v-for="item in messages" 
+      <Post v-for="item in messages"
+      :id="item.id" 
       :title="item.title" 
       :createdAt="item.createdAt" 
       :content="item.content"
       :attachment="item.attachment"
-      :key="item.id" />
+      :toto="item.Comments"
+      :key="item.id" 
+      />
     </section>
 
 
@@ -39,6 +42,7 @@ import EncartBienvenue from '@/components/EncartBienvenue.vue'
 import EncartPost from '@/components/EncartPost.vue'
 import Post from '@/components/Post.vue'
 
+
 import { mapActions } from 'vuex';
 
 
@@ -49,7 +53,8 @@ export default {
   },
   data() {
     return {
-      messages: null
+      messages: null,
+      commentaires:null
     }
   },
   
@@ -58,18 +63,27 @@ export default {
        ...mapActions(['loadMessages']),
 
        async loadMessages() {
-           let messages = await this.$store.dispatch('loadMessages')
-               .then(function (response) {
-                   console.log(response)
-                   return response;
-               })
-           return this.messages = messages;
+         let messages = await this.$store.dispatch('loadMessages')
+           .then(function (response) {
+             console.log(response)
+             return response;
+           })
+         return this.messages = messages;
+       },
+
+       async loadComments() {
+         let commentaires = await this.$store.dispatch('loadComments')
+           .then(function (response) {
+             console.log(response)
+             return response;
+           })
+         return this.commentaires = commentaires;
        }
 
-   },
+     },
 
     created() {
-        this.loadMessages()
+        this.loadMessages(), this.loadComments()
         console.log(this.messages)
     },
 }
