@@ -11,6 +11,7 @@ exports.allMessage = (req, res, next) => {
 }
 
 exports.oneMessage = (req, res, next) => {
+    console.log(req.params)
     Models.Message.findOne({ 
         where: { id: req.params.id },
         include:[Models.Comment, Models.Like]
@@ -36,18 +37,34 @@ exports.modifyMessage = (req, res, next) => {
 
 exports.createMessage = (req, res, next) => {
     console.log(req.body)
-    Models.Message.create({
-        UserId: req.body.UserId,
-        title: req.body.title,
-        content: req.body.content,
-        nbLikes: req.body.nbLikes,
-        nbDislikes: req.body.nbDislikes,
-        attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    })
-    .then(Message => res.status(201).json({
-        message:'Post créé',
-        data: Message,
-    }))
+    console.log(req.file)
+    if(req.file === undefined){
+        Models.Message.create({
+            UserId: req.body.UserId,
+            title: req.body.title,
+            content: req.body.content,
+            nbLikes: req.body.nbLikes,
+            nbDislikes: req.body.nbDislikes,
+        })
+        .then(Message => res.status(201).json({
+            message:'Post créé',
+            data: Message,
+        }))
+    } else {
+        Models.Message.create({
+            UserId: req.body.UserId,
+            title: req.body.title,
+            content: req.body.content,
+            nbLikes: req.body.nbLikes,
+            nbDislikes: req.body.nbDislikes,
+            attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        })
+        .then(Message => res.status(201).json({
+            message:'Post créé',
+            data: Message,
+        }))
+    }
+
 }
 
 exports.getUserMessage = (req, res, next) => {

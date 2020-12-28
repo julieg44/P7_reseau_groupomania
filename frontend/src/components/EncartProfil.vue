@@ -7,14 +7,14 @@
             </div>
         </div>
         <div class="closeProfil"><a href="#" id="closeProfil">X</a></div>
-        <h2 class="profilName"> {{ user.username }}</h2>
+        <h2 class="profilName"> {{user.username}}</h2>
         <p id="contenuProfil">
             Email :
-            {{ this.user.email }}
-            <br />
+            {{ user.email }}
+            <!-- <br />
             Mot de passe :
             *********
-            <br />
+            <br /> -->
         </p>
         <div id="actionProfil">
             <BtnDeconnect @click="deconnect()" />
@@ -24,6 +24,7 @@
             <BtnSupUser @click="supUser(user.id)" />
         </div>
     </div>
+    
 </template>
 
 <script>
@@ -39,6 +40,7 @@ import { mapActions } from 'vuex';
 
 
 
+
 export default {
     name: 'EncartProfil',
     components: {
@@ -46,11 +48,16 @@ export default {
         BtnDeconnect,
         BtnModifyUser
     },
-    data() {
-        return {
-            user: null
-        }
+
+    props: {
+        user:{ type:Object}
     },
+
+    // data() {
+    //     return {
+    //         user: null
+    //     }
+    // },
 
     computed: {
         ...mapState({
@@ -67,15 +74,21 @@ export default {
     methods: {
         ...mapActions(['supUser', 'deconnect']),
 
-        async loadProfil() {
-            let user = await this.$store.dispatch('loadUser', {
-                    id: this.$route.params.id
-                })
-                .then(function (response) {
-                    return response;
-                })
-            return this.user = user;
-        },
+        // async loadProfil() {
+        //         let user = await this.$store.dispatch('loadUser', {
+        //                 id: this.$route.params.id
+        //             })
+        //             .then(function (response) {
+        //                 return response;
+        //             })
+        //         return this.user = user;
+        //     },
+
+
+
+
+
+
         deconnect() {
             localStorage.clear()
             window.location.href = '/';
@@ -95,8 +108,9 @@ export default {
     },
 
     created() {
-        this.loadProfil()
-        console.log(this.user)
+        // this.loadProfil()
+        // console.log(this.user)
+        
     },
 
 
@@ -149,6 +163,7 @@ export default {
 
         img {
             width: 40%;
+            height: 120px;
             margin: 5%;
             position: absolute;
         }
@@ -163,28 +178,29 @@ export default {
     }
 
     @include tablette_ecran {
-        width: 25%;
+        width: 20%;
         margin-right: 2%;
         background-color: $blanc;
         position: relative;
         padding-bottom: 0;
 
         h2 {
-            margin-top: 40%;
+            margin-top: 30%;
+            margin-bottom: 3%;
             text-align: center;
         }
 
         #actionProfil {
             width: 100%;
             position: absolute;
-            bottom: 20px;
+            bottom: 0px;
             text-align: center;
         }
 
         #photo {
             // text-align: center;
             // background-color: $groupomania_rouge;
-            height: 25%;
+            height: 34%;
 
         #taille-photo{
             width:60%;
@@ -195,7 +211,7 @@ export default {
                 width: 60%;
                 margin: 0;
                margin-top: 10%;
-               height: 147px;
+               height: 120px;
             }
         }
             

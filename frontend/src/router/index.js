@@ -34,7 +34,9 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/ModifyUser.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/ModifyUser.vue'),
+    props:true
+
   },
   { 
     path: '/main/:id',
@@ -42,7 +44,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Main.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Main.vue'),
+    props:true
   },
 ]
 

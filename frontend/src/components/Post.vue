@@ -1,18 +1,25 @@
 <template>
         <div id="message">
             <div id="message-top">
-                <img src="../assets/avatar.png"/>
+                <div class="positionPhoto">
+                    <img src="../assets/test.jpg" />
+                    <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" />
+                </div>
                 <h1> {{ title }}</h1>
                 <p> {{ createdAt }}</p>  
             </div> 
             <h2 id="title">{{ title }}</h2>
-            <img v-if="attachment" :src="attachment"/>
+            <div class="attachment-post">
+                <img class="image-post" v-if="attachment" :src="attachment"/>
+            </div>
             <p class="contenuComment">{{ content }}</p> 
             <Likes/>
             <Comments v-for="item in toto" 
             :toto="item.content" 
-            :key="item.id"/>
-            <AddComment/>
+            :Messageid="item.MessageId"
+            :key="item.id"
+            />
+              <AddComment :idMessage="id"  />
 
         </div>
 </template>
@@ -55,6 +62,9 @@ export default {
         attachment:{
             type: String,
         },
+        idMessage:{
+            type: Number,
+        },
         toto:{
             type: Array,
         }
@@ -65,13 +75,13 @@ export default {
 //       comments: null
 //     }
 //   },
-//   data() {
+  data() {
       
-//     return {
-//       messages: null, 
-//       commentaires: null,
-//     }
-//   },
+    return {
+      messages: null, 
+      commentaires: null,
+    }
+  },
 
 
     computed: {
@@ -169,7 +179,7 @@ export default {
 
     // created() {
     //     this.loadMessages()
-    //     this.loadComments()
+    //     // this.loadComments()
     // },
 
 }
@@ -177,7 +187,7 @@ export default {
 
 </script>
 
-<style lang="scss">@import "../sass/main.scss";
+<style lang="scss">@import "../sass/variables.scss";
 
 
     #message {
@@ -186,6 +196,7 @@ export default {
         background-color: $groupomania_bleu_clair;
         padding: 3%;
         margin-top: 5%;
+        z-index: 0;
 
         #message-top {
             display: flex;
@@ -193,10 +204,29 @@ export default {
             justify-content: flex-start;
             align-items: center;
             margin-bottom: 5%;
+            position: relative;
 
-            img {
-                width: 15%;
-                margin-right: 3%;
+            .positionPhoto {
+                position: absolute;
+                top: 0;
+                width: 140%;
+                text-align: left;
+                margin-right: 5%;
+
+                @include tablette_ecran {
+                    
+                    width: 80%;
+                    
+                }
+
+
+                img {
+                    width: 7%;
+                    margin-right: 1%;
+                    position: absolute;
+
+                    
+                }
             }
 
             h1 {
@@ -204,12 +234,25 @@ export default {
                 text-align: left;
                 font-weight: 700;
                 margin-bottom: 0;
+                margin-left: 13%;
                 width: 80%;
                 color: $groupomania_bleu;
+                @include tablette_ecran{
+                    margin-left: 8%;
+                }
             }
 
             p {
                 text-align: right;
+            }
+        }
+
+        .attachment-post {
+            width: 100%;
+            height: 80%;
+
+            .image-post {
+                width: 80%;
             }
         }
 
@@ -219,7 +262,8 @@ export default {
             margin-top: 2%;
             margin-bottom: 4%;
         }
-        #title{
+
+        #title {
             font-size: $textpetit;
             text-align: center;
             font-weight: 700;
@@ -236,11 +280,19 @@ export default {
             margin: auto;
             margin-top: 5%;
             padding: 4%;
-            #message-top{
+            #message-top{ 
                 img {
                 width: 7%;
                 }
             }
+            .attachment-post{
+                width: 100%;
+                height: 80%;
+                .image-post{
+                    width: 80%;
+                }
+            }
+            
         }
     }
 

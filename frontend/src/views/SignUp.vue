@@ -97,17 +97,30 @@ export default {
         },
 
         signup() {
-            const fd = new FormData()
-            fd.append('image', this.selectedFile, this.selectedFile.name)
-            fd.append('username', this.username)
-            fd.append('email', this.email)
-            fd.append('password', this.password)
-            axios.post(urlApi + '/api/user/signup', fd)
-                .then(function (response) {
-                    let alert = new customAlert();
-                    alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
-                })
-
+            if (this.selectedFile !== null) {
+                const fd = new FormData()
+                fd.append('image', this.selectedFile, this.selectedFile.name)
+                fd.append('username', this.username)
+                fd.append('email', this.email)
+                fd.append('password', this.password)
+                axios.post(urlApi + '/api/user/signup', fd)
+                    .then(function (response) {
+                        let alert = new customAlert();
+                        alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+                    })
+                
+            } else {
+                let NewUser = {
+                    username: this.username,
+                    email: this.email,
+                    password: this.password
+                }
+                axios.post(urlApi + '/api/user/signup', NewUser)
+                    .then(function (response) {
+                        let alert = new customAlert();
+                        alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+                    })
+            }
         },
     },
 }

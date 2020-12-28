@@ -35,7 +35,7 @@ export default {
   },
   data(){
       return {
-          user : null, content:"", title:"", UserId:41, selectedFile:null
+          user : null, content:"", title:"", selectedFile:null
       }
   },
 
@@ -57,33 +57,36 @@ export default {
 
     poster() {
         let fd = new FormData()
-        fd.append('image', this.selectedFile, this.selectedFile.name)
-
+        if(this.selectedFile !== null){
+            fd.append('image', this.selectedFile, this.selectedFile.name)
+            }
         fd.append('UserId', this.user.id)
         fd.append('title', this.title)
         fd.append('content', this.content)
         fd.append('nbLikes', 0)
         fd.append('nbDislikes', 0)
+
+        console.log(this.selectedFile)
         axios.post(urlApi + '/api/message', fd)
             .then(function (response) {
                 console.log(response)
             })
     },
 
-            async loadProfil() {
-            let user = await this.$store.dispatch('loadUser', {
-                    id: this.$route.params.id
-                })
-                .then(function (response) {
-                    return response;
-                })
-            return this.user = user;
-        }
+        //     async loadProfil() {
+        //     let user = await this.$store.dispatch('loadUser', {
+        //             id: this.$route.params.id
+        //         })
+        //         .then(function (response) {
+        //             return response;
+        //         })
+        //     return this.user = user;
+        // }
     },
 
     created() {
-        this.loadProfil()
-        console.log(this.user)
+        // this.loadProfil()
+        // console.log(this.user)
     },
 
   }
@@ -128,7 +131,7 @@ export default {
 
         @include tablette_ecran {
             background-color: $blanc;
-            height: 250px;
+            height: 180px;
             padding: 2% 2% 2% 2%;
         }
     }
@@ -157,7 +160,7 @@ export default {
             height: 95px;
 
             @include tablette_ecran {
-                height: 150px;
+                height: 80px;
             }
         }
 

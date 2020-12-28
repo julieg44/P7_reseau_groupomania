@@ -35,6 +35,8 @@
 import Header from '@/components/Header.vue'
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 import BtnBleu from '@/components/UI/Btn/BtnBleu.vue'
+import Service from '@/services/service.js'
+
 
 import { mapState } from "vuex";
 
@@ -51,6 +53,8 @@ export default {
         BtnRouge,
         BtnBleu
     },
+    props:['id'],
+
     computed: {
         ...mapState({
             users: "users",
@@ -61,6 +65,9 @@ export default {
             return '/main/' + this.$route.params.id;
         }
     },
+
+
+
     data() {
         return {
             username: "",
@@ -68,7 +75,7 @@ export default {
             password: "",
             photo: "",
             selectedFile: null,
-            user: null
+            // user: null
         }
     },
     methods: {
@@ -111,20 +118,22 @@ export default {
         },
 
 
-        async loadProfil() {
-            let user = await this.$store.dispatch('loadUser', {
-                    id: this.$route.params.id
-                })
-                .then(function (response) {
-                    return response;
-                })
-            return this.user = user;
-        }
+        // async loadProfil() {
+        //     let user = await this.$store.dispatch('loadUser', {
+        //             id: this.$route.params.id
+        //         })
+        //         .then(function (response) {
+        //             return response;
+        //         })
+        //     return this.user = user;
+        // }
     },
 
     created() {
-        console.log('trop tot')
-        this.loadProfil()
+        Service.getUser(this.id)
+        .then (response => {
+          this.user = response.data
+        })
     },
 }
 

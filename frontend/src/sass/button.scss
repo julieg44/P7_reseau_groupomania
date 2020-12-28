@@ -21,5 +21,6 @@ button{
     margin: 0;
     @include tablette_ecran{
         background-color: $blanc;
+        width: 25%;
     }
   }

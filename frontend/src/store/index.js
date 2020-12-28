@@ -71,6 +71,7 @@ export default new Vuex.Store({
       let user = { email:payload.email, password:payload.password };
       axios.post(urlApi+'/api/user/login', user)
         .then(function (response) {
+          console.log(response.data)
           let userlogged = response.data
           localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
           localStorage.setItem('userId',JSON.stringify(userlogged.userId))
@@ -94,23 +95,22 @@ export default new Vuex.Store({
           // handle error
           console.log(error);
         })
-        console.log(user)
         return user;
     },
 
-    async loadMessages(){
-      let token = 'Bearer '+ this.state.token;
-      let message = await axios.get(urlApi + '/api/message',{
-        headers: { 'Authorization': token }}
-      )
-        .then(function(response){
-          return (response.data);
-        })
-        .catch(function (error){
-          console.log(error);
-        })
-        return message;
-    },
+    // async loadMessages(){
+    //   let token = 'Bearer '+ this.state.token;
+    //   let message = await axios.get(urlApi + '/api/message',{
+    //     headers: { 'Authorization': token }}
+    //   )
+    //     .then(function(response){
+    //       return (response.data);
+    //     })
+    //     .catch(function (error){
+    //       console.log(error);
+    //     })
+    //     return message;
+    // },
 
     // async loadComments(){
 
@@ -138,21 +138,21 @@ export default new Vuex.Store({
 
     
 
-    async loadComments(){
+    // async loadComments(){
 
-      let token = 'Bearer '+ this.state.token;
-      let comment = await axios.get(urlApi + '/api/comment/message/3',{
-        headers: { 'Authorization': token }}
-      )
-        .then(function(response){
-          return (response.data);
-        })
-        .catch(function (error){
-          console.log(error);
-        })
-        console.log(comment)
-        return comment;
-    },
+    //   let token = 'Bearer '+ this.state.token;
+    //   let comment = await axios.get(urlApi + '/api/comment/message/3',{
+    //     headers: { 'Authorization': token }}
+    //   )
+    //     .then(function(response){
+    //       return (response.data);
+    //     })
+    //     .catch(function (error){
+    //       console.log(error);
+    //     })
+    //     console.log(comment)
+    //     return comment;
+    // },
 
     // signup(context, payload){
     //   localStorage.clear()

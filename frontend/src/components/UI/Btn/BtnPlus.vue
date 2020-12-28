@@ -27,7 +27,7 @@ export default {
     -webkit-mask-size: 100%;
       @include tablette_ecran{
         width: 4%;
-        margin-top: 0;
+        margin-top: 1%;
         margin-bottom: 0;
         margin-left: 3%;
       }

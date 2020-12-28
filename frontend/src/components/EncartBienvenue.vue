@@ -26,11 +26,14 @@ export default {
   components: {
 
   },
-  data(){
-      return {
-          user : null
-      }
-  },
+  props: {
+        user:{ type:Object}
+    },
+//   data(){
+//       return {
+//           user : null
+//       }
+//   },
 
   computed: {
     ...mapState ({
@@ -44,17 +47,17 @@ export default {
    methods: {
    ...mapActions (['supUser', 'deconnect', 'modifyUser']),
 
-   async loadProfil() {
-    let user = await this.$store.dispatch('loadUser', { id:this.$route.params.id })
-        .then (function (response){
-            return response;
-        })
-    return this.user = user;    
-   }
+//    async loadProfil() {
+//     let user = await this.$store.dispatch('loadUser', { id:this.$route.params.id })
+//         .then (function (response){
+//             return response;
+//         })
+//     return this.user = user;    
+//    }
   },
 
     created(){
-        this.loadProfil() 
+        // this.loadProfil() 
   },
 
 
@@ -98,10 +101,10 @@ export default {
 
         display: flex;
         justify-content: flex-start;
-        margin-top: 5%;
+        margin-top: 3%;
         padding: 0;
         h1{
-        margin-bottom: 5%;
+        margin-bottom: 2%;
         }
 
         .iconPerso {

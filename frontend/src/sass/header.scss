@@ -1,10 +1,17 @@
 header{
-
+  // position: fixed;
+  // width: 100%;
     background-color: $groupomania_bleu;
     text-align: center;
     padding: 4% 2% 2% 2%;
+    // top: 0;
+      // z-index: 10;
     @include ecran{
       padding: 1% 1% 1% 1%;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 10;
     }
 }
 
@@ -21,7 +28,7 @@ header{
         width: 25%;
         }
         @include ecran{
-        width: 17%;
+        width: 12%;
         height: 50px;
         }
 }
