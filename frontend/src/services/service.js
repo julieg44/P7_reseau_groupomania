@@ -21,6 +21,9 @@ export default{
     },
     getUser(id){
         return appelsAPI.get(URL + '/api/user/' + id)
+    },
+    getComments(messageId){
+        return appelsAPI.get(URL + '/api/comment/message/' + messageId)
     }
 }
 

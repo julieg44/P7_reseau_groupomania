@@ -6,10 +6,10 @@
     </header>
     <section id="section-user">
       <div id='content-user'>
-        <EncartProfil :user="user" />
+        <EncartProfil :userConnected="userConnected" />
         <div id="content-post">
-          <EncartBienvenue :user="user" />
-          <EncartPost />
+          <EncartBienvenue :userConnected="userConnected" />
+          <EncartPost :userConnected="userConnected"/>
         </div>
       </div>
     </section>
@@ -23,11 +23,13 @@
       :createdAt="item.createdAt" 
       :content="item.content"
       :attachment="item.attachment"
-      :toto="item.Comments"
+      :user="item.User"
+      :UserId="item.UserId"
       :key="item.id" 
+      :userConnected="userConnected"
+
       />
     </section>
-
 
 
   </div>
@@ -44,28 +46,100 @@ import Post from '@/components/Post.vue'
 import Service from '@/services/service.js'
 
 
-import { mapActions } from 'vuex';
 
 
 export default {
   name: 'Main',
+
   components: {
     Header, EncartProfil, EncartPost , EncartBienvenue, Post
   },
+
   props:['id'],
         
 
   data() {
     return {
       messages: null,
-      commentaires:null,
-      user:null
+      // commentaires:null,
+      userConnected:null,
     }
   },
   
      methods: {
+      //     async getMessage() {
+      //     let test = await Service.getMessages()
+      //     .then(response => { 
+      //       for (let i = 0; i < response.data.length; i++) {
+      //         let id = response.data[i].UserId;
+      //         Service.getUser(id)
+      //           .then(response2 => {
+      //             let user = {
+      //               username: response2.data.username,
+      //               photo: response2.data.photo
+      //             }
+      //             response.data[i].user2 = user
+      //           })
+      //       }
+      //     })
+      //     this.messages = test;
+      //     console.log(this.messages)
+      // }
+     },
 
-       ...mapActions(['loadMessages']),
+     created(){
+        Service.getUser(this.id)
+        .then (response => {
+          this.userConnected = response.data
+        }),
+
+        Service.getMessages()
+        .then (response => {
+         this.messages = response.data
+          })
+
+        // Service.getComments(1)
+        // .then (response => {
+        //   this.commentaires = response.data
+        // })  
+     }
+
+    // created() {
+
+    //   Service.getUser(this.id)
+    //     .then (response => {
+    //       this.userConnected = response.data
+    //     })
+
+
+    //     Service.getMessages()
+    //       .then(response => { 
+    //       this.messages = response.data
+
+    //         for (let i = 0; i < response.data.length; i++) {
+    //           let id = response.data[i].UserId;
+    //           Service.getUser(id)
+    //             .then(response2 => {
+    //               let user = { 
+    //                 prenom: response2.data.username,
+    //                 avatar: response2.data.photo 
+    //                 };
+    //               // let user = []
+    //               // user.push({ 
+    //               //   prenom: response2.data.username,
+    //               //   avatar: response2.data.photo
+    //               //   })
+                  
+    //               response.data[i].userQuiAPost = user
+    //               this.userQuiAPost = user
+
+    //             })
+    //         }
+    //       })
+    // }
+}
+</script>
+
 
       //  async loadMessages() {
       //    let messages = await this.$store.dispatch('loadMessages')
@@ -95,20 +169,8 @@ export default {
             //     return this.user = user;
             // },
 
-     },
 
-    created() {
-        Service.getMessages()
-        .then (response => {
-          this.messages = response.data
-        })
-        Service.getUser(this.id)
-        .then (response => {
-          this.user = response.data
-        })
-    },  
-}
-</script>
+
 
 <style lang="scss">
 

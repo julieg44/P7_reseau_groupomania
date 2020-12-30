@@ -1,9 +1,13 @@
 const Models = require('../models');
+const sequelize = require('sequelize');
 
 
 exports.allMessage = (req, res, next) => {
     Models.Message.findAll({
-        include:[Models.Comment, Models.Like]
+        include:[Models.Comment, Models.Like, Models.User],
+        order:[
+            ['id', 'DESC']
+        ]
     })
       .then(results => {
       res.json(results);

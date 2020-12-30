@@ -1,6 +1,6 @@
 <template>
-    <div class="bienvenue" v-if="user">
-        <h1>Bonjour {{ user.username }} !</h1>
+    <div class="bienvenue" v-if="userConnected">
+        <h1>Bonjour {{ userConnected.username }} !</h1>
         <div class="iconPerso">
             <div class="notification"></div>
             <div class="search"></div>
@@ -27,7 +27,7 @@ export default {
 
   },
   props: {
-        user:{ type:Object}
+        userConnected:{ type:Object}
     },
 //   data(){
 //       return {

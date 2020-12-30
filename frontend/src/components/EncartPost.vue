@@ -33,9 +33,14 @@ export default {
     BtnRouge, 
     // BtnAddMedia,
   },
+
+  props: {
+        userConnected:{ type:Object}
+    },
+
   data(){
       return {
-          user : null, content:"", title:"", selectedFile:null
+          content:"", title:"", selectedFile:null
       }
   },
 
@@ -60,7 +65,10 @@ export default {
         if(this.selectedFile !== null){
             fd.append('image', this.selectedFile, this.selectedFile.name)
             }
-        fd.append('UserId', this.user.id)
+        // if(this.user.photo !== null){
+        //     fd.append('UserPhoto', this.user.photo)
+        // }    
+        fd.append('UserId', this.userConnected.id)
         fd.append('title', this.title)
         fd.append('content', this.content)
         fd.append('nbLikes', 0)

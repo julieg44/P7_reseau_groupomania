@@ -1,11 +1,11 @@
 <template>
     <div id="comments">
         <div class="positionPhoto">
-            <img src="../assets/test.jpg" />
+            <img :src="userCommentaire.photo" />
             <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" />
         </div>
-        <h1> Jean Michel</h1>
-        <p> {{ toto }}</p>
+        <h1> {{ userCommentaire.username }}</h1>
+        <p> {{ content }}</p>
     </div>
 </template>
 
@@ -24,12 +24,25 @@ export default {
 
     props: {
         
-    toto: {
+    content: {
         type: String,
         },
-    id: {
-        type: Number,
-        },
+    // UserPhoto:{
+    //     type: String
+    // },
+    // UserUsername:{
+    //     type: String
+    // },
+
+    // user:{
+    //     type:Object
+    // },
+
+    userCommentaire:{
+        type:Object
+    }
+
+      
     },
 
 
@@ -84,7 +97,7 @@ export default {
         position: absolute;
         @include tablette_ecran{
                 
-        width: 7%;
+        width: 29px;
         margin-right:1%;
         position: absolute;
         

@@ -1,16 +1,16 @@
 <template>
-    <div id="cartoucheProfil" v-if="user">
+    <div id="cartoucheProfil" v-if="userConnected">
         <div id="photo">
             <div id="taille-photo">
-                <img id="principale" :src="user.photo" alt="photo de profil" />
+                <img id="principale" :src="userConnected.photo" alt="photo de profil" />
                 <img id="cache"  src= "../assets/avatar-cache.png"  alt="cache-photo" />
             </div>
         </div>
         <div class="closeProfil"><a href="#" id="closeProfil">X</a></div>
-        <h2 class="profilName"> {{user.username}}</h2>
+        <h2 class="profilName"> {{userConnected.username}}</h2>
         <p id="contenuProfil">
             Email :
-            {{ user.email }}
+            {{ userConnected.email }}
             <!-- <br />
             Mot de passe :
             *********
@@ -21,7 +21,7 @@
             <router-link :to="_modify">
             <BtnModifyUser/>
             </router-link>
-            <BtnSupUser @click="supUser(user.id)" />
+            <BtnSupUser @click="supUser(userConnected.id)" />
         </div>
     </div>
     
@@ -50,7 +50,8 @@ export default {
     },
 
     props: {
-        user:{ type:Object}
+
+        userConnected:{ type:Object}
     },
 
     // data() {
@@ -66,7 +67,7 @@ export default {
             token: "token",
         }),
         _modify() {
-            return '/modifyUser/' + this.user.id;
+            return '/modifyUser/' + this.userConnected.id;
         }
     },
 

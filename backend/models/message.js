@@ -13,12 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Message.hasMany(models.Comment);
       models.Message.hasMany(models.Like);
-
-      models.Message.belongsTo(models.User, {
-        foreignKey:{
-          allowNull: false
-        }
-      });
+      models.Message.belongsTo(models.User);
     }
   };
   Message.init({

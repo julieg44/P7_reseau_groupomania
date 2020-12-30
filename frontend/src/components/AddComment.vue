@@ -2,13 +2,13 @@
     <form class="post-comment" enctype="multipart/form-data">
         <div id="AddComments">
             <div class="positionPhoto">
-                <img v-if="user" :src="user.photo" />
+                <img v-if="userConnected" :src="userConnected.photo" />
                 <img class="cacheBleu" src="../assets/avatar-cache-blanc.png" />
             </div>
             
             <input class="addcomment" type='text' placeholder="Vous souhaitez commenter ?" v-model="content"/>
-            <input v-if ="messages" type='hiden' /> 
-            <BtnPlus @click.prevent="PostComment()"/>
+            <!-- <input :value="MessageId" type='hiden' />  -->
+            <BtnPlus @click="PostComment()"/>
         </div>
     </form>
 </template>
@@ -21,8 +21,8 @@
 import BtnPlus from '@/components/UI/Btn/BtnPlus.vue'
 import { mapState } from 'vuex';
 
-// const axios = require('axios');
-// let urlApi = "http://localhost:3000"
+const axios = require('axios');
+let urlApi = "http://localhost:3000"
 
 
 export default {
@@ -30,14 +30,21 @@ export default {
   components: {
       BtnPlus
   },
-  props:{
-      idMessage:{
-        type: Number,
+  props: {
+      MessageId: {
+          type: Number,
       },
+
+    //   UserId: {
+    //       type: Number
+    //   },
+
+      userConnected: { type: Object }
+
   },
+
   data(){
       return {
-          user : null, 
           messages: null,
           content:"", 
 
@@ -55,29 +62,22 @@ export default {
 
    methods: {
        PostComment() {
-           // console.log(messages)
-           for (let i = 0; i<this.messages.length; i++){
-               console.log(i)
-               console.log(this.messages[i])
-               if (i === this.messages[i]){
-                   console.log("c'est la")
-               }
-            // console.log(this.messages[i].id)
             let Newcomment = {
-               UserId: this.user.id,
-               MessageId: this.messages[i].id,
-               content: this.content
+               UserId: this.userConnected.id,
+               UserUsername: this.userConnected.username,               
+               UserPhoto: this.userConnected.photo,               
+               MessageId: this.MessageId,
+               content: this.content,
             }
-                      console.log(Newcomment)
-
+            axios.post(urlApi + '/api/comment/message/' + this.MessageId, Newcomment)
+               .then(function (response) {
+                   console.log(response)
+               })
            }
            // console.log(this.user.id)
            
 
-           // axios.post(urlApi + '/api/comment/message/' + 15, Newcomment)
-           //     .then(function (response) {
-           //         console.log(response)
-           //     })
+         
        },
 
 
@@ -99,12 +99,7 @@ export default {
     //        return this.user = user;
     //    },
 
-   },
-
-    created() {
-        //  this.loadMessages()
-        //  this.loadProfil()
-    },
+   
 }
 
 
@@ -152,7 +147,7 @@ export default {
         height: 31px;
         position: absolute;
         @include tablette_ecran{
-            width: 4%;
+            width: 39px;
             height: 39px;
         };
     }

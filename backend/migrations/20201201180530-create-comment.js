@@ -16,6 +16,14 @@ module.exports = {
           key: 'id',
         }
       },
+      UserUsername: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      UserPhoto: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       MessageId: {
         allowNull: false,
         type: Sequelize.INTEGER,

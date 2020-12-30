@@ -2,11 +2,11 @@
         <div id="message">
             <div id="message-top">
                 <div class="positionPhoto">
-                    <img src="../assets/test.jpg" />
+                    <img :src="user.photo" />
                     <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" />
                 </div>
-                <h1> {{ title }}</h1>
-                <p> {{ createdAt }}</p>  
+                <h1>{{ user.username }}</h1>
+                <p> {{ createdAt }}</p>     
             </div> 
             <h2 id="title">{{ title }}</h2>
             <div class="attachment-post">
@@ -14,13 +14,14 @@
             </div>
             <p class="contenuComment">{{ content }}</p> 
             <Likes/>
-            <Comments v-for="item in toto" 
-            :toto="item.content" 
-            :Messageid="item.MessageId"
+            <Comments v-for="item in commentaires" 
+            :content="item.content" 
+            :UserId="item.UserId"
+            :MessageId="item.MessageId"
+            :userCommentaire="item.User"
             :key="item.id"
             />
-              <AddComment :idMessage="id"  />
-
+            <AddComment :MessageId="id" :UserId="UserId" :userConnected="userConnected" />
         </div>
 </template>
 
@@ -38,6 +39,9 @@ import AddComment from '@/components/AddComment.vue'
 
 import { mapState } from 'vuex';
 import { mapActions } from 'vuex';
+
+import Service from '@/services/service.js'
+
 
 export default {
   name: 'Post',
@@ -62,12 +66,25 @@ export default {
         attachment:{
             type: String,
         },
-        idMessage:{
+        // comments:{
+        //     type: Array,
+        // },
+        // commentaires:{
+        //     type:Array
+        // },
+
+        UserId: {
             type: Number,
         },
-        toto:{
-            type: Array,
-        }
+
+        user:{
+            type: Object
+        },
+        
+        userConnected:{ type: Object},
+
+
+        
     },
 
 //   data() {
@@ -78,7 +95,6 @@ export default {
   data() {
       
     return {
-      messages: null, 
       commentaires: null,
     }
   },
@@ -177,10 +193,12 @@ export default {
 
 
 
-    // created() {
-    //     this.loadMessages()
-    //     // this.loadComments()
-    // },
+    created() {
+           Service.getComments(this.id)
+        .then (response => {
+          this.commentaires = response.data
+        }) 
+    },
 
 }
 

@@ -4,6 +4,7 @@ const Models = require('../models');
 exports.allComment = (req, res, next) => {
     Models.Comment.findAll({
         where: { MessageId: req.params.id },
+        include: [Models.User]
     })
       .then(Comment => {
       res.json(Comment);
@@ -19,6 +20,8 @@ exports.supComment = (req, res, next) => {
 exports.postComment = (req, res, next) => {
     Models.Comment.create({
         UserId: req.body.UserId,
+        UserUsername: req.body.UserUsername,
+        UserPhoto: req.body.UserPhoto,
         MessageId:req.body.MessageId,
         content: req.body.content,
     })

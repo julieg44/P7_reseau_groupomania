@@ -9,16 +9,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
+        unique: true,
         allowNull: false,
         type: Sequelize.STRING
       },
       username: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       password: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       isAdmin: {
         allowNull: false,
@@ -26,7 +27,7 @@ module.exports = {
       },
       photo:{
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -37,6 +38,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+    await queryInterface.addIndex('Users', ['id', 'username', 'photo'])
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Users');
