@@ -1,5 +1,5 @@
 <template>
-    <button id="plus" v-on="$listeners">
+    <button class="plus" v-on="$listeners">
     </button>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 @import "../../../sass/button.scss";
 
 
-  #plus{
+  .plus{
       width: 10%;
       margin-top: 3%;
       margin-bottom: 3%;

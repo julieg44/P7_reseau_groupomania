@@ -77,7 +77,9 @@ export default new Vuex.Store({
           localStorage.setItem('userId',JSON.stringify(userlogged.userId))
           context.commit('LoggedUserId', userlogged.userId)
           context.commit('LoggedToken', userlogged.token)
-          window.location.href = '/main/'+ userlogged.userId;
+          // window.location.href = '/main/'+ userlogged.userId;
+          window.location.href = '/main';
+
         })
     },
 

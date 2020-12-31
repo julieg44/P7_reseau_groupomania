@@ -1,10 +1,16 @@
 <template>
     <div class="bienvenue" v-if="userConnected">
         <h1>Bonjour {{ userConnected.username }} !</h1>
-        <div class="iconPerso">
-            <div class="notification"></div>
-            <div class="search"></div>
-        </div>
+        <!-- <div class="iconPerso"> -->
+            <!-- <div class="notification"></div> -->
+            <!-- <Search @click="input()"/>
+            <div v-show="showInput">
+                <input  id="searchByname" type="text" placeholder="Rechercher un nom" v-model="searchName"/>
+                <BtnRouge @click.prevent="search()" label="Chercher"/>
+            </div> -->
+            
+            <!-- <div class="search"></div> -->
+        <!-- </div> -->
         <div class="post-icon">
             <a href="#cartouchePost" id="openPost">
                 <img src="../assets/comment.svg" />
@@ -16,16 +22,37 @@
 
 <script>
 // @ is an alias to /src
+// import Search from '@/components/UI/Search.vue'
+// import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
+
 import { mapState } from "vuex";
 import { mapActions } from 'vuex';
+// import Service from '@/services/service.js'
+
 
 
 
 export default {
   name: 'EncartBienvennue',
   components: {
-
   },
+
+//   data(){
+//       return { 
+//           showInput: false, 
+//           searchName:"",
+//           messagesUser:null
+//           }
+//   },
+
+//   data(){
+//       return { 
+//           showInput: false, 
+//           searchName:"",
+//           messagesUser:null
+//           }
+//   },
+
   props: {
         userConnected:{ type:Object}
     },
@@ -47,6 +74,35 @@ export default {
    methods: {
    ...mapActions (['supUser', 'deconnect', 'modifyUser']),
 
+//    input(){
+//         this.showInput = true
+//    },
+
+
+//    async search() {
+//        let nomrecherche = this.searchName
+//        await Service.getAllUsers()
+//            .then(response => {
+//                console.log(response)
+//                for (let i = 0; i < response.data.length; i++) {
+//                    //    console.log(response.data[i].username)
+//                    //    console.log(response.data[i].id)
+//                    console.log(nomrecherche)
+//                    if (response.data[i].username === nomrecherche) {
+//                        console.log('yeah baby')
+//                        let idRecherche = response.data[i].id
+//                        console.log(idRecherche)
+//                        Service.getMessagesOneUser(idRecherche)
+//                            .then(response2 => {
+//                                console.log(response2.data)
+//                                return this.messagesUser = response2.data
+//                            })
+//                    }
+//                }
+//            })
+//    }
+   },
+
 //    async loadProfil() {
 //     let user = await this.$store.dispatch('loadUser', { id:this.$route.params.id })
 //         .then (function (response){
@@ -54,11 +110,12 @@ export default {
 //         })
 //     return this.user = user;    
 //    }
-  },
+  
 
     created(){
-        // this.loadProfil() 
-  },
+    // this.search()
+    // console.log(this.messagesUser)
+    },
 
 
 
@@ -77,6 +134,7 @@ export default {
     justify-content: flex-start;
     margin-top: 5%;
     padding: 2%;
+
 
     h1 {
         color: $groupomania_rouge;
@@ -103,6 +161,7 @@ export default {
         justify-content: flex-start;
         margin-top: 3%;
         padding: 0;
+        width: 80%;
         h1{
         margin-bottom: 2%;
         }

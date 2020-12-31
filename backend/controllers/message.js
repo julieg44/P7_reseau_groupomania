@@ -15,7 +15,6 @@ exports.allMessage = (req, res, next) => {
 }
 
 exports.oneMessage = (req, res, next) => {
-    console.log(req.params)
     Models.Message.findOne({ 
         where: { id: req.params.id },
         include:[Models.Comment, Models.Like]
@@ -72,11 +71,18 @@ exports.createMessage = (req, res, next) => {
 }
 
 exports.getUserMessage = (req, res, next) => {
-    console.log(req.params.idUser)
-    Models.Message.findAll({ where: { UserId: req.params.idUser} })
+    console.log(req.params.id);
+    Models.Message.findAll({ 
+        where: { UserId: req.params.id} ,
+        include:[Models.Comment, Models.Like, Models.User],
+        order:[
+            ['id', 'DESC']
+        ]
+    })
     .then (message => res.status (200).json(message))
     .catch(error => res.status (404).json ({error}))
 }
+
 
 exports.getLike = (req, res, next) => {
     Models.Message.findOne ({where: { id: req.params.id}})

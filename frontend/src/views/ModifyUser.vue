@@ -62,7 +62,7 @@ export default {
             token: "token",
         }),
         _goBack() {
-            return '/main/' + this.$route.params.id;
+            return '/main';
         }
     },
 
@@ -112,8 +112,8 @@ export default {
                         'Authorization': token
                     }
                 })
-                .then(function (response) {
-                    window.location.href = '/main/' + response.data.data.id;
+                .then(function () {
+                    window.location.href = '/main';
                 })
         },
 
