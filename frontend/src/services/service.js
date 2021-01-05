@@ -19,6 +19,9 @@ export default{
     getMessages(){
         return appelsAPI.get(URL + '/api/message')
     },
+    postMessage(){
+        return appelsAPI.post(URL + '/api/message')
+    },
     getUser(id){
         return appelsAPI.get(URL + '/api/user/' + id)
     },
@@ -30,7 +33,10 @@ export default{
     },
     getMessagesOneUser(id){
         return appelsAPI.get(URL + '/api/message/user/' + id)
-    }
+    },
+    getLike(messageId){
+        return appelsAPI.get(URL + '/api/like/message/' + messageId)
+    },
 
 }
 

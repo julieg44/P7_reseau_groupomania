@@ -64,7 +64,7 @@ exports.createMessage = (req, res, next) => {
         })
         .then(Message => res.status(201).json({
             message:'Post créé',
-            data: Message,
+            data: Message
         }))
     }
 

@@ -8,8 +8,7 @@
                 <input id="contentpost" placeholder="écrivez-ici" type="text" v-model="content">
                 <div class="align-boutons">
                     <input id="fichier" type="file" @change="onFileSelected"/>
-                    <!-- <BtnAddMedia /> -->
-                    <BtnRouge @click="poster()" label="Envoyer"/>
+                    <BtnRouge @click.prevent="poster()" label="Envoyer"/>
                 </div>
             </form>
         </div>
@@ -22,6 +21,8 @@ import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 // import BtnAddMedia from '@/components/BtnAddMedia.vue'
 import { mapState } from "vuex";
 import { mapActions } from 'vuex';
+// import Service from '@/services/service.js'
+
 
 const axios = require('axios');
 let urlApi = "http://localhost:3000";
@@ -60,26 +61,138 @@ export default {
             this.selectedFile = event.target.files[0]
         },
 
-    poster() {
-        let fd = new FormData()
-        if(this.selectedFile !== null){
-            fd.append('image', this.selectedFile, this.selectedFile.name)
-            }
-        // if(this.user.photo !== null){
-        //     fd.append('UserPhoto', this.user.photo)
-        // }    
-        fd.append('UserId', this.userConnected.id)
-        fd.append('title', this.title)
-        fd.append('content', this.content)
-        fd.append('nbLikes', 0)
-        fd.append('nbDislikes', 0)
+    // poster() {
+    //     let fd = new FormData()
+    //     if(this.selectedFile !== null){
+    //         fd.append('image', this.selectedFile, this.selectedFile.name)
+    //         }
+    //     // if(this.user.photo !== null){
+    //     //     fd.append('UserPhoto', this.user.photo)
+    //     // }    
+    //     fd.append('UserId', this.userConnected.id)
+    //     fd.append('title', this.title)
+    //     fd.append('content', this.content)
+    //     fd.append('nbLikes', 0)
+    //     fd.append('nbDislikes', 0)
+    //     axios.post(urlApi + '/api/message', fd)
+    //         .then(function (response) {
+    //         console.log(response.data)
+    //         debugger;
+    //         let LikeDefault = {
+    //            UserId: this.userConnected.id,
+    //            MessageId: response.data.id,               
+    //            like: 0,               
+    //            dislike: 0
+    //         }
+    //         debugger;
+    //         console.log(LikeDefault)
+    //         axios.post(urlApi + '/api/like/message/' + response.data.id, LikeDefault)
+    //            .then(function (response) {
+    //                debugger;
+    //                console.log(response)
+    //            })
+    //        })     
+    // },
 
-        console.log(this.selectedFile)
-        axios.post(urlApi + '/api/message', fd)
-            .then(function (response) {
-                console.log(response)
-            })
-    },
+        async poster() {
+            if (this.selectedFile !== null) {
+                let fd = new FormData()
+                fd.append('image', this.selectedFile, this.selectedFile.name)
+                fd.append('UserId', this.userConnected.id)
+                fd.append('title', this.title)
+                fd.append('content', this.content)
+                fd.append('nbLikes', 0)
+                fd.append('nbDislikes', 0)
+                await axios.post(urlApi + '/api/message', fd)
+                    .then(function (response) {
+                        console.log(response.data.data)
+                        let LikeDefault = {
+                            UserId: response.data.data.UserId,
+                            MessageId: response.data.data.id,
+                            like: 0,
+                            dislike: 0,
+                            userLikes:{"id":[]},
+                            userDislikes:{"id":[]}
+                        }
+                        console.log(LikeDefault)
+                        axios.post(urlApi + '/api/like/message/' + response.data.data.id, LikeDefault)
+                            .then(function (response) {
+                                console.log(response)
+                            })
+
+                        window.location.href = '/main'
+                    })
+            } else {
+                let Newmess = {
+                    UserId: this.userConnected.id,
+                    title: this.title,
+                    content: this.content,
+                    nbLikes: 0,
+                    nbDislikes: 0
+                }
+                console.log(Newmess)
+                await axios.post(urlApi + '/api/message', Newmess)
+                    .then(function (response) {
+                        console.log(response.data.data.id)
+                        let LikeDefault = {
+                            UserId: response.data.data.UserId,
+                            MessageId: response.data.data.id,
+                            like: 0,
+                            dislike: 0,
+                            userLikes:{"id":[]},
+                            userDislikes:{"id":[]}
+                        }
+                        console.log(LikeDefault)
+                        axios.post(urlApi + '/api/like/message/' + response.data.data.id, LikeDefault)
+                            .then(function (response) {
+                                console.log(response)
+                            })
+                        window.location.href = '/main'
+                    })
+            }
+
+        },
+
+
+
+// poster(){
+//     let LikeDefault = {
+//         UserId: this.userConnected.id,
+//         MessageId: 11,
+//         like: 30,
+//         dislike: 0
+//         }
+//         console.log(LikeDefault)
+//         axios.post(urlApi + '/api/like/user/message/' + 11, LikeDefault)
+//             .then(function (response) {
+//                 console.log(response)
+//             })
+// }
+
+
+
+
+
+
+        },
+
+
+    //         poster() {
+    //     let fd = new FormData()
+    //     if(this.selectedFile !== null){
+    //         fd.append('image', this.selectedFile, this.selectedFile.name)
+    //         }   
+    //     fd.append('UserId', this.userConnected.id)
+    //     fd.append('title', this.title)
+    //     fd.append('content', this.content)
+    //     fd.append('nbLikes', 0)
+    //     fd.append('nbDislikes', 0)
+    //     axios.post(urlApi + '/api/message', fd)
+    //         .then(function (response) {
+    //         console.log(response.data.data)
+    //         window.location.href = '/main'
+    //        })     
+    // },
 
         //     async loadProfil() {
         //     let user = await this.$store.dispatch('loadUser', {
@@ -90,7 +203,7 @@ export default {
         //         })
         //     return this.user = user;
         // }
-    },
+    
 
     created() {
         // this.loadProfil()

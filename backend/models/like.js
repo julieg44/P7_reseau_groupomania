@@ -26,7 +26,11 @@ module.exports = (sequelize, DataTypes) => {
   Like.init({
     UserId: DataTypes.INTEGER,
     MessageId: DataTypes.INTEGER,
-    likeValue: DataTypes.INTEGER
+    like: DataTypes.INTEGER,
+    dislike: DataTypes.INTEGER,
+    userLikes: DataTypes.JSON,
+    userDislikes: DataTypes.JSON,
+
   }, {
     sequelize,
     modelName: 'Like',

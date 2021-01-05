@@ -3,7 +3,7 @@
             <div id="message-top">
                 <div class="positionPhoto">
                     <img :src="user.photo" />
-                    <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" />
+                    <!-- <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" /> -->
                 </div>
                 <h1>{{ user.username }}</h1>
                 <p> {{ createdAt }}</p>     
@@ -13,13 +13,23 @@
                 <img class="image-post" v-if="attachment" :src="attachment"/>
             </div>
             <p class="contenuComment">{{ content }}</p> 
-            <Likes/>
+            
+            <Likes v-for="item in decompteLikes"
+            :toto="item.like"
+            :tata="item.dislike"
+            :MessageId="item.MessageId"
+            :userDislikes="item.userDislikes"
+            :userLikes="item.userLikes"
+            :userConnected="userConnected"
+            :key="item.id"
+            />
+            
             <Comments v-for="item in commentaires" 
             :content="item.content" 
             :UserId="item.UserId"
             :MessageId="item.MessageId"
-            :userCommentaire="item.User"
             :key="item.id"
+            :userCommentaire="item.User"
             />
             <AddComment :MessageId="id" :UserId="UserId" :userConnected="userConnected" />
         </div>
@@ -80,22 +90,22 @@ export default {
         user:{
             type: Object
         },
+
+        // Decomptelikes:{
+        //     type:Array
+        // },
+
         
         userConnected:{ type: Object},
-
-
         
     },
 
-//   data() {
-//     return {
-//       comments: null
-//     }
-//   },
+
   data() {
       
     return {
       commentaires: null,
+      decompteLikes: null
     }
   },
 
@@ -197,7 +207,11 @@ export default {
            Service.getComments(this.id)
         .then (response => {
           this.commentaires = response.data
-        }) 
+        })
+        Service.getLike(this.id)
+        .then (response => {
+            this.decompteLikes = response.data
+        })
     },
 
 }
@@ -239,9 +253,11 @@ export default {
 
 
                 img {
-                    width: 7%;
+                    width: 8%;
+                    height: 46px;
                     margin-right: 1%;
                     position: absolute;
+                    clip-path:ellipse(50% 50%);
 
                     
                 }

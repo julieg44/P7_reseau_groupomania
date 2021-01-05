@@ -1,10 +1,10 @@
 <template>
     <div id='align'>
-        <p class="nbr">2</p>
-        <div id="like"></div>
-        <p class="nbr">3</p>
-        <div id="dislike"></div>
-        <p class="nbr">2</p>
+        <p class="nbr">{{ toto }}</p>
+        <div id="like" v-show="notVote" @click="addLike()"></div>
+        <p class="nbr">{{ tata }}</p>
+        <div id="dislike" @click="addDislike()"></div>
+        <p class="nbr">{{ tata }}</p>
         <div id="bulle"></div>
     </div>
 </template>
@@ -13,18 +13,141 @@
 <script>
 // @ is an alias to /src
 
+const axios = require('axios');
+let urlApi = "http://localhost:3000";
+
 export default {
   name: 'Likes',
-  components: {
+
+  props:{
+      tata:{
+        type:Number
+    },
+    toto:{
+        type:Number,
+    },
+    MessageId:{
+        type:Number
+    },
+    userConnected: { 
+        type: Object 
+        },
+
+    userDislikes:{
+        type: Object
+    },
+    userLikes:{
+        type: Object
+    },
+    // DecompteLike:{
+    //     type:Array
+    // },
   },
 
-  computed: {
- 
+  data(){
+      return {
+          notVote:true
+      }
+  },
+  components: {
+
+  },
+
+  watch: {
+//  decrementeLike(){
+//       return this.toto -- 
+//       },
+//       implementeLike(){
+//           return this.toto ++
+//       },
+//       decrementeDislike(){
+//       return this.tata -- 
+//       },
+//       implementeDislike(){
+//           return this.tata ++
+//       },
+    
   },
 
    methods: {
 
-  },
+      decrementeLike(){
+      return this.toto -- 
+      },
+      implementeLike(){
+          return this.toto ++
+      },
+      decrementeDislike(){
+      return this.tata -- 
+      },
+      implementeDislike(){
+          return this.tata ++
+      },
+
+
+
+
+
+       addLike() {
+           if (this.userLikes.id.includes(this.userConnected.id)){
+               this.decrementeLike ()
+            //    this.toto = this.toto --
+            //    this.decrementeLike()
+               let id = this.userConnected.id
+               console.log(id)
+            //    this.decrementeLike()
+            //    this.supTableauAdd() 
+            this.userLikes.id = this.userLikes.id.filter(function(Id){
+                return Id !== id
+                });      
+               axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+                   UserId: this.userConnected.id,
+                   MessageId: this.MessageId,
+                   like: 0
+               })
+    
+           } else {
+            //    this.toto = this.toto ++
+               this.implementeLike()
+               this.userLikes.id.push(this.userConnected.id)
+               axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+                   UserId: this.userConnected.id,
+                   MessageId: this.MessageId,
+                   like: 1
+               })
+           }
+        
+                        // window.location.href = '/main'
+
+       },
+       addDislike() {
+           if (this.userDislikes.id.includes(this.userConnected.id)) {
+               this.decrementeDislike()
+               let id = this.userConnected.id
+               this.userDislikes.id = this.userLikes.id.filter(function(Id){
+                return Id !== id
+                });
+               axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+                   UserId: this.userConnected.id,
+                   MessageId: this.MessageId,
+                   like: 0
+               }) 
+               
+               
+           } else {
+               this.implementeDislike()
+               this.userDislikes.id.push(this.userConnected.id)
+               axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+                   UserId: this.userConnected.id,
+                   MessageId: this.MessageId,
+                   like: -1
+               })
+           }
+                                //    window.location.href = '/main'
+
+       }
+
+   },
 
     created(){
 

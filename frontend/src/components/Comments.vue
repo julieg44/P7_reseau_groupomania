@@ -2,7 +2,7 @@
     <div id="comments">
         <div class="positionPhoto">
             <img :src="userCommentaire.photo" />
-            <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" />
+            <!-- <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" /> -->
         </div>
         <h1> {{ userCommentaire.username }}</h1>
         <p> {{ content }}</p>
@@ -41,6 +41,8 @@ export default {
     userCommentaire:{
         type:Object
     }
+
+
 
       
     },
@@ -98,8 +100,10 @@ export default {
         @include tablette_ecran{
                 
         width: 29px;
+        height: 29px;
         margin-right:1%;
         position: absolute;
+                    clip-path:ellipse(50% 50%);
         
         }
     }

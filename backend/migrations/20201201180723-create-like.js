@@ -24,9 +24,26 @@ module.exports = {
           key: 'id',
         }
       },
-      likeValue: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+      like: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        defaultValue: '0',
+
+      },
+      dislike: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        defaultValue: '0',
+      },
+      userLikes: {
+        allowNull: true,
+        type: Sequelize.JSON,
+        defaultValue: null,
+      },
+      userDislikes: {
+        allowNull: true,
+        type: Sequelize.JSON,
+        defaultValue: null,
       },
       createdAt: {
         allowNull: false,

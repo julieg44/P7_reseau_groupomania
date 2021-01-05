@@ -3,7 +3,7 @@
         <div id="photo">
             <div id="taille-photo">
                 <img id="principale" :src="userConnected.photo" alt="photo de profil" />
-                <img id="cache"  src= "../assets/avatar-cache.png"  alt="cache-photo" />
+                <!-- <img id="cache"  src= "../assets/avatar-cache.png"  alt="cache-photo" /> -->
             </div>
         </div>
         <div class="closeProfil"><a href="#" id="closeProfil">X</a></div>
@@ -167,6 +167,8 @@ export default {
             height: 120px;
             margin: 5%;
             position: absolute;
+                                clip-path:ellipse(50% 50%);
+
         }
     }
 

@@ -35,6 +35,8 @@
       :attachment="item.attachment"
       :user="item.User"
       :UserId="item.UserId"
+      :DecompteLike="item.Likes"
+      :Commentaires="item.Comments"
       :key="item.id" 
       :userConnected="userConnected"
 
@@ -49,6 +51,8 @@
       :content="item.content"
       :attachment="item.attachment"
       :user="item.User"
+      :DecompteLike="item.Likes"
+      :Commentaires="item.Comments"
       :UserId="item.UserId"
       :key="item.id" 
       :userConnected="userConnected"
