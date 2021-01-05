@@ -4,8 +4,8 @@
         <div id="like" v-show="notVote" @click="addLike()"></div>
         <p class="nbr">{{ tata }}</p>
         <div id="dislike" @click="addDislike()"></div>
-        <p class="nbr">{{ tata }}</p>
-        <div id="bulle"></div>
+        <!-- <p class="nbr">{{ tata }}</p>
+        <div id="bulle"></div> -->
     </div>
 </template>
 
@@ -165,6 +165,9 @@ export default {
     margin-top: 8%;
     margin-bottom: 8%;
     height: 17px;
+    @include tablette_ecran{
+        width: 20%;
+    }
     .nbr    {
         font-weight: 700;
         margin-right: 0.5%;
@@ -172,7 +175,7 @@ export default {
     }
     #like{
         margin-right: 5%;
-        width: 4%;
+        width: 10%;
         background-color: $groupomania_bleu;
         -webkit-mask: url(../assets/thumbs_up.svg);
         mask: url(../assets/thumbs_up.svg);
@@ -181,7 +184,7 @@ export default {
     }
     #dislike{
         margin-right: 5%;
-        width: 4%;
+        width: 10%;
         background-color: $groupomania_bleu;
         -webkit-mask: url(../assets/thumbs_down.svg);
         mask: url(../assets/thumbs_down.svg);
@@ -201,8 +204,8 @@ export default {
         margin-bottom: 2%;
         height: 17px;
         #like, #dislike, #bulle{
-            width: 2%;
-            margin-right: 3%;
+            width: 10%;
+            margin-right: 15%;
         }
         #nbr{
             font-size: 0.6rem;

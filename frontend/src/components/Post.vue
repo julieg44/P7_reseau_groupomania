@@ -1,6 +1,6 @@
 <template>
         <div id="message">
-            <div id="message-top">
+            <div class="message-top">
                 <div class="positionPhoto">
                     <img :src="user.photo" />
                     <!-- <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" /> -->
@@ -13,17 +13,18 @@
                 <img class="image-post" v-if="attachment" :src="attachment"/>
             </div>
             <p class="contenuComment">{{ content }}</p> 
-            
-            <Likes v-for="item in decompteLikes"
-            :toto="item.like"
-            :tata="item.dislike"
-            :MessageId="item.MessageId"
-            :userDislikes="item.userDislikes"
-            :userLikes="item.userLikes"
-            :userConnected="userConnected"
-            :key="item.id"
-            />
-            
+            <div class="message-bottom">
+                <Likes v-for="item in decompteLikes"
+                :toto="item.like"
+                :tata="item.dislike"
+                :MessageId="item.MessageId"
+                :userDislikes="item.userDislikes"
+                :userLikes="item.userLikes"
+                :userConnected="userConnected"
+                :key="item.id"
+                />
+                <BtnSup v-if= proprietaireMessage @click="supMessage()"/>
+            </div>
             <Comments v-for="item in commentaires" 
             :content="item.content" 
             :UserId="item.UserId"
@@ -46,6 +47,8 @@
 import Comments from '@/components/Comments.vue'
 import Likes from '@/components/Likes.vue'
 import AddComment from '@/components/AddComment.vue'
+import BtnSup from '@/components/UI/Btn/BtnSup.vue'
+
 
 import { mapState } from 'vuex';
 import { mapActions } from 'vuex';
@@ -56,7 +59,7 @@ import Service from '@/services/service.js'
 export default {
   name: 'Post',
   components: {
-      Comments, Likes, AddComment
+      Comments, Likes, AddComment, BtnSup
   },
 
       props: {
@@ -105,7 +108,8 @@ export default {
       
     return {
       commentaires: null,
-      decompteLikes: null
+      decompteLikes: null,
+      proprietaireMessage:false
     }
   },
 
@@ -116,12 +120,51 @@ export default {
             selectedUser: "selectedUser",
             token: "token",
         }),
+        
+        //     Trash(){
+        //     if (this.userConnected.id === this.UserId){
+        //         return this.proprietaireMessage = true
+        //     } else {
+        //         return this.proprietaireMessage
+        //     }
+            
+        // },
+
+
+        
+    },
+
+    watch:{
+        // Trash(){
+        //     if (this.userConnected.id === this.UserId){
+        //         return this.proprietaireMessage = false
+        //     } else {
+        //         return this.proprietaireMessage = true
+        //     }
+        // },
+
+        // proprietaireMessageTrue: function(){
+        //     if (this.userConnected.id === this.UserId){
+        //         return this.proprietaireMessage = false
+        //     } else {
+        //         return this.proprietaireMessage = true
+        //     }
+        // }
     },
 
 
    methods: {
 
        ...mapActions(['loadMessages']),
+
+
+       supMessage() {
+           console.log(this.id)
+        Service.supMessage(this.id)
+        .then (response => {
+          console.log(response)
+        })
+       }
 
     //    async loadComments() {
     //        let comments = await this.$store.dispatch('loadComments')
@@ -212,7 +255,21 @@ export default {
         .then (response => {
             this.decompteLikes = response.data
         })
+        
+        // if (this.userConnected.id === this.UserId){
+        //         return this.proprietaireMessage = true
+        //     } else {
+        //         return this.proprietaireMessage
+        //     }
     },
+
+    beforeMount() {
+		if (this.userConnected.id === this.UserId){
+                return this.proprietaireMessage = true
+            } else {
+                return this.proprietaireMessage
+            }
+	},
 
 }
 
@@ -230,7 +287,7 @@ export default {
         margin-top: 5%;
         z-index: 0;
 
-        #message-top {
+        .message-top {
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
@@ -304,6 +361,11 @@ export default {
             margin-bottom: 0;
             color: $groupomania_bleu;
         }
+        .message-bottom{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
     }
 
     @include tablette_ecran {
@@ -314,7 +376,7 @@ export default {
             margin: auto;
             margin-top: 5%;
             padding: 4%;
-            #message-top{ 
+            .message-top{ 
                 img {
                 width: 7%;
                 }
@@ -327,6 +389,22 @@ export default {
                 }
             }
             
+        }
+      
+        .button-user {
+            background-color: $groupomania_bleu_clair;
+            width: 5%;
+            margin: 0;
+
+            @include tablette_ecran {
+                background-color: none;
+            }
+
+            #destroy-icon {
+                background-color: $groupomania_bleu;
+                width: 85%;
+
+            }
         }
     }
 

@@ -20,9 +20,11 @@
 
 import BtnPlus from '@/components/UI/Btn/BtnPlus.vue'
 import { mapState } from 'vuex';
+import Service from '@/services/service.js'
 
-const axios = require('axios');
-let urlApi = "http://localhost:3000"
+
+// const axios = require('axios');
+// let urlApi = "http://localhost:3000"
 
 
 export default {
@@ -69,10 +71,15 @@ export default {
                MessageId: this.MessageId,
                content: this.content,
             }
-            axios.post(urlApi + '/api/comment/message/' + this.MessageId, Newcomment)
-               .then(function (response) {
+            // axios.post(urlApi + '/api/comment/message/' + this.MessageId, Newcomment)
+            //    .then(function (response) {
+            //        console.log(response)
+            //    })
+            Service.postComment(this.MessageId, Newcomment)
+            .then(function (response) {
                    console.log(response)
                })
+               window.location.href="/main"
            }
            // console.log(this.user.id)
            

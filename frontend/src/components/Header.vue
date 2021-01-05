@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <header>
         <div id="logoGroupomania"></div>
         <section id="bandeauMobile">
             <div id="photoProfilMobile">
@@ -10,7 +10,7 @@
                 <div class="search"></div>
             </div>
         </section>
-    </div>
+    </header>
 </template>
 
 <script>

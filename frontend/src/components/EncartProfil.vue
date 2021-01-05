@@ -21,7 +21,7 @@
             <router-link :to="_modify">
             <BtnModifyUser/>
             </router-link>
-            <BtnSupUser @click="supUser(userConnected.id)" />
+            <BtnSup @click="supUser(userConnected.id)" />
         </div>
     </div>
     
@@ -32,7 +32,7 @@ const axios = require('axios');
 let urlApi = "http://localhost:3000"
 
 // @ is an alias to /src
-import BtnSupUser from '@/components/UI/Btn/BtnSupUser.vue'
+import BtnSup from '@/components/UI/Btn/BtnSup.vue'
 import BtnDeconnect from '@/components/UI/Btn/BtnDeconnect.vue'
 import BtnModifyUser from '@/components/UI/Btn/BtnModifyUser.vue'
 import { mapState } from "vuex";
@@ -44,7 +44,7 @@ import { mapActions } from 'vuex';
 export default {
     name: 'EncartProfil',
     components: {
-        BtnSupUser,
+        BtnSup,
         BtnDeconnect,
         BtnModifyUser
     },
@@ -220,6 +220,19 @@ export default {
             
         }
     }
+    .button-user{
+    background-color: $groupomania_rouge_clair;
+    width: 20%;
+    margin: 0;
+    @include tablette_ecran{
+        background-color: $blanc;
+        width: 25%;
+    }
+    #destroy-icon{
+        background-color: $groupomania_rouge;
+        width: 45%;
+    }
+  }
 }
 
 </style>

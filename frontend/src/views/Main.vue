@@ -1,10 +1,11 @@
 <template>
   <div>
     <!-- <PopAlert /> -->
-    <header>
+    <!-- <header> -->
       <Header />
-    </header>
-    <section id="section-user">
+    <!-- </header> -->
+    <Nav :userConnected="userConnected" @affichageUser="showUserOpen()"/>
+    <section id="section-user" v-show="showUser">
       <div id='content-user'>
         <EncartProfil :userConnected="userConnected" />
         <div id="content-post">
@@ -16,7 +17,7 @@
                 <input id="searchByname" type="text" placeholder="Rechercher un nom" v-model="searchName" />
                 <BtnRouge @click="search()" label="Chercher" />
               </div>
-              <Notif />
+              <div id="closeUser" @click="showUserClose()"></div>
             </div>
           </div>
           <EncartPost :userConnected="userConnected" />
@@ -68,10 +69,11 @@
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
 // import PopAlert from '@/components/PopAlert.vue'
+import Nav from '@/components/Nav.vue'
+
 import EncartProfil from '@/components/EncartProfil.vue'
 import EncartBienvenue from '@/components/EncartBienvenue.vue'
 import Search from '@/components/UI/Search.vue'
-import Notif from '@/components/UI/Notif.vue'
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 
 import EncartPost from '@/components/EncartPost.vue'
@@ -85,7 +87,7 @@ export default {
   name: 'Main',
 
   components: {
-    Header, EncartProfil, EncartPost , EncartBienvenue, Search, Notif, BtnRouge, Post
+    Header, Nav, EncartProfil, EncartPost , EncartBienvenue, Search, BtnRouge, Post
   },
 
   props:['id'],
@@ -99,6 +101,7 @@ export default {
       messagesUser:null,
       showInput: false, 
           searchName:"",
+      showUser:false,    
     }
   },
 
@@ -128,6 +131,14 @@ export default {
 
   input(){
         this.showInput = true
+   },
+
+   showUserOpen(){
+     this.showUser = true
+   },
+
+   showUserClose(){
+     this.showUser = false
    },
 
 
@@ -243,6 +254,7 @@ export default {
 #section-user{
   // position: fixed;
   // width: 100%;
+  // display: none;
   z-index: 10;
   background-color: $blanc;
   padding-top: 1%;
@@ -268,6 +280,17 @@ export default {
     margin: auto;
     align-items: initial;
   }
+}
+
+#closeUser{
+  width: 18%;
+                height: 25px;
+
+        background-color: $groupomania-rouge;
+        -webkit-mask: url(../assets/close.svg);
+        mask: url(../assets/close.svg);
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: 100%;
 }
 #content-post {
   position: absolute;
@@ -310,7 +333,7 @@ export default {
   @include ecran{
     max-width: 980px;
     margin: auto;
-    margin-top: 25%;
+    margin-top: 10%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;

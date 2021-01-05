@@ -16,24 +16,39 @@ const appelsAPI = axios.create({
 
 
 export default{
+
+    /// messages /////
     getMessages(){
         return appelsAPI.get(URL + '/api/message')
     },
     postMessage(){
         return appelsAPI.post(URL + '/api/message')
     },
+    supMessage(id){
+        return appelsAPI.delete(URL + '/api/message/' + id)
+    },
+    getMessagesOneUser(id){
+        return appelsAPI.get(URL + '/api/message/user/' + id)
+    },
+
+    ///// users /////
     getUser(id){
         return appelsAPI.get(URL + '/api/user/' + id)
     },
     getAllUsers(){
         return appelsAPI.get(URL + '/api/user')
     },
+
+    //// comments //// 
     getComments(messageId){
         return appelsAPI.get(URL + '/api/comment/message/' + messageId)
     },
-    getMessagesOneUser(id){
-        return appelsAPI.get(URL + '/api/message/user/' + id)
+    postComment(messageId, comment){
+        return appelsAPI.post(URL + '/api/comment/message/' + messageId, comment)
     },
+
+
+    //// likes /////
     getLike(messageId){
         return appelsAPI.get(URL + '/api/like/message/' + messageId)
     },
