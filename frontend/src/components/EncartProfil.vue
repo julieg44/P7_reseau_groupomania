@@ -186,7 +186,11 @@ export default {
         }
 
         .taille-photo {
-            @include tablette_ecran {
+            @include tablette{
+                width: 55%;
+                margin: auto;
+            }
+            @include ecran {
                 width: 60%;
                 margin: auto;
             }
@@ -198,8 +202,13 @@ export default {
             margin: 5%;
             position: absolute;
             clip-path: ellipse(50% 50%);
-
-            @include tablette_ecran {
+            @include tablette{
+                width: 56%;
+                margin: 0;
+                margin-top: 10%;
+                height: 100px;
+            }
+            @include ecran{
                 width: 60%;
                 margin: 0;
                 margin-top: 10%;

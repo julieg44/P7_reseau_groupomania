@@ -7,7 +7,7 @@
                 <input class="titrepost" placeholder="Titre" type="text" v-model="title">
                 <input class="contentpost" placeholder="écrivez-ici" type="text" v-model="content">
                 <div class="align-boutons">
-                    <input class="fichier" type="file" @change="onFileSelected"/>
+                    <input class="inputPost" type="file" @change="onFileSelected"/>
                     <BtnRouge @click.prevent="poster()" label="Envoyer"/>
                 </div>
             </form>
@@ -250,12 +250,13 @@ export default {
         background-color: $gris1;
         margin-top: 2%;
         padding: 4% 4% 4% 4%;
-        text-align: right;
+        text-align: center;
 
         @include tablette_ecran {
             background-color: $blanc;
             height: 180px;
             padding: 2% 2% 2% 2%;
+            text-align: right;
         }
     }
 
@@ -271,44 +272,62 @@ export default {
                     margin-left: 95%;
 
         }
-        @include tablette_ecran{
-            display: none;
+        // @include tablette_ecran{
+        //     display: none;
+        // }
+
+        // input {
+        //     border: none;
+        //     color: $gris3;
+        //     width: 100%;
+        //     margin-top: 3%;
+
+        //     @include tablette_ecran {
+        //         background-color: $blanc;
+        //         text-align: left;
+        //         margin-top: 0;
+        //     }
+        // }
+
+        .contentpost {
+            height: 95px;
+            border: none;
+            color: $gris3;
+            width: 100%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+
+            @include tablette_ecran {
+                height: 80px;
+                background-color: $blanc;
+                text-align: left;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
         }
 
-        input {
+        .titrepost {
+            height: 30px;
             border: none;
             color: $gris3;
             width: 100%;
             margin-top: 3%;
 
             @include tablette_ecran {
+                height: 40px;
                 background-color: $blanc;
                 text-align: left;
                 margin-top: 0;
             }
         }
-
-        .contentpost {
-            height: 95px;
-
-            @include tablette_ecran {
-                height: 80px;
-            }
-        }
-
-        .titrepost {
-            height: 30px;
-
-            @include tablette_ecran {
-                height: 40px;
-            }
-        }
     }
 
     .align-boutons {
-        .fichier {
-            width: 40%;
-        }
+        @include tablette_ecran{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        }  
     }
 }
 
