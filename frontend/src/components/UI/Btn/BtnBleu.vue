@@ -1,5 +1,5 @@
 <template>
-  <button id="btnBleu" v-on="$listeners">
+  <button class="btnBleu" v-on="$listeners">
     <slot>{{label}}</slot>
   </button>
 </template>
@@ -20,7 +20,7 @@ export default {
 @import "../../../sass/button.scss";
 
 
-  #btnBleu{
+  .btnBleu{
       background-color: $groupomania_bleu;
   }
 

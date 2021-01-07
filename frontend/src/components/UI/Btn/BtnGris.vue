@@ -1,5 +1,5 @@
 <template>
-    <button id="btnGris" v-on="$listeners">
+    <button class="btnGris" v-on="$listeners">
       <slot>{{label}}</slot>
     </button>
 </template>
@@ -19,7 +19,7 @@ export default {
 @import "../../../sass/variables.scss";
 @import "../../../sass/button.scss";
 
-  #btnGris{
+  .btnGris{
       background-color: $gris2;
   }
 </style>

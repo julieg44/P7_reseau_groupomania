@@ -1,65 +1,70 @@
 <template>
-  <div>
+  <div id="global">
     <!-- <PopAlert /> -->
-    <!-- <header> -->
-      <Header />
-    <!-- </header> -->
+    <Entete />
     <Nav :userConnected="userConnected" @affichageUser="showUserOpen()"/>
-    <section id="section-user" v-show="showUser">
+    <div id="section-user" v-show="showUser">
       <div id='content-user'>
         <EncartProfil :userConnected="userConnected" />
         <div id="content-post">
           <div id="content-bienvenue">
-            <EncartBienvenue :userConnected="userConnected" />
-            <div class="iconPerso">
+            <div class="message-accueil" v-if="userConnected">
+              <h1>Bonjour {{ userConnected.username }} !</h1>
+            </div>
+            <div class="iconPerso" v-show="showIcon">
               <Search @click="input()" />
-              <div v-show="showInput">
-                <input id="searchByname" type="text" placeholder="Rechercher un nom" v-model="searchName" />
-                <BtnRouge @click="search()" label="Chercher" />
-              </div>
-              <div id="closeUser" @click="showUserClose()"></div>
+              <div class="closeUser" @click="showUserClose()"></div> 
+            </div>
+            <div class="search-input" v-show="showInput">
+              <!-- <div><img src="../assets/close.svg"/></div> -->
+                <input class="input-search" type="text" placeholder="Rechercher un nom" v-model="searchName" />
+                <BtnRouge class="search-btn" @click="search()" label="Chercher" />
+                <!-- <div class="close">XXX</div> -->
+                <div class="closeSearch" @click="closeInput()"><img src="../assets/close.svg"/></div>
             </div>
           </div>
           <EncartPost :userConnected="userConnected" />
         </div>
       </div>
-    </section>
+    </div>
 
 
     <!--messages -->
-    <section id="filPost" v-if="messagesUser">
-      <Post v-for="item in messagesUser"
-      :id="item.id" 
-      :title="item.title" 
-      :createdAt="item.createdAt" 
-      :content="item.content"
-      :attachment="item.attachment"
-      :user="item.User"
-      :UserId="item.UserId"
-      :DecompteLike="item.Likes"
-      :Commentaires="item.Comments"
-      :key="item.id" 
-      :userConnected="userConnected"
+    <div id="section-post">
+        <div class="filPost" v-if="messagesUser">
+          <Post v-for="item in messagesUser"
+          :id="item.id" 
+          :title="item.title" 
+          :createdAt="item.createdAt" 
+          :content="item.content"
+          :attachment="item.attachment"
+          :user="item.User"
+          :UserId="item.UserId"
+          :DecompteLike="item.Likes"
+          :Commentaires="item.Comments"
+          :key="item.id" 
+          :userConnected="userConnected"
 
-      />
-    </section>
+          />
+        </div>
 
-    <section id="filPost" v-else>
-      <Post v-for="item in messages"
-      :id="item.id" 
-      :title="item.title" 
-      :createdAt="item.createdAt" 
-      :content="item.content"
-      :attachment="item.attachment"
-      :user="item.User"
-      :DecompteLike="item.Likes"
-      :Commentaires="item.Comments"
-      :UserId="item.UserId"
-      :key="item.id" 
-      :userConnected="userConnected"
+        <div class="filPost" v-else>
+          <Post v-for="item in messages"
+          :id="item.id" 
+          :title="item.title" 
+          :createdAt="item.createdAt" 
+          :content="item.content"
+          :attachment="item.attachment"
+          :user="item.User"
+          :DecompteLike="item.Likes"
+          :Commentaires="item.Comments"
+          :UserId="item.UserId"
+          :key="item.id" 
+          :userConnected="userConnected"
 
-      />
-    </section>
+          />
+        </div>
+    </div>
 
 
   </div>
@@ -67,13 +72,13 @@
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue'
+import Entete from '@/components/Entete.vue'
 // import PopAlert from '@/components/PopAlert.vue'
 import Nav from '@/components/Nav.vue'
 
 import EncartProfil from '@/components/EncartProfil.vue'
-import EncartBienvenue from '@/components/EncartBienvenue.vue'
 import Search from '@/components/UI/Search.vue'
+// import Input from '@/components/UI/Input.vue'
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 
 import EncartPost from '@/components/EncartPost.vue'
@@ -87,7 +92,7 @@ export default {
   name: 'Main',
 
   components: {
-    Header, Nav, EncartProfil, EncartPost , EncartBienvenue, Search, BtnRouge, Post
+    Entete, Nav, EncartProfil, EncartPost, Search, BtnRouge, Post
   },
 
   props:['id'],
@@ -101,7 +106,8 @@ export default {
       messagesUser:null,
       showInput: false, 
           searchName:"",
-      showUser:false,    
+      showUser:false,
+      showIcon:true    
     }
   },
 
@@ -131,9 +137,20 @@ export default {
 
   input(){
         this.showInput = true
+        this.showIcon = false
+   },
+   
+   closeInput(){
+     this.showInput = false
+     Service.getMessages()
+        .then (response => {
+         this.messages = response.data
+         this.messagesUser = null
+         this.showIcon = true
+          })
    },
 
-   showUserOpen(){
+   showUserOpen(){  
      this.showUser = true
    },
 
@@ -251,29 +268,33 @@ export default {
 
 
 
-#section-user{
-  // position: fixed;
-  // width: 100%;
-  // display: none;
+#section-user {
   z-index: 10;
-  background-color: $blanc;
+  position: fixed;
+  width: 100%;
   padding-top: 1%;
   padding-bottom: 2%;
-  @include tablette_ecran{ 
+  top: 115px;
+
+  @include tablette_ecran {
     background-color: $gris1;
-    position: fixed;
-    width: 100%;
     top: 70px;
   }
 }
 
-#content-user{
+#content-user {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
-  position:relative;
-    @include tablette_ecran{
+  position: relative;
+
+  @include tablette{
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+
+  @include tablette_ecran {
     display: flex;
     flex-direction: row;
     max-width: 980px;
@@ -282,18 +303,25 @@ export default {
   }
 }
 
-#closeUser{
-  width: 18%;
-                height: 25px;
+.closeUser {
+  display: none;
 
-        background-color: $groupomania-rouge;
-        -webkit-mask: url(../assets/close.svg);
-        mask: url(../assets/close.svg);
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 100%;
+  @include tablette_ecran {
+    display: block;
+    width: 18%;
+    height: 25px;
+
+    background-color: $groupomania-rouge;
+    -webkit-mask: url(../assets/close.svg);
+    mask: url(../assets/close.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 100%;
+  }
 }
+
 #content-post {
   position: absolute;
+  width: 100%;
 
   @include tablette_ecran {
     position: relative;
@@ -302,10 +330,17 @@ export default {
     align-items: initial;
     display: flex;
     width: 75%;
+    background-color: $gris1;
+  }
 
-    #content-bienvenue {
+  #content-bienvenue {
+    display: none;
+
+    @include tablette_ecran {
       display: flex;
       flex-direction: row;
+      align-items: center;
+
       .iconPerso {
         width: 15%;
         display: flex;
@@ -313,30 +348,95 @@ export default {
         margin-right: 3%;
         margin-top: 3%;
       }
-    }
 
+      .message-accueil {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 3%;
+        padding: 0;
+        width: 80%;
+
+        h1 {
+          color: $groupomania_rouge;
+          text-align: left;
+          font-size: $textmoyen;
+          font-weight: 700;
+          margin-right: 15%;
+          width: 85%;
+          margin-bottom: 2%;
+        }
+      }
+    }
   }
+.search-input{
+display: flex;
+flex-direction: row;
+width: 100%;
+align-items: center;
+margin-top: 3%;
+
+  .input-search {
+  height: 30px;
+  width: 70%;
+  border: none;
+}
+
+.search-btn{
+  width: 40%;
+  height: 30px;
+  margin-right: 2%;
+}
+
+.closeSearch{
+    width: 20px;
+height: 20px;
+background-color: $groupomania-rouge;
+img{
+  width: 40%;
+  margin-top: 30%;
+}
+}
+
+}
+
+
+}
+
+
+////// LES POST /////
+
+
+#section-post{
+    z-index: 0;
+    width: 100%;
+    margin-top: 40%;
+    @include tablette{
+      margin-top: 20%;
+    }
+    @include ecran{
+      margin-top: 12%;
+    }
 }
 
 
 
-#filPost {
-  // width: 100%;
+.filPost {
+  position: relative;
+  width: 100%;
   z-index: 0;
-  margin-top: 34%;
 
   @include tablette_ecran{
-    margin-top: 33%;
+    // margin-top: 33%;
     max-width: 980px;
     margin: auto;
   }
   @include ecran{
     max-width: 980px;
     margin: auto;
-    margin-top: 10%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+    // margin-top: 10%;
+    // display: flex;
+    // flex-wrap: wrap;
+    // flex-direction: row;
   }
 }
 

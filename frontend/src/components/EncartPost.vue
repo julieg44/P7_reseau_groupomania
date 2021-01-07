@@ -1,13 +1,13 @@
 <template>
     <div id="cartouchePost">
         <p>De quoi souhaitez vous parler aujourd'hui ?</p>
-        <div id="post">
-            <form id="post-form" enctype="multipart/form-data">
-                <div class="closePost"><a href="#" id="closePost">X</a></div>
-                <input id="titrepost" placeholder="Titre" type="text" v-model="title">
-                <input id="contentpost" placeholder="écrivez-ici" type="text" v-model="content">
+        <div class="post">
+            <form class="post-form" enctype="multipart/form-data">
+                <div class="closePost"><a href="#" id="closePost"><img src="../assets/close.svg"/></a></div>
+                <input class="titrepost" placeholder="Titre" type="text" v-model="title">
+                <input class="contentpost" placeholder="écrivez-ici" type="text" v-model="content">
                 <div class="align-boutons">
-                    <input id="fichier" type="file" @change="onFileSelected"/>
+                    <input class="fichier" type="file" @change="onFileSelected"/>
                     <BtnRouge @click.prevent="poster()" label="Envoyer"/>
                 </div>
             </form>
@@ -18,7 +18,6 @@
 <script>
 // @ is an alias to /src
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
-// import BtnAddMedia from '@/components/BtnAddMedia.vue'
 import { mapState } from "vuex";
 import { mapActions } from 'vuex';
 // import Service from '@/services/service.js'
@@ -222,6 +221,7 @@ export default {
 
 #cartouchePost {
     padding: 2%;
+    background-color: $blanc;
 
     @include tablette_ecran {
         width: 100%;
@@ -230,21 +230,23 @@ export default {
         justify-content: flex-end;
         margin-top: 0;
         padding: 0;
+        background-color: $gris1;
     }
 
     p {
         color: $gris3;
-        font-size: 1rem;
+        font-size: 1.3rem;
         font-weight: 300;
         text-align: left;
         margin-top: 3%;
 
         @include tablette_ecran {
             margin-top: 0;
+            font-size: 1rem;
         }
     }
 
-    #post {
+    .post {
         background-color: $gris1;
         margin-top: 2%;
         padding: 4% 4% 4% 4%;
@@ -257,11 +259,20 @@ export default {
         }
     }
 
-    #post-form {
+    .post-form {
         width: 100%;
 
         @include tablette_ecran {
             height: 150px;
+        }
+
+        .closePost{
+                    width: 5%;
+                    margin-left: 95%;
+
+        }
+        @include tablette_ecran{
+            display: none;
         }
 
         input {
@@ -277,7 +288,7 @@ export default {
             }
         }
 
-        #contentpost {
+        .contentpost {
             height: 95px;
 
             @include tablette_ecran {
@@ -285,7 +296,7 @@ export default {
             }
         }
 
-        #titrepost {
+        .titrepost {
             height: 30px;
 
             @include tablette_ecran {
@@ -295,8 +306,7 @@ export default {
     }
 
     .align-boutons {
-
-        #fichier {
+        .fichier {
             width: 40%;
         }
     }

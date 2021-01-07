@@ -1,9 +1,9 @@
 <template>
   <div>
     <PopAlert/>
-    <header>
-      <Header/>
-    </header>
+    <!-- <header> -->
+      <Entete/>
+    <!-- </header> -->
     <section id="login">
       <Login/>
     </section>
@@ -12,7 +12,7 @@
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue'
+import Entete from '@/components/Entete.vue'
 import Login from '@/components/Login.vue'
 import PopAlert from '@/components/PopAlert.vue'
 
@@ -20,7 +20,7 @@ import PopAlert from '@/components/PopAlert.vue'
 export default {
   name: 'Home',
   components: {
-    Header, Login, PopAlert
+    Entete, Login, PopAlert
   }
 }
 </script>
@@ -29,19 +29,18 @@ export default {
 
 @import "../sass/main.scss";
 
-header{
-    background-color: $groupomania_bleu;
-    text-align: center;
-    padding: 4% 2% 2% 2%;
-    @include ecran{
-      padding: 1% 1% 1% 1%;
-    }
-}
+
 
 #login {
-  padding-top: 10%;
+  padding-top: 30%;
   background-color: $gris1;
   height: 980px;
+  @include tablette{
+    padding-top: 23%;
+  }
+  @include ecran{
+    padding-top: 10%;
+  }
 }
 
 </style>

@@ -1,30 +1,21 @@
 <template>
     <div id="cartoucheProfil" v-if="userConnected">
-        <div id="photo">
-            <div id="taille-photo">
+        <div class="photo">
+            <div class="taille-photo">
                 <img id="principale" :src="userConnected.photo" alt="photo de profil" />
-                <!-- <img id="cache"  src= "../assets/avatar-cache.png"  alt="cache-photo" /> -->
             </div>
         </div>
-        <div class="closeProfil"><a href="#" id="closeProfil">X</a></div>
+        <div class="closeProfil"><a href="#" id="closeProfil"><img src="../assets/close.svg"/></a></div>
         <h2 class="profilName"> {{userConnected.username}}</h2>
-        <p id="contenuProfil">
-            Email :
-            {{ userConnected.email }}
-            <!-- <br />
-            Mot de passe :
-            *********
-            <br /> -->
-        </p>
-        <div id="actionProfil">
+        <p class="contenuProfil">Email :{{ userConnected.email }}</p>
+        <div class="actionProfil">
             <BtnDeconnect @click="deconnect()" />
             <router-link :to="_modify">
-            <BtnModifyUser/>
+                <BtnModifyUser />
             </router-link>
             <BtnSup @click="supUser(userConnected.id)" />
         </div>
     </div>
-    
 </template>
 
 <script>
@@ -121,118 +112,143 @@ export default {
 
 <style lang="scss">
 
-@import "../sass/main.scss";
+@import "../sass/variables.scss";
+@import "../sass/button.scss";
+@import "../sass/animMobile.scss";
+
+
+
 
 #cartoucheProfil {
     width: 95%;
     background-color: $groupomania_rouge_clair;
-    position: relative;
     padding-bottom: 7%;
 
+    @include tablette{
+    width: 25%;
+    }
+
+    @include ecran{
+    width: 20%;
+    }
+
+    @include tablette_ecran {
+        margin-right: 2%;
+        background-color: $blanc;
+        position: relative;
+        padding-bottom: 0;
+    }
+
     .closeProfil {
-    position: absolute;
-    bottom: 220px;
-    right: 32px;
+        position: absolute;
+        bottom: 83%;
+        right: 32px;
+        width: 5%;
     }
 
     h2 {
-        font-size: 1.3rem;
+        font-size: 1.7rem;
         font-weight: 300;
         color: $groupomania_rouge;
         text-align: left;
         text-transform: uppercase;
         margin-bottom: 5%;
         margin-left: 5%;
+
+        @include tablette_ecran {
+            font-size: 1.3rem;
+            margin-top: 30%;
+            margin-bottom: 3%;
+            text-align: center;
+        }
     }
 
     p {
-        font-size: 0.8rem;
+        font-size: 1.3rem;
         color: $gris3;
         text-align: left;
         margin-left: 5%;
         line-height: 1.7rem;
+        @include tablette_ecran{
+          font-size: 0.8rem;  
+        }
     }
 
-    #photo {
+    .photo {
         background-color: $groupomania_rouge;
         text-align: left;
         height: 84px;
         margin-bottom: 25%;
         position: relative;
 
+        @include tablette_ecran {
+            height: 34%;
+        }
 
+        .taille-photo {
+            @include tablette_ecran {
+                width: 60%;
+                margin: auto;
+            }
+        }
 
         img {
-            width: 40%;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             margin: 5%;
             position: absolute;
-                                clip-path:ellipse(50% 50%);
+            clip-path: ellipse(50% 50%);
 
+            @include tablette_ecran {
+                width: 60%;
+                margin: 0;
+                margin-top: 10%;
+                height: 120px;
+            }
         }
     }
 
-    #actionProfil {
+    .actionProfil {
         width: 80%;
+        height: 55px;
         position: absolute;
         bottom: 45%;
         right: 10px;
         text-align: right;
-    }
 
-    @include tablette_ecran {
-        width: 20%;
-        margin-right: 2%;
-        background-color: $blanc;
-        position: relative;
-        padding-bottom: 0;
-
-        h2 {
-            margin-top: 30%;
-            margin-bottom: 3%;
-            text-align: center;
-        }
-
-        #actionProfil {
+        @include tablette_ecran {
             width: 100%;
+            height: 40px;
             position: absolute;
             bottom: 0px;
             text-align: center;
         }
+    }
 
-        #photo {
-            // text-align: center;
-            // background-color: $groupomania_rouge;
-            height: 34%;
+    .button-user {
+        background-color: $groupomania_rouge_clair;
+        width: 20%;
+        height: 55px;
+        margin: 0;
 
-        #taille-photo{
-            width:60%;
-            margin: auto;
-            
-            
-            img {
-                width: 60%;
-                margin: 0;
-               margin-top: 10%;
-               height: 120px;
+        @include tablette_ecran {
+            background-color: $blanc;
+            width: 25%;
+            height: 35px;
+        }
+
+        .destroy-icon {
+            background-color: $groupomania_rouge;
+            width: 57%;
+            height: 35px;
+
+            @include tablette_ecran {
+                width: 45%;
+                height: 35px;
             }
         }
-            
-        }
     }
-    .button-user{
-    background-color: $groupomania_rouge_clair;
-    width: 20%;
-    margin: 0;
-    @include tablette_ecran{
-        background-color: $blanc;
-        width: 25%;
-    }
-    #destroy-icon{
-        background-color: $groupomania_rouge;
-        width: 45%;
-    }
-  }
 }
+
 
 </style>

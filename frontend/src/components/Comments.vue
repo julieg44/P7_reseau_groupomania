@@ -1,10 +1,9 @@
 <template>
-    <div id="comments">
+    <div class="ligne-comment">
         <div class="positionPhoto">
             <img :src="userCommentaire.photo" />
-            <!-- <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" /> -->
         </div>
-        <h1> {{ userCommentaire.username }}</h1>
+        <h1 class="username"> {{ userCommentaire.username }}</h1>
         <p> {{ content }}</p>
     </div>
 </template>
@@ -27,6 +26,8 @@ export default {
     content: {
         type: String,
         },
+
+
     // UserPhoto:{
     //     type: String
     // },
@@ -68,63 +69,47 @@ export default {
 <style lang="scss">@import "../sass/main.scss";
 
 
-#comments {
+.ligne-comment {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    // align-items: center;
-    margin-bottom: 10%;    
+    margin-bottom: 10%;
     margin-top: 4%;
-    @include tablette_ecran{
+
+    @include tablette_ecran {
         margin-bottom: 5%;
     }
 
-    .positionPhoto{ 
-    // position: absolute;
-    // bottom: 7%;
-    // width: 5%;
-    text-align: left;
-    margin-right: 5%;
-    @include tablette_ecran {
-        position: absolute;
-        // bottom: 7%;
-        width: 40%;
+    .positionPhoto {
         text-align: left;
-    }
+        margin-right: 1%;
 
+        img {
+            width: 7%;
+            margin-right: 1%;
 
-    img {
-        width: 7%;
-        margin-right:1%;
-        position: absolute;
-        @include tablette_ecran{
-                
-        width: 29px;
-        height: 29px;
-        margin-right:1%;
-        position: absolute;
-                    clip-path:ellipse(50% 50%);
-        
+            @include tablette_ecran {
+                width: 29px;
+                height: 29px;
+                clip-path: ellipse(50% 50%);
+            }
         }
     }
-    }
-    
 
-    h1 {
+
+    .username {
         font-size: 0.7rem;
         text-align: left;
         font-weight: 700;
         margin-top: 1%;
         margin-bottom: 0;
-        margin-right: 3%;
-        margin-left: 5%;
-        @include tablette_ecran{
+        margin-right: 1%;
+
+        @include tablette_ecran {
             font-size: 0.7rem;
-        text-align: left;
-        font-weight: 700;
-        margin-bottom: 0;
-        margin-right: 3%;
-        margin-left: 6%;
+            text-align: left;
+            font-weight: 700;
+            margin-right: 1%;
         }
     }
 
@@ -133,9 +118,6 @@ export default {
         font-size: 0.7rem;
         margin-top: 1%;
     }
-
 }
-
-
 
 </style>

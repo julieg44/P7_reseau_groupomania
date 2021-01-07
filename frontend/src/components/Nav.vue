@@ -2,8 +2,8 @@
 <nav v-if="userConnected">
 <h1> Bonjour {{ userConnected.username }} !</h1>
 <div class="icons" @click="affUser">
-    <div id="bulle"></div>
-    <div id="profil"></div>
+    <div id="bulle"><a href="#cartouchePost" id="openPost"><img src="../assets/bulle-rond.svg" alt="photo de profil" /></a></div>
+    <div id="profil"><a href="#cartoucheProfil" id="openProfil"><img src="../assets/user-solid-rond.svg" alt="photo de profil" /></a></div> 
 </div>
 
 </nav>
@@ -39,22 +39,23 @@ nav{
     position: fixed;
     width: 100%;
     height: 49px;
-    top: 70px;
+    top: 60px;
     z-index: 10;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    @include tablette_ecran{
+        top: 70px
+    }
 
     h1{
         color: $blanc;
         margin-bottom: 0;
-        // width: 25%;
         font-weight: 200;
     }
 
     .icons{ 
-        // width: 15%;
         display: flex;
         flex-direction: row;
         justify-content: center;

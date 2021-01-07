@@ -1,6 +1,6 @@
 <template>
     <button class="button-user" v-on="$listeners">
-        <div id="deconnect-icon"></div>
+        <div class="deconnect-icon"></div>
     </button>
 </template>
 
@@ -15,10 +15,9 @@ export default {
 @import "../../../sass/variables.scss";
 @import "../../../sass/button.scss";
 
-#deconnect-icon {
-
+.deconnect-icon {
     width: 65%;
-    height: 25px;
+    height: 35px;
     background-color: $groupomania_rouge;
     mask: url(../../../assets/power_off.svg);
     -webkit-mask: url(../../../assets/power_off.svg);
@@ -26,7 +25,6 @@ export default {
     -webkit-mask-size: 100%;
         @include tablette_ecran{
         width: 50%;
-        height: 25px;
         background-color: $groupomania_rouge;
     }
 }

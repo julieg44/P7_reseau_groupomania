@@ -1,5 +1,5 @@
 <template>
-    <button id="search" v-on="$listeners">
+    <button class="search" v-on="$listeners">
     </button>
 </template>
 
@@ -11,20 +11,16 @@ export default {
 </script>
 
 <style lang="scss">
-
 @import "../../sass/variables.scss";
 @import "../../sass/button.scss";
 
+.search {
+  width: 21%;
+  background-color: $groupomania_rouge;
+  -webkit-mask: url(../../assets/search.svg);
+  mask: url(../../assets/search.svg);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+}
 
-
-
-
-            #search {
-                width: 21%;
-                background-color: $groupomania_rouge;
-                -webkit-mask: url(../../assets/search.svg);
-                mask: url(../../assets/search.svg);
-                -webkit-mask-repeat: no-repeat;
-                -webkit-mask-size: 100%;
-            }
 </style>

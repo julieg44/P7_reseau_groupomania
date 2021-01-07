@@ -1,34 +1,38 @@
-header{
-  // position: fixed;
-  // width: 100%;
-    background-color: $groupomania_bleu;
-    text-align: center;
-    padding: 4% 2% 2% 2%;
-    // top: 0;
-      // z-index: 10;
-    @include ecran{
-      padding: 1% 1% 1% 1%;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 10;
-    }
+header {
+  position: fixed;
+  width: 100%;
+  background-color: $groupomania_bleu;
+  text-align: center;
+  height: 10%;
+  padding-top: 2.5%;
+  top: 0;
+  z-index: 10;
+  @include tablette{
+    height: 10%;
+  }
+  @include ecran {
+    height: 8%;
+    padding-top: 1%;
+  }
 }
 
-#logoGroupomania{
-    width: 50%;
-    margin: auto;
-    height: 35px;
-    background-color: $blanc;
-    mask: url(../assets/logoGroupomania.svg);
-    -webkit-mask:url(../assets/logoGroupomania.svg);
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: 100%;
-        @include tablette{
-        width: 25%;
-        }
-        @include ecran{
-        width: 12%;
-        height: 50px;
-        }
+#logoGroupomania {
+  width: 50%;
+  margin: auto;
+  height: 60%;
+  background-color: $blanc;
+  mask: url(../assets/logoGroupomania.svg);
+  -webkit-mask: url(../assets/logoGroupomania.svg);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+
+  @include tablette {
+    width: 25%;
+    height: 40%;
+  }
+
+  @include ecran {
+    width: 12%;
+    height: 80%;
+  }
 }

@@ -3,7 +3,6 @@
             <div class="message-top">
                 <div class="positionPhoto">
                     <img :src="user.photo" />
-                    <!-- <img class="cacheBleu" src="../assets/avatar-cache-bleu.png" /> -->
                 </div>
                 <h1>{{ user.username }}</h1>
                 <p> {{ createdAt }}</p>     
@@ -301,11 +300,11 @@ export default {
                 width: 140%;
                 text-align: left;
                 margin-right: 5%;
-
-                @include tablette_ecran {
-                    
+                @include tablette {
+                    width: 100%;
+                }
+                @include ecran {
                     width: 80%;
-                    
                 }
 
 
@@ -315,7 +314,9 @@ export default {
                     margin-right: 1%;
                     position: absolute;
                     clip-path:ellipse(50% 50%);
-
+                    // @include tablette{
+                    //     margin-right: 5%;
+                    // }
                     
                 }
             }
@@ -324,12 +325,18 @@ export default {
                 font-size: $textpetit;
                 text-align: left;
                 font-weight: 700;
+                text-decoration: underline;
                 margin-bottom: 0;
                 margin-left: 13%;
                 width: 80%;
                 color: $groupomania_bleu;
-                @include tablette_ecran{
+                @include tablette{
+                    margin-left: 10%;
+                    font-size: 1rem;
+                }
+                @include ecran{
                     margin-left: 8%;
+                    font-size: 1rem;
                 }
             }
 
@@ -360,6 +367,12 @@ export default {
             font-weight: 700;
             margin-bottom: 0;
             color: $groupomania_bleu;
+            @include tablette{
+                font-size: 1rem;
+            }
+            @include ecran{
+                font-size: 1rem;
+            }
         }
         .message-bottom{
             display: flex;
@@ -400,9 +413,10 @@ export default {
                 background-color: none;
             }
 
-            #destroy-icon {
+            .destroy-icon {
                 background-color: $groupomania_bleu;
                 width: 85%;
+                height: 30px;
 
             }
         }

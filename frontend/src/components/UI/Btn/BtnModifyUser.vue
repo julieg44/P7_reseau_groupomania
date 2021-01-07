@@ -1,6 +1,6 @@
 <template>
     <button class="button-user" v-on="$listeners">
-        <div id="modif-icon"></div>
+        <div class="modif-icon"></div>
     </button>
 </template>
 
@@ -15,10 +15,9 @@ export default {
 @import "../../../sass/variables.scss";
 @import "../../../sass/button.scss";
 
-#modif-icon {
-
-  width: 75%;
-  height: 25px;
+.modif-icon {
+  width: 74%;
+  height: 35px;
   background-color: $groupomania_rouge;
   mask: url(../../../assets/user_edit.svg);
   -webkit-mask: url(../../../assets/user_edit.svg);

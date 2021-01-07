@@ -11,11 +11,11 @@
             
             <!-- <div class="search"></div> -->
         <!-- </div> -->
-        <div class="post-icon">
+        <!-- <div class="post-icon">
             <a href="#cartouchePost" id="openPost">
                 <img src="../assets/comment.svg" />
             </a>
-        </div>
+        </div> -->
 
     </div>
 </template>

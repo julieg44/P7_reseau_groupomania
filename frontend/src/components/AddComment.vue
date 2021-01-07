@@ -1,13 +1,10 @@
 <template>
     <form class="post-comment" enctype="multipart/form-data">
-        <div id="AddComments">
+        <div class="commentaire">
             <div class="positionPhoto">
                 <img v-if="userConnected" :src="userConnected.photo" />
-                <img class="cacheBleu" src="../assets/avatar-cache-blanc.png" />
-            </div>
-            
+            </div> 
             <input class="addcomment" type='text' placeholder="Vous souhaitez commenter ?" v-model="content"/>
-            <!-- <input :value="MessageId" type='hiden' />  -->
             <BtnPlus @click="PostComment()"/>
         </div>
     </form>
@@ -67,7 +64,7 @@ export default {
             let Newcomment = {
                UserId: this.userConnected.id,
                UserUsername: this.userConnected.username,               
-               UserPhoto: this.userConnected.photo,               
+              UserPhoto: this.userConnected.photo,               
                MessageId: this.MessageId,
                content: this.content,
             }
@@ -115,7 +112,7 @@ export default {
 <style lang="scss">@import "../sass/main.scss";
 
 
-.post-comment{
+.post-comment {
     width: 100%;
     margin-top: 3%;
     background-color: $blanc;
@@ -123,52 +120,34 @@ export default {
 
 }
 
-#AddComments {
+.commentaire {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     height: 30px;
-    // align-items: center;
+    align-items: center;
     padding: 1%;
     background-color: $blanc;
-    // position: relative;
-    @include tablette_ecran{
+
+    @include tablette_ecran {
         height: 53px;
     }
 
-        .positionPhoto{ 
-    // position: absolute;
-    // bottom: 7%;
-    // width: 5%;
-    text-align: left;
-    margin-right: 5%;
-    @include tablette_ecran {
-        // position: absolute;
-        // bottom: 7%;
-        // width: 60%;
+    .positionPhoto {
         text-align: left;
-    }
+        margin-right: 1%;
+
         img {
-        width: 10%;
-        margin-right:1%;
-        height: 31px;
-        position: absolute;
-        @include tablette_ecran{
-            width: 39px;
-            height: 39px;
-        };
-    }
+            width: 10%;
+            margin-right: 1%;
+            height: 31px;
+            clip-path: ellipse(50% 50%);
+
+            @include tablette_ecran {
+                width: 39px;
+                height: 39px;
+            }
         }
-
-
-
-
-    h1 {
-        font-size: 0.7rem;
-        text-align: left;
-        font-weight: 700;
-        margin-bottom: 0;
-        margin-right: 3%;
     }
 
     .addcomment {
@@ -177,13 +156,7 @@ export default {
         border: none;
         width: 87%;
         height: 30px;
-        margin-left: 8%;
-        margin-top: 0.5%;
-        @include tablette_ecran{
-        margin-left: 2%;
-        }
     }
-
 }
 
 
