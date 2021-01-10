@@ -14,19 +14,21 @@ module.exports = (sequelize, DataTypes) => {
       models.Comment.belongsTo(models.User, {
         foreignKey:{
           allowNull: false
-        }
+        },
+        onDelete:'cascade'
       });
       models.Comment.belongsTo(models.Message, {
         foreignKey:{
           allowNull: false
-        }
+        },
+        onDelete:'cascade'
       });
     }
   };
   Comment.init({
     UserId: DataTypes.INTEGER,
-    UserUsername: DataTypes.STRING,
-    UserPhoto: DataTypes.STRING,
+    // UserUsername: DataTypes.STRING,
+    // UserPhoto: DataTypes.STRING,
     MessageId: DataTypes.INTEGER,
     content: DataTypes.STRING
   }, {

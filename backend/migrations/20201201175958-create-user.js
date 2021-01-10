@@ -6,7 +6,10 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        foreignKey:'fkey_UserId_like',
+        foreignKey:'fkey_UserId',
+        onDelete:'cascade'
       },
       email: {
         unique: true,
@@ -38,7 +41,6 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    await queryInterface.addIndex('Users', ['id', 'username', 'photo'])
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Users');

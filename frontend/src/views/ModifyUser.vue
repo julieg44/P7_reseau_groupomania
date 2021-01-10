@@ -94,9 +94,9 @@ export default {
             if (this.email === "") {
                 this.email = this.user.email
             }
-            // if (this.password === "") {
-            //     this.password = this.user.password
-            // }
+            if (this.password === "") {
+                this.password = undefined
+            }
 
             const fd = new FormData()
             if(this.selectedFile !== null){
@@ -104,7 +104,7 @@ export default {
             }
             fd.append('username', this.username)
             fd.append('email', this.email)
-            // fd.append('password', this.password)
+            fd.append('password', this.password)
             axios.put(urlApi + '/api/user/' + this.$route.params.id, fd, {
                     headers: {
                         'Authorization': token

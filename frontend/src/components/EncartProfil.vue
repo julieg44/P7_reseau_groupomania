@@ -2,7 +2,9 @@
     <div id="cartoucheProfil" v-if="userConnected">
         <div class="photo">
             <div class="taille-photo">
-                <img id="principale" :src="userConnected.photo" alt="photo de profil" />
+                <img id="principale" v-if="userConnected.photo !==null" :src="userConnected.photo" alt="photo de profil" />
+                <img id="principale"  v-else src="../assets/avatar.png" alt="photo de profil" />
+
             </div>
         </div>
         <div class="closeProfil"><a href="#" id="closeProfil"><img src="../assets/close.svg"/></a></div>
@@ -19,13 +21,15 @@
 </template>
 
 <script>
-const axios = require('axios');
-let urlApi = "http://localhost:3000"
+// const axios = require('axios');
+// let urlApi = "http://localhost:3000"
 
 // @ is an alias to /src
 import BtnSup from '@/components/UI/Btn/BtnSup.vue'
 import BtnDeconnect from '@/components/UI/Btn/BtnDeconnect.vue'
 import BtnModifyUser from '@/components/UI/Btn/BtnModifyUser.vue'
+import Service from '@/services/service.js'
+
 import { mapState } from "vuex";
 import { mapActions } from 'vuex';
 
@@ -87,12 +91,13 @@ export default {
         },
         supUser() {
             //@todo  => alert sure ??
-            let token = 'Bearer ' + JSON.parse(localStorage.getItem('usertoken'));
-            axios.delete(urlApi + '/api/user/' + this.user.id, {
-                    headers: {
-                        'Authorization': token
-                    }
-                })
+            // let token = 'Bearer ' + JSON.parse(localStorage.getItem('usertoken'));
+            // axios.delete(urlApi + '/api/user/' + this.userConnected.id, {
+            //         headers: {
+            //             'Authorization': token
+            //         }
+            //     })
+        Service.supUser(this.userConnected.id)
                 .then(function () {
                     window.location.href = '/'
                 })

@@ -13,16 +13,18 @@ module.exports = {
         type: Sequelize.INTEGER,
         references:{
           model: 'Users',
-          key: 'id',
-        }
+          key: 'id'
+        },
+        onDelete:'cascade'
       },
       MessageId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references:{
           model: 'Messages',
-          key: 'id',
-        }
+          key: 'id'
+        },
+        onDelete:'cascade'
       },
       like: {
         allowNull: true,
@@ -54,7 +56,30 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+    // await queryInterface.addConstraint('Likes', {
+    //   fields: ['UserId'],
+    //   type: 'foreign key',
+    //   name: 'fkey_UserId_like',
+    //   references: { //Required field
+    //     table: 'Users',
+    //     field: 'id'
+    //   },
+    //   onDelete: 'cascade',
+    //   onUpdate: 'cascade'
+    // },{
+    //   fields: ['MessageId'],
+    //   type: 'foreign key',
+    //   name: 'fkey_MessageId_like',
+    //   references: { //Required field
+    //     table: 'Messages',
+    //     field: 'id'
+    //   },
+    //   onDelete: 'cascade',
+    //   onUpdate: 'cascade'}
+    // );
   },
+ 
+
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Likes');
   }

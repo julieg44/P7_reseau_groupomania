@@ -14,12 +14,14 @@ module.exports = (sequelize, DataTypes) => {
       models.Like.belongsTo(models.User, {
         foreignKey:{
           allowNull: false
-        }
+        },
+        onDelete:'cascade'
       });
       models.Like.belongsTo(models.Message, {
         foreignKey:{
           allowNull: false
-        }
+        },
+        onDelete:'cascade'
       });
     }
   };

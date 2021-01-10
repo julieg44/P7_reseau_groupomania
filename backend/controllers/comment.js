@@ -20,8 +20,8 @@ exports.supComment = (req, res, next) => {
 exports.postComment = (req, res, next) => {
     Models.Comment.create({
         UserId: req.body.UserId,
-        UserUsername: req.body.UserUsername,
-        UserPhoto: req.body.UserPhoto,
+        // UserUsername: req.body.UserUsername,
+        // UserPhoto: req.body.UserPhoto,
         MessageId:req.body.MessageId,
         content: req.body.content,
     })

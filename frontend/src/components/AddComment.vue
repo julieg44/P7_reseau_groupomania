@@ -2,7 +2,8 @@
     <form class="post-comment" enctype="multipart/form-data">
         <div class="commentaire">
             <div class="positionPhoto">
-                <img v-if="userConnected" :src="userConnected.photo" />
+                <img v-if="userConnected.photo !== null" :src="userConnected.photo" />
+                <img v-else src="../assets/avatar.png" />
             </div> 
             <input class="addcomment" type='text' placeholder="Vous souhaitez commenter ?" v-model="content"/>
             <BtnPlus @click="PostComment()"/>

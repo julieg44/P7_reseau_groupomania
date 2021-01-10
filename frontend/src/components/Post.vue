@@ -2,7 +2,8 @@
         <div id="message">
             <div class="message-top">
                 <div class="positionPhoto">
-                    <img :src="user.photo" />
+                    <img v-if="user.photo !== null" :src="user.photo" />
+                    <img v-else src="../assets/avatar.png"/>
                 </div>
                 <h1>{{ user.username }}</h1>
                 <p> {{ createdAt }}</p>     
@@ -96,7 +97,6 @@ export default {
         // Decomptelikes:{
         //     type:Array
         // },
-
         
         userConnected:{ type: Object},
         
@@ -158,10 +158,10 @@ export default {
 
 
        supMessage() {
-           console.log(this.id)
         Service.supMessage(this.id)
         .then (response => {
           console.log(response)
+          window.location.href='/main'
         })
        }
 

@@ -125,14 +125,152 @@ exports.deleteUser = (req, res, next) => {
   }
 };
 
+exports.modifyUser = (req, res, next) => {
+
+  /// si le MDP ne change pas 
+    if (req.body.password == undefined) {
+      //// si la photo ne change pas
+      if (req.file === undefined) {
+        Models.User.update({
+            email: req.body.email,
+            username: req.body.username,
+            isAdmin: false,
+          }, { where: { id: req.params.id },returning: true,plain: true })
+          .then(function () {
+            Models.User.findOne({ where: { id: req.params.id } })
+              .then(user => res.status(200).json({
+                data: user,
+                message: 'ok'
+              }))
+          })
+          .catch(error => res.status(400).json({ error }));
+      } 
+      //// si la photo change
+      else {
+        Models.User.findOne({ where: { id: req.params.id } })
+          .then(user => {
+            ///// si la photo existait deja
+            if (user.photo == !null) {
+              const filename = user.photo.split('/images/')[1];
+              fs.unlink(`images/${filename}`, () => {
+                Models.User.update({
+                    email: req.body.email,
+                    username: req.body.username,
+                    isAdmin: false,
+                    photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                  }, { where: { id: req.params.id }, returning: true, plain: true })
+
+                  .then(function () {
+                    Models.User.findOne({ where: { id: req.params.id } })
+                      .then(user => res.status(200).json({
+                        data: user,
+                        message: 'ok'
+                      }))
+                  })
+                  .catch(error => res.status(400).json({ error }));
+              });
+              //// s'il n'existait pas de photo
+            } else {
+              Models.User.update({
+                  email: req.body.email,
+                  username: req.body.username,
+                  isAdmin: false,
+                  photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                }, { where: { id: req.params.id }, returning: true, plain: true })
+
+                .then(function () {
+                  Models.User.findOne({ where: { id: req.params.id } })
+                    .then(user => res.status(200).json({
+                      data: user,
+                      message: 'ok'
+                    }))
+                })
+                .catch(error => res.status(400).json({ error }));
+            }
+          })
+      }
+    } 
+  /////// le MDP change  
+    else {
+      bcrypt.hash(req.body.password, 10)
+        .then(hash => {
+          //// si la photo ne change pas
+        if (req.file === undefined) {
+        Models.User.update({
+            email: req.body.email,
+            username: req.body.username,
+            password:hash,
+            isAdmin: false,
+          }, { where: { id: req.params.id },returning: true,plain: true })
+          .then(function () {
+            Models.User.findOne({ where: { id: req.params.id } })
+              .then(user => res.status(200).json({
+                data: user,
+                message: 'ok'
+              }))
+          })
+          .catch(error => res.status(400).json({ error }));
+        } 
+      //// si la photo change
+        else {
+        Models.User.findOne({ where: { id: req.params.id } })
+          .then(user => {
+            ///// si la photo existait deja
+            if (user.photo == !null) {
+              const filename = user.photo.split('/images/')[1];
+              fs.unlink(`images/${filename}`, () => {
+                Models.User.update({
+                    email: req.body.email,
+                    username: req.body.username,
+                    isAdmin: false,
+                    password:hash,
+                    photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                  }, { where: { id: req.params.id }, returning: true, plain: true })
+
+                  .then(function () {
+                    Models.User.findOne({ where: { id: req.params.id } })
+                      .then(user => res.status(200).json({
+                        data: user,
+                        message: 'ok'
+                      }))
+                  })
+                  .catch(error => res.status(400).json({ error }));
+              });
+            } 
+            //// s'il n'existait pas de photo
+            else {
+              Models.User.update({
+                  email: req.body.email,
+                  username: req.body.username,
+                  isAdmin: false,
+                  password:hash,
+                  photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                }, { where: { id: req.params.id }, returning: true, plain: true })
+
+                .then(function () {
+                  Models.User.findOne({ where: { id: req.params.id } })
+                    .then(user => res.status(200).json({
+                      data: user,
+                      message: 'ok'
+                  }))
+                })
+                .catch(error => res.status(400).json({ error }));
+            }
+          })
+        }
+      })
+    }
+  }
+
+
 // exports.modifyUser = (req, res, next) => {
-//   bcrypt.hash(req.body.password, 10)
-//   .then(hash => {
+//   // bcrypt.hash(req.body.password, 10)
+//   // .then(hash => {
 //     if (req.file === undefined){
 //       Models.User.update({
 //         email:req.body.email,
 //         username:req.body.username,
-//         password: hash,
+//         // password: hash,
 //         isAdmin: false,
 //       },{ where: { id: req.params.id } , returning: true, plain: true})
 //           .then (function(){
@@ -141,64 +279,41 @@ exports.deleteUser = (req, res, next) => {
 //       })
 //     .catch(error => res.status(400).json({ error }));
 //     } else {
-//       Models.User.update({ 
-//         email:req.body.email,
-//         username:req.body.username,
-//         password: hash,
-//         isAdmin: false,
-//         photo:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-//        },{ where: { id: req.params.id } , returning: true, plain: true})
-    
-//     .then (function(){
 //       Models.User.findOne({ where: { id: req.params.id } })
-//       .then (user => res.status (200).json({data: user, message: 'ok'}))
+//       .then(user => {
+//         if (user.photo ==! null){
+//           const filename = user.photo.split('/images/')[1];
+//           fs.unlink(`images/${filename}`, () => {
+//             Models.User.update({
+//               email:req.body.email,
+//               username:req.body.username,
+//               // password: hash,
+//               isAdmin: false,
+//               photo:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+//              },{ where: { id: req.params.id } , returning: true, plain: true})
+  
+//              .then (function(){
+//               Models.User.findOne({ where: { id: req.params.id } })
+//               .then (user => res.status (200).json({data: user, message: 'ok'}))
+//               })
+//             .catch(error => res.status(400).json({ error }));
+//           });
+//         } else {
+//           Models.User.update({
+//             email:req.body.email,
+//             username:req.body.username,
+//             // password: hash,
+//             isAdmin: false,
+//             photo:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+//            },{ where: { id: req.params.id } , returning: true, plain: true})
+
+//            .then (function(){
+//             Models.User.findOne({ where: { id: req.params.id } })
+//             .then (user => res.status (200).json({data: user, message: 'ok'}))
+//             })
+//           .catch(error => res.status(400).json({ error }));
+//         }
+
 //       })
-//     .catch(error => res.status(400).json({ error }));
-//       }
-//   })
+//     }
 // };
-
-exports.modifyUser = (req, res, next) => {
-  // bcrypt.hash(req.body.password, 10)
-  // .then(hash => {
-    if (req.file === undefined){
-      Models.User.update({
-        email:req.body.email,
-        username:req.body.username,
-        // password: hash,
-        isAdmin: false,
-      },{ where: { id: req.params.id } , returning: true, plain: true})
-          .then (function(){
-      Models.User.findOne({ where: { id: req.params.id } })
-      .then (user => res.status (200).json({data: user, message: 'ok'}))
-      })
-    .catch(error => res.status(400).json({ error }));
-    } else {
-      Models.User.findOne({ where: { id: req.params.id } })
-      .then(user => {
-        const filename = user.photo.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-          Models.User.update({
-            email:req.body.email,
-            username:req.body.username,
-            // password: hash,
-            isAdmin: false,
-            photo:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-           },{ where: { id: req.params.id } , returning: true, plain: true})
-
-           .then (function(){
-            Models.User.findOne({ where: { id: req.params.id } })
-            .then (user => res.status (200).json({data: user, message: 'ok'}))
-            })
-          .catch(error => res.status(400).json({ error }));
-        });
-      })
-    }
-};
-
-
-
-
-
-
-

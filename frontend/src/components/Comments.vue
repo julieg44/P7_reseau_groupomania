@@ -1,7 +1,8 @@
 <template>
     <div class="ligne-comment">
         <div class="positionPhoto">
-            <img :src="userCommentaire.photo" />
+            <img v-if="userCommentaire.photo !== null" :src="userCommentaire.photo" />
+            <img v-else src="../assets/avatar.png"/>
         </div>
         <h1 class="username"> {{ userCommentaire.username }}</h1>
         <p> {{ content }}</p>

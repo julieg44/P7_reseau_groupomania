@@ -107,7 +107,7 @@ export default {
       showInput: false, 
           searchName:"",
       showUser:false,
-      showIcon:true    
+      showIcon:true , 
     }
   },
 
@@ -186,13 +186,18 @@ export default {
         Service.getMessages()
         .then (response => {
          this.messages = response.data
-          })
+        })
+
+          
 
         // Service.getComments(1)
         // .then (response => {
         //   this.commentaires = response.data
         // })  
+
      }
+
+     
 
     // created() {
 

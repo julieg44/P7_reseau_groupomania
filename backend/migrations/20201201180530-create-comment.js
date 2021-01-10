@@ -13,24 +13,25 @@ module.exports = {
         type: Sequelize.INTEGER,
         references:{
           model: 'Users',
-          key: 'id',
-        }
+          key: 'id'},
+        onDelete:'cascade'
       },
-      UserUsername: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      UserPhoto: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
+      // UserUsername: {
+      //   allowNull: false,
+      //   type: Sequelize.STRING,
+      // },
+      // UserPhoto: {
+      //   allowNull: true,
+      //   type: Sequelize.STRING,
+      // },
       MessageId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references:{
           model: 'Messages',
-          key: 'id',
-        }
+          key: 'id'
+        },
+        onDelete:'cascade'
       },
       content: {
         allowNull: false,

@@ -46,8 +46,8 @@ exports.createMessage = (req, res, next) => {
             UserId: req.body.UserId,
             title: req.body.title,
             content: req.body.content,
-            nbLikes: req.body.nbLikes,
-            nbDislikes: req.body.nbDislikes,
+            // nbLikes: req.body.nbLikes,
+            // nbDislikes: req.body.nbDislikes,
         })
         .then(Message => res.status(201).json({
             message:'Post créé',
@@ -58,8 +58,8 @@ exports.createMessage = (req, res, next) => {
             UserId: req.body.UserId,
             title: req.body.title,
             content: req.body.content,
-            nbLikes: req.body.nbLikes,
-            nbDislikes: req.body.nbDislikes,
+            // nbLikes: req.body.nbLikes,
+            // nbDislikes: req.body.nbDislikes,
             attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         })
         .then(Message => res.status(201).json({

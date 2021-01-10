@@ -11,17 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Message.hasMany(models.Comment);
-      models.Message.hasMany(models.Like);
-      models.Message.belongsTo(models.User);
+      models.Message.hasMany(models.Comment, {
+        onDelete:'cascade' 
+      });
+      models.Message.hasMany(models.Like), {
+        onDelete:'cascade' 
+      };
+
+      models.Message.belongsTo(models.User, {
+        onDelete:'cascade' 
+      });
     }
   };
   Message.init({
     UserId: DataTypes.INTEGER,
     title: DataTypes.STRING,
     content: DataTypes.STRING,
-    nbLikes: DataTypes.INTEGER,
-    nbDislikes: DataTypes.INTEGER,
+    // nbLikes: DataTypes.INTEGER,
+    // nbDislikes: DataTypes.INTEGER,
     attachment: DataTypes.STRING
   }, {
     sequelize,

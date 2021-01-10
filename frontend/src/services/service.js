@@ -32,6 +32,9 @@ export default{
     },
 
     ///// users /////
+    supUser(id){
+        return appelsAPI.delete(URL + '/api/user/' + id)
+    },
     getUser(id){
         return appelsAPI.get(URL + '/api/user/' + id)
     },

@@ -101,6 +101,7 @@ export default {
                 fd.append('username', this.username)
                 fd.append('email', this.email)
                 fd.append('password', this.password)
+                
                 axios.post(urlApi + '/api/user/signup', fd)
                     .then(function (response) {
                         let alert = new customAlert();
@@ -111,7 +112,8 @@ export default {
                 let NewUser = {
                     username: this.username,
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    // photo: null
                 }
                 axios.post(urlApi + '/api/user/signup', NewUser)
                     .then(function (response) {

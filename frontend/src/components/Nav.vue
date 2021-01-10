@@ -3,7 +3,8 @@
 <h1> Bonjour {{ userConnected.username }} !</h1>
 <div class="icons" @click="affUser">
     <div id="bulle"><a href="#cartouchePost" id="openPost"><img src="../assets/bulle-rond.svg" alt="photo de profil" /></a></div>
-    <div id="profil"><a href="#cartoucheProfil" id="openProfil"><img src="../assets/user-solid-rond.svg" alt="photo de profil" /></a></div> 
+    <div id="profil"><a href="#cartoucheProfil" id="openProfil"><img src="../assets/user-solid-rond.svg" alt="photo de profil" /></a></div>
+    <div id="deconnection"><img src="../assets/deconnect-rond.svg" alt="deconnection" @click="deconnect()"/></div> 
 </div>
 
 </nav>
@@ -23,6 +24,11 @@ export default {
     methods:{
         affUser(){
             this.$emit('affichageUser')
+        },
+
+        deconnect(){
+            localStorage.clear()
+            window.location.href="/"
         }
     }
   
@@ -53,6 +59,7 @@ nav{
         color: $blanc;
         margin-bottom: 0;
         font-weight: 200;
+        margin-right: 2%;
     }
 
     .icons{ 
@@ -60,6 +67,12 @@ nav{
         flex-direction: row;
         justify-content: center;
         align-content: center;
+        @include tablette{
+        width: 20%;
+        }
+        @include ecran{
+        width: 8%;
+        }
 
 
     #bulle{
@@ -70,8 +83,8 @@ nav{
         mask: url(../assets/bulle-rond.svg);
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: 100%;
-        margin-left: 10%;
-    margin-right: 10%;
+        margin-left: 7%;
+    margin-right: 7%;
     }
     #profil{
         width: 50px;
@@ -82,8 +95,19 @@ nav{
         mask: url(../assets/user-solid-rond.svg);
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: 100%;
-        margin-left: 10%;
-    margin-right: 10%;
+        margin-left: 7%;
+    margin-right: 7%;
+    }
+    #deconnection{
+        width: 50px;
+        height: 33px;
+        background-color: $blanc;
+        -webkit-mask: url(../assets/deconnect-rond.svg);
+        mask: url(../assets/deconnect-rond.svg);
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: 100%;
+        margin-left: 7%;
+    margin-right: 7%;
     }
     }
 
