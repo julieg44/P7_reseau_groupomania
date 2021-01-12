@@ -53,8 +53,17 @@ export default{
 
     //// likes /////
     getLike(messageId){
-        return appelsAPI.get(URL + '/api/like/message/' + messageId)
+        return appelsAPI.get(URL + '/api/like/message/' + messageId + '/like')
     },
+    getDislike(messageId){
+        return appelsAPI.get(URL + '/api/like/message/' + messageId + '/dislike')
+    },
+    postLike(messageId, vote){
+        return appelsAPI.post(URL + '/api/like/message/' + messageId + '/add', vote)
+    },
+    supLike(MessageId, UserId){
+        return appelsAPI.post(URL + '/api/like/message/' + MessageId + '/' + UserId)
+    }
 
 }
 

@@ -1,5 +1,6 @@
 const Models = require('../models');
 const sequelize = require('sequelize');
+const fs = require('fs');
 
 
 exports.allMessage = (req, res, next) => {
@@ -24,10 +25,30 @@ exports.oneMessage = (req, res, next) => {
 }
 
 exports.deleteMessage = (req, res, next) => {
-    Models.Message.destroy({ where: { id: req.params.id } })
-    .then (() => res.status (200).json({ message: 'Message supprimé !'}))
-    .catch(error => res.status (404).json ({error}))
+    Models.Message.findOne({ where: { id: req.params.id } })
+    .then (message => {
+    if (message.attachment == !null) {
+        (message => {
+          const filename = message.attachment.split('/images/')[1];
+          fs.unlink(`images/${filename}`, () => {
+            Models.Message.destroy({
+                where: { id: req.params.id }
+              })
+              .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+              .catch(error => res.status(400).json({ error }));
+          });
+        })
+      } else {
+        Models.Message.destroy({
+          where: { id: req.params.id }
+        })
+        .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+        .catch(error => res.status(400).json({ error }));
+      }
+    })
 }
+
+
 
 exports.modifyMessage = (req, res, next) => {
     Models.Message.update({...req.body},{where: { id: req.params.id } })

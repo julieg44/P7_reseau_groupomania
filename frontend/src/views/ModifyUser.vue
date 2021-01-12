@@ -18,6 +18,7 @@
                                 Sélectionner une photo
                             </label> -->
                             <input class="inputfile" type="file" name="photo" @change="onFileSelected" />
+                            <div class="supPhoto" @click="supPhoto()"><p>Supprimer la photo</p></div>
                         <!-- </div> -->
                     </div>
                 </form>
@@ -73,7 +74,7 @@ export default {
             password: "",
             photo: "",
             selectedFile: null,
-            // user: null
+            user: null
         }
     },
     methods: {
@@ -81,6 +82,17 @@ export default {
         onFileSelected(event) {
             this.selectedFile = event.target.files[0]
             console.log(this.selectedFile)
+        },
+
+        supPhoto() {
+            let token = 'Bearer ' + JSON.parse(localStorage.getItem('usertoken'));
+            axios.put(urlApi + '/api/user/' + this.selectedUser + '/photo', {photo: null},{  
+                headers: { 'Authorization': token } 
+                })
+                .then(function (response) {
+                    console.log(response)
+                    window.location.href = '/main';
+                })
         },
 
         modifyUser() {
@@ -94,9 +106,7 @@ export default {
             if (this.email === "") {
                 this.email = this.user.email
             }
-            if (this.password === "") {
-                this.password = undefined
-            }
+            
 
             const fd = new FormData()
             if(this.selectedFile !== null){
@@ -104,8 +114,11 @@ export default {
             }
             fd.append('username', this.username)
             fd.append('email', this.email)
-            fd.append('password', this.password)
-            axios.put(urlApi + '/api/user/' + this.$route.params.id, fd, {
+            // if (this.password !== ""){
+            // fd.append('password', this.password)
+            // }
+            
+            axios.put(urlApi + '/api/user/' + this.selectedUser, fd, {
                     headers: {
                         'Authorization': token
                     }
@@ -128,7 +141,7 @@ export default {
     },
 
     created() {
-        Service.getUser(this.id)
+        Service.getUser(this.selectedUser)
         .then (response => {
           this.user = response.data
         })

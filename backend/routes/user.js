@@ -13,5 +13,6 @@ router.get('/:id', auth, userCtrl.getOneUser);
 router.get('/', auth, userCtrl.allUser);
 router.delete('/:id', auth, userCtrl.deleteUser);
 router.put('/:id', auth, multer, userCtrl.modifyUser);
+router.put('/:id/photo', auth, userCtrl.supPhotoUser )
 
 module.exports = router;

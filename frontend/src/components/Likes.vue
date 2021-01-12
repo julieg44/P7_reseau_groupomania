@@ -1,9 +1,11 @@
 <template>
     <div id='align'>
-        <p class="nbr">{{ toto }}</p>
-        <div id="like" v-show="notVote" @click="addLike()"></div>
-        <p class="nbr">{{ tata }}</p>
-        <div id="dislike" @click="addDislike()"></div>
+        <p class="nbr">{{ decompteLikes }}</p>
+        <div id="like" v-if="aVotedislike === false" @click="addLike()"></div>
+        <div id="likeGris" v-else></div>
+        <p class="nbr">{{ decompteDislikes }}</p>
+        <div id="dislike" v-if="aVotelike === false" @click="addDislike()"></div>
+        <div id="dislikeGris" v-else></div>
         <!-- <p class="nbr">{{ tata }}</p>
         <div id="bulle"></div> -->
     </div>
@@ -13,6 +15,9 @@
 <script>
 // @ is an alias to /src
 
+// import Service from '@/services/service.js'
+
+
 const axios = require('axios');
 let urlApi = "http://localhost:3000";
 
@@ -20,37 +25,41 @@ export default {
   name: 'Likes',
 
   props:{
-      tata:{
+
+
+    MessageId:{
         type:Number
     },
-    toto:{
-        type:Number,
-    },
-    MessageId:{
+    UserLikeId:{
         type:Number
     },
     userConnected: { 
         type: Object 
         },
 
-    userDislikes:{
-        type: Object
+    decompteLikes:{
+        type:Number
     },
-    userLikes:{
-        type: Object
+    decompteDislikes:{
+        type:Number
     },
-    // DecompteLike:{
-    //     type:Array
-    // },
+    aVotelike:{
+        type:Boolean
+    },
+    aVotedislike:{
+        type:Boolean
+    },
   },
 
   data(){
       return {
-          notVote:true
+          notVote:true,
       }
   },
-  components: {
 
+
+  computed: {
+   
   },
 
   watch: {
@@ -71,12 +80,14 @@ export default {
 
    methods: {
 
+     implementeLike(){
+        return this.decompteLikes ++
+      }, 
+
       decrementeLike(){
       return this.toto -- 
       },
-      implementeLike(){
-          return this.toto ++
-      },
+
       decrementeDislike(){
       return this.tata -- 
       },
@@ -89,69 +100,100 @@ export default {
 
 
        addLike() {
-           if (this.userLikes.id.includes(this.userConnected.id)){
-               this.decrementeLike ()
-            //    this.toto = this.toto --
-            //    this.decrementeLike()
-               let id = this.userConnected.id
-               console.log(id)
-            //    this.decrementeLike()
-            //    this.supTableauAdd() 
-            this.userLikes.id = this.userLikes.id.filter(function(Id){
-                return Id !== id
-                });      
-               axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
-                   UserId: this.userConnected.id,
-                   MessageId: this.MessageId,
-                   like: 0
-               })
-    
+           if (this.aVotelike === true) {
+            this.decompteLikes--
+            this.aVotelike = false
+               axios.delete(urlApi + '/api/like/message/' + this.MessageId + '/' + this.userConnected.id + '/like')
            } else {
-            //    this.toto = this.toto ++
-               this.implementeLike()
-               this.userLikes.id.push(this.userConnected.id)
-               axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+               this.decompteLikes++
+               this.aVotelike = true
+               axios.post(urlApi + '/api/like/message/' + this.MessageId, {
                    UserId: this.userConnected.id,
                    MessageId: this.MessageId,
                    like: 1
                })
+            //    window.location.href = '/main'
            }
-        
-                        // window.location.href = '/main'
-
        },
-       addDislike() {
-           if (this.userDislikes.id.includes(this.userConnected.id)) {
-               this.decrementeDislike()
-               let id = this.userConnected.id
-               this.userDislikes.id = this.userLikes.id.filter(function(Id){
-                return Id !== id
-                });
-               axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
-                   UserId: this.userConnected.id,
-                   MessageId: this.MessageId,
-                   like: 0
-               }) 
+
+
+        addDislike() {
+            if (this.aVotedislike === true) {
+                this.decompteDislikes--
+                this.aVotedislike = false
+                axios.delete(urlApi + '/api/like/message/' + this.MessageId + '/' + this.userConnected.id + '/dislike')
+            } else {
+                this.decompteDislikes++
+                this.aVotedislike = true
+
+                axios.post(urlApi + '/api/like/message/' + this.MessageId, {
+                    UserId: this.userConnected.id,
+                    MessageId: this.MessageId,
+                    like: -1
+                })
+                // window.location.href = '/main'
+            }
+        }
+       
+
+    //           addLike() {
+    //        if (this.userLikes.id.includes(this.userConnected.id)){
+    //            this.decrementeLike ()
+    //         //    this.toto = this.toto --
+    //         //    this.decrementeLike()
+    //            let id = this.userConnected.id
+    //            console.log(id)
+    //         //    this.decrementeLike()
+    //         //    this.supTableauAdd() 
+    //         this.userLikes.id = this.userLikes.id.filter(function(Id){
+    //             return Id !== id
+    //             });      
+    //            axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+    //                UserId: this.userConnected.id,
+    //                MessageId: this.MessageId,
+    //                like: 0
+    //            })
+    
+    //        } else {
+    //         //    this.toto = this.toto ++
+    //            this.implementeLike()
+    //            this.userLikes.id.push(this.userConnected.id)
+    //            axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+    //                UserId: this.userConnected.id,
+    //                MessageId: this.MessageId,
+    //                like: 1
+    //            })
+    //        }
+    //    },
+
+
+
+    //    addDislike() {
+    //        if (this.userDislikes.id.includes(this.userConnected.id)) {
+    //            this.decrementeDislike()
+    //            let id = this.userConnected.id
+    //            this.userDislikes.id = this.userLikes.id.filter(function(Id){
+    //             return Id !== id
+    //             });
+    //            axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+    //                UserId: this.userConnected.id,
+    //                MessageId: this.MessageId,
+    //                like: 0
+    //            }) 
                
                
-           } else {
-               this.implementeDislike()
-               this.userDislikes.id.push(this.userConnected.id)
-               axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
-                   UserId: this.userConnected.id,
-                   MessageId: this.MessageId,
-                   like: -1
-               })
-           }
-                                //    window.location.href = '/main'
+    //        } else {
+    //            this.implementeDislike()
+    //            this.userDislikes.id.push(this.userConnected.id)
+    //            axios.post(urlApi + '/api/like/message/' + this.MessageId + '/add', {
+    //                UserId: this.userConnected.id,
+    //                MessageId: this.MessageId,
+    //                like: -1
+    //            })
+    //        }
+    //     }
 
-       }
-
-   },
-
-    created(){
-
-  },
+}
 }
 
 
@@ -182,10 +224,29 @@ export default {
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: 100%;
     }
+    #likeGris{
+        margin-right: 5%;
+        width: 10%;
+        background-color: $gris1;
+        -webkit-mask: url(../assets/thumbs_up.svg);
+        mask: url(../assets/thumbs_up.svg);
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: 100%;
+    }
+
     #dislike{
         margin-right: 5%;
         width: 10%;
         background-color: $groupomania_bleu;
+        -webkit-mask: url(../assets/thumbs_down.svg);
+        mask: url(../assets/thumbs_down.svg);
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: 100%;
+    }
+    #dislikeGris{
+        margin-right: 5%;
+        width: 10%;
+        background-color: $gris1;
         -webkit-mask: url(../assets/thumbs_down.svg);
         mask: url(../assets/thumbs_down.svg);
         -webkit-mask-repeat: no-repeat;
@@ -203,7 +264,8 @@ export default {
         margin-top: 2%;
         margin-bottom: 2%;
         height: 17px;
-        #like, #dislike, #bulle{
+        #like, #dislike, 
+        #likeGris, #dislikeGris{
             width: 10%;
             margin-right: 15%;
         }

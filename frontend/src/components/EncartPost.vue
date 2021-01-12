@@ -109,9 +109,9 @@ export default {
                             UserId: response.data.data.UserId,
                             MessageId: response.data.data.id,
                             like: 0,
-                            dislike: 0,
-                            userLikes:{"id":[]},
-                            userDislikes:{"id":[]}
+                            // dislike: 0,
+                            // userLikes:{"id":[]},
+                            // userDislikes:{"id":[]}
                         }
                         console.log(LikeDefault)
                         axios.post(urlApi + '/api/like/message/' + response.data.data.id, LikeDefault)
@@ -126,8 +126,8 @@ export default {
                     UserId: this.userConnected.id,
                     title: this.title,
                     content: this.content,
-                    nbLikes: 0,
-                    nbDislikes: 0
+                    // nbLikes: 0,
+                    // nbDislikes: 0
                 }
                 console.log(Newmess)
                 await axios.post(urlApi + '/api/message', Newmess)
@@ -137,9 +137,9 @@ export default {
                             UserId: response.data.data.UserId,
                             MessageId: response.data.data.id,
                             like: 0,
-                            dislike: 0,
-                            userLikes:{"id":[]},
-                            userDislikes:{"id":[]}
+                            // dislike: 0,
+                            // userLikes:{"id":[]},
+                            // userDislikes:{"id":[]}
                         }
                         console.log(LikeDefault)
                         axios.post(urlApi + '/api/like/message/' + response.data.data.id, LikeDefault)

@@ -62,7 +62,7 @@ export default {
             token: "token",
         }),
         _modify() {
-            return '/modifyUser/' + this.userConnected.id;
+            return '/modifyUser';
         }
     },
 

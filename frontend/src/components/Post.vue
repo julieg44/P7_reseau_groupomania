@@ -14,14 +14,12 @@
             </div>
             <p class="contenuComment">{{ content }}</p> 
             <div class="message-bottom">
-                <Likes v-for="item in decompteLikes"
-                :toto="item.like"
-                :tata="item.dislike"
-                :MessageId="item.MessageId"
-                :userDislikes="item.userDislikes"
-                :userLikes="item.userLikes"
-                :userConnected="userConnected"
-                :key="item.id"
+                <Likes :decompteLikes="decompteLikes"  
+                :decompteDislikes="decompteDislikes" 
+                :userConnected="userConnected" 
+                :MessageId="id" 
+                :aVotelike="aVotelike"
+                :aVotedislike="aVotedislike"
                 />
                 <BtnSup v-if= proprietaireMessage @click="supMessage()"/>
             </div>
@@ -36,6 +34,15 @@
         </div>
 </template>
 
+
+// v-for="item in decompteLikes"
+//                 :toto="item.like"
+//                 :tata="item.dislike"
+//                 :MessageId="item.MessageId"
+//                 :userDislikes="item.userDislikes"
+//                 :userLikes="item.userLikes"
+//                 :userConnected="userConnected"
+//                 :key="item.id"
 
 <script>
 // @ is an alias to /src
@@ -90,6 +97,10 @@ export default {
             type: Number,
         },
 
+        // MessageId:{
+        //     type: Number,
+        // },
+
         user:{
             type: Object
         },
@@ -108,6 +119,9 @@ export default {
     return {
       commentaires: null,
       decompteLikes: null,
+      aVotelike: false,
+      aVotedislike: false,
+      decompteDislikes:null,
       proprietaireMessage:false
     }
   },
@@ -250,10 +264,34 @@ export default {
         .then (response => {
           this.commentaires = response.data
         })
+
+
         Service.getLike(this.id)
-        .then (response => {
-            this.decompteLikes = response.data
-        })
+            .then(response => {
+                
+                this.decompteLikes = response.data.length
+                for (let i = 0; i < response.data.length; i++) {
+                    if (response.data[i].UserId === this.userConnected.id && response.data[i].like === 1) {
+                        return this.aVotelike = true
+                    }
+                }
+                // for (let i = 0; i < response.data.length; i++) {
+                //     if (response.data[i].UserId === this.userConnected.id && response.data[i].like === 1) {
+                //         console.log(response.data[i])
+                //         return this.likeId = response.data[i].id 
+                //     }
+                // }
+            })
+        Service.getDislike(this.id)
+            .then(response => {
+                this.likeId = response.data
+                this.decompteDislikes = response.data.length
+                for (let i = 0; i < response.data.length; i++) {
+                    if (response.data[i].UserId === this.userConnected.id && response.data[i].dislike === 1) {
+                        return this.aVotedislike = true
+                    }
+                }
+            })
         
         // if (this.userConnected.id === this.UserId){
         //         return this.proprietaireMessage = true

@@ -40,11 +40,11 @@
           :attachment="item.attachment"
           :user="item.User"
           :UserId="item.UserId"
-          :DecompteLike="item.Likes"
           :Commentaires="item.Comments"
           :key="item.id" 
           :userConnected="userConnected"
-
+          :admin="admin"
+  
           />
         </div>
 
@@ -56,11 +56,12 @@
           :content="item.content"
           :attachment="item.attachment"
           :user="item.User"
-          :DecompteLike="item.Likes"
           :Commentaires="item.Comments"
           :UserId="item.UserId"
           :key="item.id" 
           :userConnected="userConnected"
+          :admin="admin"
+
 
           />
         </div>
@@ -69,6 +70,7 @@
 
   </div>
 </template>
+          :DecompteLike="item.Likes"
 
 <script>
 // @ is an alias to /src
@@ -108,6 +110,7 @@ export default {
           searchName:"",
       showUser:false,
       showIcon:true , 
+      admin:false
     }
   },
 
@@ -181,6 +184,9 @@ export default {
         Service.getUser(this.selectedUser)
         .then (response => {
           this.userConnected = response.data
+          if ( response.data.isAdmin === true){
+            this.admin = true
+          }
         }),
 
         Service.getMessages()
