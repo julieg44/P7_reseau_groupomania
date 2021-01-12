@@ -58,8 +58,13 @@ nav{
     h1{
         color: $blanc;
         margin-bottom: 0;
-        font-weight: 200;
+        font-weight: 400;
         margin-right: 2%;
+        font-size: 1.3rem;
+        @include tablette_ecran{
+            font-size: 2rem;
+            font-weight: 200;
+        }
     }
 
     .icons{ 
@@ -67,12 +72,6 @@ nav{
         flex-direction: row;
         justify-content: center;
         align-content: center;
-        @include tablette{
-        width: 20%;
-        }
-        @include ecran{
-        width: 8%;
-        }
 
 
     #bulle{

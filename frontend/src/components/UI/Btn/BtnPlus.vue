@@ -26,8 +26,8 @@ export default {
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-size: 100%;
     @include tablette{
-      width: 4%;
-      margin-top: 2%;
+      width: 5%;
+      margin-top: 1%;
       margin-bottom: 0;
       margin-left: 3%;
     }

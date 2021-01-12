@@ -115,9 +115,9 @@ export default {
 
 .post-comment {
     width: 100%;
-    margin-top: 3%;
+    // margin-top: 3%;
     background-color: $blanc;
-    height: 40px;
+    // height: 40px;
 
 }
 
@@ -125,31 +125,44 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    height: 30px;
+    // height: 30px;
     align-items: center;
-    padding: 1%;
+    padding: 1% 3% 1% 3%;
     background-color: $blanc;
 
     @include tablette_ecran {
-        height: 53px;
+        padding: 1%;
     }
 
     .positionPhoto {
-        text-align: left;
-        margin-right: 1%;
+                width: 11%;
+                text-align: left;
+                margin-right: 2%;
+                @include tablette {
+                    width: 6%;
+                    margin-right: 2%;
+                }
+                @include ecran {
+                    width: 6%;
+                    margin-right: 2%;
+                }
 
-        img {
-            width: 10%;
-            margin-right: 1%;
-            height: 31px;
-            clip-path: ellipse(50% 50%);
 
-            @include tablette_ecran {
-                width: 39px;
-                height: 39px;
+                img {
+                    width: 100%;
+                    height: 30px;
+                    clip-path:ellipse(50% 50%);
+                    @include tablette{
+                        margin-right: 5%;
+                        height: 30px;
+                    }
+                    @include ecran{
+                        margin-right: 5%;
+                        height: 40px;
+                    }
+                    
+                }
             }
-        }
-    }
 
     .addcomment {
         text-align: left;

@@ -1,13 +1,15 @@
 <template>
-    <div id='align'>
+    <div class="align">
+        <div class="border">
         <p class="nbr">{{ decompteLikes }}</p>
-        <div id="like" v-if="aVotedislike === false" @click="addLike()"></div>
-        <div id="likeGris" v-else></div>
+        <div class="like" v-if="aVotedislike === false" @click="addLike()"></div>
+        <div class="likeGris" v-else></div>
+        </div>
+    <div class="border">
         <p class="nbr">{{ decompteDislikes }}</p>
-        <div id="dislike" v-if="aVotelike === false" @click="addDislike()"></div>
-        <div id="dislikeGris" v-else></div>
-        <!-- <p class="nbr">{{ tata }}</p>
-        <div id="bulle"></div> -->
+        <div class="dislike" v-if="aVotelike === false" @click="addDislike()"></div>
+        <div class="dislikeGris" v-else></div>
+    </div>
     </div>
 </template>
 
@@ -201,32 +203,53 @@ export default {
 
 <style lang="scss">@import "../sass/main.scss";
 
-#align{
+.align{
     display: flex;
     flex-direction: row;
-    margin-top: 8%;
-    margin-bottom: 8%;
     height: 17px;
+    width: 50%;
     @include tablette_ecran{
-        width: 20%;
+align-items: center;
+    }
+
+    .border{
+        border: solid 1px $groupomania_bleu;
+    display: flex;
+    width: 25%;
+    height: 24px;
+    margin-right: 7%;
+    align-items: center;
+    padding: 1%;
+    padding-top: 3%;
+    justify-content: center;
+    @include tablette{
+        width:16%;
+        height: 27px;
+    }
+    @include ecran{
+        width:13%;
+        height: 27px;
+    }
     }
     .nbr    {
         font-weight: 700;
-        margin-right: 0.5%;
+        margin-right: 10%;
         font-size: $textpetit;
     }
-    #like{
+    .like{
         margin-right: 5%;
-        width: 10%;
+        width: 50%;
+    height: 20px;
         background-color: $groupomania_bleu;
         -webkit-mask: url(../assets/thumbs_up.svg);
         mask: url(../assets/thumbs_up.svg);
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: 100%;
     }
-    #likeGris{
+    .likeGris{
         margin-right: 5%;
-        width: 10%;
+        width: 50%;
+    height: 20px;
         background-color: $gris1;
         -webkit-mask: url(../assets/thumbs_up.svg);
         mask: url(../assets/thumbs_up.svg);
@@ -234,44 +257,39 @@ export default {
         -webkit-mask-size: 100%;
     }
 
-    #dislike{
+    .dislike{
         margin-right: 5%;
-        width: 10%;
+        width: 50%;
+    height: 20px;
         background-color: $groupomania_bleu;
         -webkit-mask: url(../assets/thumbs_down.svg);
         mask: url(../assets/thumbs_down.svg);
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: 100%;
     }
-    #dislikeGris{
+    .dislikeGris{
         margin-right: 5%;
-        width: 10%;
+        width: 50%;
+    height: 20px;
         background-color: $gris1;
         -webkit-mask: url(../assets/thumbs_down.svg);
         mask: url(../assets/thumbs_down.svg);
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: 100%;
     }
-    #bulle{
-        width: 4%;
-        background-color: $groupomania_bleu;
-        -webkit-mask: url(../assets/bulle.svg);
-        mask: url(../assets/bulle.svg);
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 100%;
-    }
+
     @include tablette_ecran{
         margin-top: 2%;
         margin-bottom: 2%;
         height: 17px;
-        #like, #dislike, 
-        #likeGris, #dislikeGris{
-            width: 10%;
+        .like, .dislike, 
+        .likeGris, .dislikeGris{
+            width: 39%;
             margin-right: 15%;
         }
-        #nbr{
-            font-size: 0.6rem;
-        }
+        // .nbr{
+        //     font-size: 0.6rem;
+        // }
     }
 }
 

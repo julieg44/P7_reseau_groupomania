@@ -74,40 +74,56 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin-bottom: 10%;
-    margin-top: 4%;
+    align-items: center;
+    margin-bottom: 2%;
+    // margin-top: 4%;
 
-    @include tablette_ecran {
-        margin-bottom: 5%;
-    }
+    // @include tablette_ecran {
+    //     margin-bottom: 2%;
+    //     margin-top: 0;
+    // }
 
     .positionPhoto {
-        text-align: left;
-        margin-right: 1%;
+                width: 11%;
+                text-align: left;
+                margin-right: 2%;
+                @include tablette {
+                    width: 6%;
+                    margin-right: 2%;
+                }
+                @include ecran {
+                    width: 6%;
+                    margin-right: 2%;
+                }
 
-        img {
-            width: 7%;
-            margin-right: 1%;
 
-            @include tablette_ecran {
-                width: 29px;
-                height: 29px;
-                clip-path: ellipse(50% 50%);
+                img {
+                    width: 100%;
+                    height: 30px;
+                    clip-path:ellipse(50% 50%);
+                    @include tablette{
+                        margin-right: 5%;
+                        height: 30px;
+                    }
+                    @include ecran{
+                        margin-right: 5%;
+                        height: 40px;
+                    }
+                    
+                }
             }
-        }
-    }
 
 
     .username {
         font-size: 0.7rem;
         text-align: left;
         font-weight: 700;
-        margin-top: 1%;
+        // margin-top: 1%;
         margin-bottom: 0;
-        margin-right: 1%;
+        margin-right: 2%;
 
         @include tablette_ecran {
-            font-size: 0.7rem;
+            font-size: 0.9rem;
             text-align: left;
             font-weight: 700;
             margin-right: 1%;
@@ -117,7 +133,10 @@ export default {
     p {
         text-align: left;
         font-size: 0.7rem;
-        margin-top: 1%;
+        // margin-top: 1%;
+        @include tablette_ecran{
+            font-size: 0.9rem;
+        }
     }
 }
 

@@ -5,8 +5,8 @@
                     <img v-if="user.photo !== null" :src="user.photo" />
                     <img v-else src="../assets/avatar.png"/>
                 </div>
-                <h1>{{ user.username }}</h1>
-                <p> {{ createdAt }}</p>     
+                <h1 class="usernamePost">{{ user.username }}</h1>
+                <p class="date"> {{ createdAt | formatedDate }}</p>     
             </div> 
             <h2 id="title">{{ title }}</h2>
             <div class="attachment-post">
@@ -49,7 +49,7 @@
 // const axios = require('axios');
 // let urlApi = "http://localhost:3000"
 
-
+import moment from 'moment';
 
 import Comments from '@/components/Comments.vue'
 import Likes from '@/components/Likes.vue'
@@ -133,18 +133,15 @@ export default {
             selectedUser: "selectedUser",
             token: "token",
         }),
-        
-        //     Trash(){
-        //     if (this.userConnected.id === this.UserId){
-        //         return this.proprietaireMessage = true
-        //     } else {
-        //         return this.proprietaireMessage
-        //     }
-            
-        // },
+  
+    },
 
-
-        
+    filters: {
+        formatedDate: function (value) {
+            if (value) {
+                return moment(String(value)).format('MM/DD/YYYY hh:mm')
+            }
+        }
     },
 
     watch:{
@@ -177,7 +174,9 @@ export default {
           console.log(response)
           window.location.href='/main'
         })
-       }
+       }, 
+
+
 
     //    async loadComments() {
     //        let comments = await this.$store.dispatch('loadComments')
@@ -324,78 +323,87 @@ export default {
         margin-top: 5%;
         z-index: 0;
 
+
+    @include tablette_ecran {
+            width: 80%;
+            padding: 4%;
+    }
+
         .message-top {
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
             margin-bottom: 5%;
-            position: relative;
 
             .positionPhoto {
-                position: absolute;
-                top: 0;
-                width: 140%;
+                width: 20%;
                 text-align: left;
-                margin-right: 5%;
+                margin-right: 2%;
                 @include tablette {
-                    width: 100%;
+                    width: 11%;
+                    margin-right: 2%;
                 }
                 @include ecran {
-                    width: 80%;
+                    width: 8%;
+                    margin-right: 2%;
                 }
 
 
                 img {
-                    width: 8%;
-                    height: 46px;
-                    margin-right: 1%;
-                    position: absolute;
+                    width: 100%;
+                    height: 38px;
                     clip-path:ellipse(50% 50%);
-                    // @include tablette{
-                    //     margin-right: 5%;
-                    // }
+                    @include tablette_ecran{
+                        margin-right: 5%;
+                        height: 48px;
+                    }
                     
                 }
             }
 
-            h1 {
+            .usernamePost {
                 font-size: $textpetit;
                 text-align: left;
                 font-weight: 700;
                 text-decoration: underline;
                 margin-bottom: 0;
-                margin-left: 13%;
+                // margin-left: 13%;
                 width: 80%;
                 color: $groupomania_bleu;
                 @include tablette{
-                    margin-left: 10%;
+                    // margin-left: 10%;
                     font-size: 1rem;
                 }
                 @include ecran{
-                    margin-left: 8%;
+                    // margin-left: 8%;
                     font-size: 1rem;
                 }
             }
 
-            p {
+            .date {
                 text-align: right;
+                width: 50%;
+                font-size:0.7rem;
+                @include tablette_ecran{
+                    font-size:0.9rem;
+                     width: 30%;
+                }
             }
         }
 
         .attachment-post {
-            width: 100%;
-            height: 80%;
-
+            width: 80%;
+            margin: auto;
             .image-post {
-                width: 80%;
+                width: 100%;
             }
         }
 
         .contenuComment {
             font-size: $textpetit;
             text-align: justify;
-            margin-top: 2%;
+            margin-top: 4%;
             margin-bottom: 4%;
         }
 
@@ -403,52 +411,40 @@ export default {
             font-size: $textpetit;
             text-align: center;
             font-weight: 700;
-            margin-bottom: 0;
+            margin-bottom: 2%;
             color: $groupomania_bleu;
             @include tablette{
                 font-size: 1rem;
             }
             @include ecran{
                 font-size: 1rem;
+                margin-bottom: 2%;
             }
         }
         .message-bottom{
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            align-content: center;
+                margin-top: 8%;
+    margin-bottom: 8%;
+    @include tablette_ecran{
+        margin-top: 3%;
+    margin-bottom: 3%;
+    }
         }
     }
 
-    @include tablette_ecran {
 
 
-        #message {
-            width: 80%;
-            margin: auto;
-            margin-top: 5%;
-            padding: 4%;
-            .message-top{ 
-                img {
-                width: 7%;
-                }
-            }
-            .attachment-post{
-                width: 100%;
-                height: 80%;
-                .image-post{
-                    width: 80%;
-                }
-            }
-            
-        }
-      
-        .button-user {
+    .button-user {
             background-color: $groupomania_bleu_clair;
-            width: 5%;
+            width: 12%;
             margin: 0;
 
             @include tablette_ecran {
                 background-color: none;
+                width: 5%;
             }
 
             .destroy-icon {
@@ -458,7 +454,6 @@ export default {
 
             }
         }
-    }
 
 
 </style>
