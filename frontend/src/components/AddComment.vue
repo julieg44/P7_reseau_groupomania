@@ -125,7 +125,6 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    // height: 30px;
     align-items: center;
     padding: 1% 3% 1% 3%;
     background-color: $blanc;
@@ -170,6 +169,9 @@ export default {
         border: none;
         width: 87%;
         height: 30px;
+        @include tablette_ecran{
+            font-size: 0.9rem;
+        }
     }
 }
 

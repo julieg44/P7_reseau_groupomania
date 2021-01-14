@@ -49,6 +49,10 @@ export default{
     postComment(messageId, comment){
         return appelsAPI.post(URL + '/api/comment/message/' + messageId, comment)
     },
+    supComment(id){
+        return appelsAPI.delete(URL + '/api/comment/' + id)
+    },
+
 
 
     //// likes /////

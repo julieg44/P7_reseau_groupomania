@@ -9,7 +9,7 @@
         </div>
         <div class="closeProfil"><a href="#" id="closeProfil"><img src="../assets/close.svg"/></a></div>
         <h2 class="profilName"> {{userConnected.username}}</h2>
-        <p class="contenuProfil">Email :{{ userConnected.email }}</p>
+        <p class="contenuProfil">Email : {{ userConnected.email }}</p>
         <div class="actionProfil">
             <BtnDeconnect @click="deconnect()" />
             <router-link :to="_modify">

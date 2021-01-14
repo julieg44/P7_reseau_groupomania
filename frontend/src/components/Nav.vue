@@ -1,11 +1,13 @@
 <template>
 <nav v-if="userConnected">
-<h1> Bonjour {{ userConnected.username }} !</h1>
+<h1 v-if="admin===false"> Bonjour {{ userConnected.username }} !</h1>
+<h1 v-else id="admin"> Vous êtes connecté en tant qu'administrateur !</h1>
 <div class="icons" @click="affUser">
-    <div id="bulle"><a href="#cartouchePost" id="openPost"><img src="../assets/bulle-rond.svg" alt="photo de profil" /></a></div>
-    <div id="profil"><a href="#cartoucheProfil" id="openProfil"><img src="../assets/user-solid-rond.svg" alt="photo de profil" /></a></div>
-    <div id="deconnection"><img src="../assets/deconnect-rond.svg" alt="deconnection" @click="deconnect()"/></div> 
+    <div v-if="admin===false" id="bulle"><a href="#cartouchePost" id="openPost"><img src="../assets/bulle-rond.svg" alt="photo de profil" /></a></div>
+    <div v-if="admin===false" id="profil"><a href="#cartoucheProfil" id="openProfil"><img src="../assets/user-solid-rond.svg" alt="photo de profil" /></a></div>
+    <div v-if="admin===false" id="deconnection"><img src="../assets/deconnect-rond.svg" alt="deconnection" @click="deconnect()"/></div> 
 </div>
+<div id="powerOff" v-if="admin===true" @click="deconnect()"><span class="deconnectIcon"><img src="../assets/power_off.svg"/></span><p>Déconnection </p></div>
 
 </nav>
 </template>
@@ -18,7 +20,12 @@ export default {
 
 
    props: {
-        userConnected:{ type:Object}
+        userConnected:{ 
+            type:Object
+        },
+        admin:{
+            type: Boolean
+        }    
     },
 
     methods:{
@@ -66,6 +73,13 @@ nav{
             font-weight: 200;
         }
     }
+        #admin{
+        font-size: 0.9rem;
+        @include tablette_ecran{
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+    }
 
     .icons{ 
         display: flex;
@@ -108,6 +122,27 @@ nav{
         margin-left: 7%;
     margin-right: 7%;
     }
+    }
+    #powerOff {
+        width: 20%;
+        p {
+            display: none;
+            @include tablette_ecran {
+                display: block;
+                color: $blanc;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+        .deconnectIcon {
+            width: 10%;
+            img {
+                width: 40%;
+            }
+            @include tablette_ecran {
+                display: none;
+            }
+        }
     }
 
 }

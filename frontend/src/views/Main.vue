@@ -2,7 +2,7 @@
   <div id="global">
     <!-- <PopAlert /> -->
     <Entete />
-    <Nav :userConnected="userConnected" @affichageUser="showUserOpen()"/>
+    <Nav :userConnected="userConnected" :admin="admin" @affichageUser="showUserOpen()"/>
     <div id="section-user" v-show="showUser">
       <div id='content-user'>
         <EncartProfil :userConnected="userConnected" />
@@ -30,7 +30,7 @@
 
 
     <!--messages -->
-    <div id="section-post">
+    <div id="section-post" v-if="admin===false">
         <div class="filPost" v-if="messagesUser">
           <Post v-for="item in messagesUser"
           :id="item.id" 
@@ -67,6 +67,10 @@
         </div>
     </div>
 
+  <div id="administrateur" v-else>
+    <Admin :messages="messages"/>
+  </div>
+
 
   </div>
 </template>
@@ -80,7 +84,7 @@ import Nav from '@/components/Nav.vue'
 
 import EncartProfil from '@/components/EncartProfil.vue'
 import Search from '@/components/UI/Search.vue'
-// import Input from '@/components/UI/Input.vue'
+import Admin from '@/components/Admin.vue'
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 
 import EncartPost from '@/components/EncartPost.vue'
@@ -94,7 +98,7 @@ export default {
   name: 'Main',
 
   components: {
-    Entete, Nav, EncartProfil, EncartPost, Search, BtnRouge, Post
+    Entete, Nav, EncartProfil, EncartPost, Search, BtnRouge, Post, Admin
   },
 
   props:['id'],
@@ -107,10 +111,11 @@ export default {
       userConnected:null,
       messagesUser:null,
       showInput: false, 
-          searchName:"",
+      searchName:"",
       showUser:false,
       showIcon:true , 
-      admin:false
+      admin:false,
+      // listeUser:null
     }
   },
 
@@ -119,24 +124,7 @@ export default {
   },
   
      methods: {
-      //     async getMessage() {
-      //     let test = await Service.getMessages()
-      //     .then(response => { 
-      //       for (let i = 0; i < response.data.length; i++) {
-      //         let id = response.data[i].UserId;
-      //         Service.getUser(id)
-      //           .then(response2 => {
-      //             let user = {
-      //               username: response2.data.username,
-      //               photo: response2.data.photo
-      //             }
-      //             response.data[i].user2 = user
-      //           })
-      //       }
-      //     })
-      //     this.messages = test;
-      //     console.log(this.messages)
-      // }
+
 
   input(){
         this.showInput = true
@@ -193,84 +181,13 @@ export default {
         .then (response => {
          this.messages = response.data
         })
+     }, 
 
-          
-
-        // Service.getComments(1)
-        // .then (response => {
-        //   this.commentaires = response.data
-        // })  
-
-     }
-
-     
-
-    // created() {
-
-    //   Service.getUser(this.id)
-    //     .then (response => {
-    //       this.userConnected = response.data
-    //     })
-
-
-    //     Service.getMessages()
-    //       .then(response => { 
-    //       this.messages = response.data
-
-    //         for (let i = 0; i < response.data.length; i++) {
-    //           let id = response.data[i].UserId;
-    //           Service.getUser(id)
-    //             .then(response2 => {
-    //               let user = { 
-    //                 prenom: response2.data.username,
-    //                 avatar: response2.data.photo 
-    //                 };
-    //               // let user = []
-    //               // user.push({ 
-    //               //   prenom: response2.data.username,
-    //               //   avatar: response2.data.photo
-    //               //   })
-                  
-    //               response.data[i].userQuiAPost = user
-    //               this.userQuiAPost = user
-
-    //             })
-    //         }
-    //       })
-    // }
 }
+
 </script>
 
-
-      //  async loadMessages() {
-      //    let messages = await this.$store.dispatch('loadMessages')
-      //      .then(function (response) {
-      //        console.log(response)
-      //        return response;
-      //      })
-      //    return this.messages = messages;
-      //  },
-
-
-      //  async loadComments() {
-      //    let commentaires = await this.$store.dispatch('loadComments')
-      //      .then(function (response) {
-      //        console.log(response)
-      //        return response;
-      //      })
-      //    return this.commentaires = commentaires;
-      //  },
-            //    async loadProfil() {
-            //     let user = await this.$store.dispatch('loadUser', {
-            //             id: this.$route.params.id
-            //         })
-            //         .then(function (response) {
-            //             return response;
-            //         })
-            //     return this.user = user;
-            // },
-
-
+     
 
 
 <style lang="scss">
@@ -437,7 +354,6 @@ img{
   z-index: 0;
 
   @include tablette_ecran{
-    // margin-top: 33%;
     max-width: 980px;
     margin: auto;
   }
@@ -448,7 +364,21 @@ img{
     // display: flex;
     // flex-wrap: wrap;
     // flex-direction: row;
-  }
+  } 
+}
+
+#administrateur{
+  
+    z-index: 0;
+    width: 100%;
+    margin-top: 40%;
+    @include tablette{
+      margin-top: 20%;
+    }
+    @include ecran{
+      margin-top: 15%;
+    }
+
 }
 
 </style>

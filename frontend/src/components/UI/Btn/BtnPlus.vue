@@ -18,25 +18,29 @@ export default {
 
   .plus {
     width: 10%;
-    margin-top: 3%;
-    margin-bottom: 3%;
+    margin: 3%;
+    // margin-top: 3%;
+    // margin-bottom: 3%;
     background-color: $groupomania_bleu;
-    -webkit-mask: url(../../../assets/BtnAdd.svg);
-    mask: url(../../../assets/BtnAdd.svg);
+    -webkit-mask: url(../../../assets/telegram-plane-brands.svg);
+    mask: url(../../../assets/telegram-plane-brands.svg);
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-size: 100%;
     @include tablette{
       width: 5%;
-      margin-top: 1%;
-      margin-bottom: 0;
-      margin-left: 3%;
+      // margin-top: 1%;
+      // margin-bottom: 0;
+      // margin-left: 3%;
+      margin: 1% 3% 0 3%
     }
 
     @include ecran {
       width: 4%;
-      margin-top: 1%;
-      margin-bottom: 0;
-      margin-left: 3%;
+      // margin-top: 1%;
+      // margin-bottom: 0;
+      // margin-left: 3%;
+            margin: 1% 3% 0 3%
+
     }
   }
 </style>
