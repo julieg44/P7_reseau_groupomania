@@ -1,5 +1,6 @@
 <template>
 <div class='content'>
+    <PopAlert/>
     <h1> Connectez-vous</h1>
     <form>
         <!-- <div id="username"><input placeholder="Votre nom d'utilisateur" v-model="username"></div> -->
@@ -17,14 +18,16 @@
 
 <script>
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
+import PopAlert from '@/components/PopAlert.vue'
 
 import { mapActions } from 'vuex';
+
 
 
 export default {
     name:'login',
     components: { 
-        BtnRouge,
+        BtnRouge, PopAlert
     },
     data(){
     return {email:"", password:""}
@@ -39,19 +42,14 @@ export default {
         }
     }
 }
-
 </script>
 
 <style lang="scss">
-
 @import "../sass/main.scss";
-
 .content{
     max-width: 980px;
     margin: auto;
 }
-
-
 h1{
     font-size: $texttitre;
     text-align: center;
@@ -59,7 +57,6 @@ h1{
     font-weight: 100;
     margin-bottom: 5%;
 }
-
 form{
     width: 90%;
     margin: auto;
@@ -67,9 +64,6 @@ form{
         width: 50%;
     }
 }
-
-
-
 #email, #password{ 
     input{
     width:100%;
@@ -86,7 +80,6 @@ form{
     }
     }
 }
-
 #newAccount{
     color: $groupomania_rouge;
     text-decoration: underline;
@@ -94,7 +87,6 @@ form{
     font-weight: 700;
     margin-block-end: 0;
 }
-
 #connectEcran{
     @include tablette_ecran{
         display: flex;
@@ -102,6 +94,4 @@ form{
         align-items: baseline;
     }
 }
-
-
 </style>

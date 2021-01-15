@@ -17,32 +17,7 @@ Vue.use(Vuex)
 
 let urlApi = "http://localhost:3000"
 
-// alerte
-// function customAlert (){
-//   this.render = function(dialog){
-//       let winW = window.innerWidth;
-//       let winH = window.innerHeight;
-//       let popup = document.getElementById ('popup');
-//       let popupContent = document.getElementById ('popup-content');
-//       popup.style.display = 'block';
-//       popup.style.height = winH + 'px';
-//       popupContent.style.left = (winW/2) - (980 * .5) + 'px';
-//       if (winW < 569){
-//           popupContent.style.left = (winW/2) - (260 * .5) + 'px';
-//       }
-//       popupContent.style.display = "block";
-//       document.getElementById('popup-head').innerHTML = ' <button id="fermer"> X </button> ';
-//       document.getElementById('popup-text').innerHTML = dialog;
-//       let buttonAlert = document.getElementById('fermer');
-//       buttonAlert.addEventListener ('click', function(){
-//         window.location.href = '/'
-//       })
-//   }
-//   this.ok = function(){
-//       document.getElementById('popup').style.display = 'none';
-//       document.getElementById('popup-content').style.display = 'none';
-//   }
-// }
+
 
 export default new Vuex.Store({
   state: {
@@ -77,9 +52,7 @@ export default new Vuex.Store({
           localStorage.setItem('userId',JSON.stringify(userlogged.userId))
           context.commit('LoggedUserId', userlogged.userId)
           context.commit('LoggedToken', userlogged.token)
-          // window.location.href = '/main/'+ userlogged.userId;
-          window.location.href = '/main';
-
+          window.location.href = '/mainBis';
         })
     },
 

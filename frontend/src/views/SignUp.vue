@@ -35,11 +35,10 @@ import Entete from '@/components/Entete.vue'
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 import BtnBleu from '@/components/UI/Btn/BtnBleu.vue'
 import PopAlert from '@/components/PopAlert.vue'
-
-
 import { mapActions } from 'vuex';
 const axios = require('axios');
 let urlApi = "http://localhost:3000"
+
 
 // alerte
 function customAlert (){
@@ -50,12 +49,12 @@ function customAlert (){
       let popupContent = document.getElementById ('popup-content');
       popup.style.display = 'block';
       popup.style.height = winH + 'px';
-      popupContent.style.left = (winW/2) - (980 * .5) + 'px';
+      popupContent.style.left = (winW/2) - (500 * .5) + 'px';
       if (winW < 569){
-          popupContent.style.left = (winW/2) - (260 * .5) + 'px';
+          popupContent.style.left = (winW/2) - (270 * .5) + 'px';
       }
       popupContent.style.display = "block";
-      document.getElementById('popup-head').innerHTML = ' <button id="fermer"> X </button> ';
+      document.getElementById('popup-bottom').innerHTML = ' <button id="fermer"> Ok ! </button> ';
       document.getElementById('popup-text').innerHTML = dialog;
       let buttonAlert = document.getElementById('fermer');
       buttonAlert.addEventListener ('click', function(){
@@ -67,9 +66,6 @@ function customAlert (){
       document.getElementById('popup-content').style.display = 'none';
   }
 }
-
-
-
 export default {
     name: 'signUp',
     components: {
@@ -89,11 +85,9 @@ export default {
     },
     methods: {
         ...mapActions(['signup']),
-
         onFileSelected(event) {
             this.selectedFile = event.target.files[0]
         },
-
         signup() {
             if (this.selectedFile !== null) {
                 const fd = new FormData()
@@ -105,7 +99,7 @@ export default {
                 axios.post(urlApi + '/api/user/signup', fd)
                     .then(function (response) {
                         let alert = new customAlert();
-                        alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+                        alert.render("Bienvenue " + response.data.user.username + " ! <span id='pluspetit'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
                     })
                 
             } else {
@@ -117,18 +111,22 @@ export default {
                 }
                 axios.post(urlApi + '/api/user/signup', NewUser)
                     .then(function (response) {
+                        if (response.status !== 201){
+                            let erreur = response.data.error.errors[0].message
+                            console.log(erreur)
+                            let alert = new customAlert();
+                            alert.render("Erreur ! </br> <span id='pluspetit'>" + erreur + "</span>") 
+                        }
                         let alert = new customAlert();
-                        alert.render("Bienvenue " + response.data.user.username + " ! <span style='font-size:1.5rem'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+                        alert.render("Bienvenue " + response.data.user.username + " ! <span id='pluspetit'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
                     })
             }
         },
     },
 }
-
 </script>
 
 <style lang="scss">
-
 @import "../sass/main.scss";
-
 </style>
+

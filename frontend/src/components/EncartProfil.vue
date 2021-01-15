@@ -152,7 +152,7 @@ export default {
     }
 
     h2 {
-        font-size: 1.7rem;
+        font-size: 1.3rem;
         font-weight: 300;
         color: $groupomania_rouge;
         text-align: left;
@@ -161,7 +161,6 @@ export default {
         margin-left: 5%;
 
         @include tablette_ecran {
-            font-size: 1.3rem;
             margin-top: 30%;
             margin-bottom: 3%;
             text-align: center;
@@ -169,7 +168,7 @@ export default {
     }
 
     p {
-        font-size: 1.3rem;
+        font-size: 1rem;
         color: $gris3;
         text-align: left;
         margin-left: 5%;
@@ -223,11 +222,11 @@ export default {
     }
 
     .actionProfil {
-        width: 80%;
+        width: 70%;
         height: 55px;
         position: absolute;
-        bottom: 45%;
-        right: 10px;
+        bottom: 43%;
+        right: 0px;
         text-align: right;
 
         @include tablette_ecran {

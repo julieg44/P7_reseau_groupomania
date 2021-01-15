@@ -15,8 +15,6 @@
 import Entete from '@/components/Entete.vue'
 import Login from '@/components/Login.vue'
 import PopAlert from '@/components/PopAlert.vue'
-
-
 export default {
   name: 'Home',
   components: {
@@ -26,11 +24,7 @@ export default {
 </script>
 
 <style lang="scss">
-
 @import "../sass/main.scss";
-
-
-
 #login {
   padding-top: 30%;
   background-color: $gris1;
@@ -42,5 +36,4 @@ export default {
     padding-top: 10%;
   }
 }
-
 </style>
