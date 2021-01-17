@@ -32,7 +32,7 @@ exports.signup = (req, res, next) => {
           .catch(error => res.json({
             error: true,
             data: [],
-            error: error
+            error: "Cet email est déjà utilisé"
           }));
       });
   } else {

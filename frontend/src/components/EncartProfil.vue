@@ -30,8 +30,8 @@ import BtnDeconnect from '@/components/UI/Btn/BtnDeconnect.vue'
 import BtnModifyUser from '@/components/UI/Btn/BtnModifyUser.vue'
 import Service from '@/services/service.js'
 
-import { mapState } from "vuex";
-import { mapActions } from 'vuex';
+// import { mapState } from "vuex";
+// import { mapActions } from 'vuex';
 
 
 
@@ -56,11 +56,11 @@ export default {
     // },
 
     computed: {
-        ...mapState({
-            users: "users",
-            selectedUser: "selectedUser",
-            token: "token",
-        }),
+        // ...mapState({
+        //     users: "users",
+        //     selectedUser: "selectedUser",
+        //     token: "token",
+        // }),
         _modify() {
             return '/modifyUser';
         }
@@ -68,7 +68,7 @@ export default {
 
 
     methods: {
-        ...mapActions(['supUser', 'deconnect']),
+        // ...mapActions(['supUser', 'deconnect']),
 
         // async loadProfil() {
         //         let user = await this.$store.dispatch('loadUser', {

@@ -57,8 +57,8 @@ import AddComment from '@/components/AddComment.vue'
 import BtnSup from '@/components/UI/Btn/BtnSup.vue'
 
 
-import { mapState } from 'vuex';
-import { mapActions } from 'vuex';
+// import { mapState } from 'vuex';
+// import { mapActions } from 'vuex';
 
 import Service from '@/services/service.js'
 
@@ -127,14 +127,14 @@ export default {
   },
 
 
-    computed: {
-        ...mapState({
-            users: "users",
-            selectedUser: "selectedUser",
-            token: "token",
-        }),
+    // computed: {
+    //     ...mapState({
+    //         users: "users",
+    //         selectedUser: "selectedUser",
+    //         token: "token",
+    //     }),
   
-    },
+    // },
 
     filters: {
         formatedDate: function (value) {
@@ -165,7 +165,7 @@ export default {
 
    methods: {
 
-       ...mapActions(['loadMessages']),
+    //    ...mapActions(['loadMessages']),
 
 
        supMessage() {

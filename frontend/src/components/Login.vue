@@ -20,7 +20,9 @@
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 import PopAlert from '@/components/PopAlert.vue'
 
-import { mapActions } from 'vuex';
+// import { mapActions } from 'vuex';
+const axios = require('axios');
+let urlApi = "http://localhost:3000"
 
 
 
@@ -33,13 +35,27 @@ export default {
     return {email:"", password:""}
     },
     methods: {
-        ...mapActions(['login']),
-        login(){
-            this.$store.dispatch('login', {
-                email:this.email,
-                password:this.password
-            })
-        }
+        // ...mapActions(['login']),
+        // login(){
+        //     this.$store.dispatch('login', {
+        //         email:this.email,
+        //         password:this.password
+        //     })
+        // },
+
+        login() {
+            let user = {
+                email: this.email,
+                password: this.password
+            };
+            axios.post(urlApi + '/api/user/login', user)
+                .then(function (response) {
+                    let userlogged = response.data
+                    localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
+                    localStorage.setItem('userId', JSON.stringify(userlogged.userId))
+                    window.location.href = '/mainBis';
+                })
+        },
     }
 }
 </script>

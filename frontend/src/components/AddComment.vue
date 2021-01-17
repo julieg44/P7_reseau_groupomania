@@ -17,7 +17,7 @@
 
 
 import BtnPlus from '@/components/UI/Btn/BtnPlus.vue'
-import { mapState } from 'vuex';
+// import { mapState } from 'vuex';
 import Service from '@/services/service.js'
 
 
@@ -51,13 +51,13 @@ export default {
       }
   },
 
-    computed: {
-        ...mapState({
-            users: "users",
-            selectedUser: "selectedUser",
-            token: "token",
-        }),
-    },
+    // computed: {
+    //     ...mapState({
+    //         users: "users",
+    //         selectedUser: "selectedUser",
+    //         token: "token",
+    //     }),
+    // },
 
 
    methods: {

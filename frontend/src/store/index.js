@@ -42,19 +42,19 @@ export default new Vuex.Store({
      context.commit('LoggedToken',token)
     },
 
-    login(context, payload){
-      let user = { email:payload.email, password:payload.password };
-      axios.post(urlApi+'/api/user/login', user)
-        .then(function (response) {
-          console.log(response.data)
-          let userlogged = response.data
-          localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
-          localStorage.setItem('userId',JSON.stringify(userlogged.userId))
-          context.commit('LoggedUserId', userlogged.userId)
-          context.commit('LoggedToken', userlogged.token)
-          window.location.href = '/mainBis';
-        })
-    },
+    // login(context, payload){
+    //   let user = { email:payload.email, password:payload.password };
+    //   axios.post(urlApi+'/api/user/login', user)
+    //     .then(function (response) {
+    //       console.log(response.data)
+    //       let userlogged = response.data
+    //       localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
+    //       localStorage.setItem('userId',JSON.stringify(userlogged.userId))
+    //       context.commit('LoggedUserId', userlogged.userId)
+    //       context.commit('LoggedToken', userlogged.token)
+    //       window.location.href = '/mainBis';
+    //     })
+    // },
 
     async loadUser(context, payload){
       let token = 'Bearer '+ this.state.token;

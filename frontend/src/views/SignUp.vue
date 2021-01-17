@@ -111,8 +111,9 @@ export default {
                 }
                 axios.post(urlApi + '/api/user/signup', NewUser)
                     .then(function (response) {
+                        console.log(response)
                         if (response.status !== 201){
-                            let erreur = response.data.error.errors[0].message
+                            let erreur = response.data.error
                             console.log(erreur)
                             let alert = new customAlert();
                             alert.render("Erreur ! </br> <span id='pluspetit'>" + erreur + "</span>") 

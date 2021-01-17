@@ -18,8 +18,8 @@
 <script>
 // @ is an alias to /src
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
-import { mapState } from "vuex";
-import { mapActions } from 'vuex';
+// import { mapState } from "vuex";
+// import { mapActions } from 'vuex';
 // import Service from '@/services/service.js'
 
 
@@ -44,17 +44,17 @@ export default {
       }
   },
 
-  computed: {
-    ...mapState ({
-    users: "users",
-    selectedUser: "selectedUser",
-    token: "token",
-    }),  
-  },
+//   computed: {
+//     ...mapState ({
+//     users: "users",
+//     selectedUser: "selectedUser",
+//     token: "token",
+//     }),  
+//   },
 
 
    methods: {
-   ...mapActions (['supUser', 'deconnect', 'modifyUser']),
+//    ...mapActions (['supUser', 'deconnect', 'modifyUser']),
 
    onFileSelected(event){
             this.selectedFile = event.target.files[0]

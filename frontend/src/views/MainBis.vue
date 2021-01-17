@@ -90,7 +90,7 @@ import Post from '@/components/Post.vue'
 import Service from '@/services/service.js'
 
 
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 
 export default {
   name: 'MainBis',
@@ -99,7 +99,7 @@ export default {
     Entete, NavBis, EncartProfil, EncartPost, Post, Admin, BtnRouge
   },
 
-  props:['id'],
+  // props:['id'],
         
 
   data() {
@@ -117,9 +117,10 @@ export default {
     }
   },
 
-  computed:{
-    ...mapState(["selectedUser"])
-  },
+  // computed:{
+  //   ...mapState(["selectedUser"])
+
+  // },
   
      methods: {
 
@@ -167,7 +168,8 @@ export default {
      },
 
      created(){
-        Service.getUser(this.selectedUser)
+       let selectedUser=localStorage.getItem('userId')
+        Service.getUser(selectedUser)
         .then (response => {
           this.userConnected = response.data
           if ( response.data.isAdmin === true){
@@ -322,7 +324,7 @@ export default {
       .iconPerso {
         width: 15%;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         margin-right: 3%;
         margin-top: 3%;
       }
