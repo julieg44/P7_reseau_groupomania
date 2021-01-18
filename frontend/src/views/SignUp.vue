@@ -14,12 +14,7 @@
                     </div>
                     <div class="formImg">
                         <img src="../assets/avatar.jpg" alt="avatar"/>
-                        <!-- <div class="upload_file_container">
-                            <label for="file">
-                                Sélectionner une photo
-                            </label> -->
                             <input class="inputfile" type="file" name="photo" @change="onFileSelected" />
-                        <!-- </div> -->
                     </div>
                 </form>
                 <router-link to="/"><BtnBleu label="Annuler"/></router-link><span id="retour-mobile"><br></span>
@@ -98,6 +93,12 @@ export default {
                 
                 axios.post(urlApi + '/api/user/signup', fd)
                     .then(function (response) {
+                        if (response.status !== 201){
+                            let erreur = response.data.error
+                            console.log(erreur)
+                            let alert = new customAlert();
+                            alert.render("Erreur ! </br> <span id='pluspetit'>" + erreur + "</span>") 
+                        }
                         let alert = new customAlert();
                         alert.render("Bienvenue " + response.data.user.username + " ! <span id='pluspetit'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
                     })

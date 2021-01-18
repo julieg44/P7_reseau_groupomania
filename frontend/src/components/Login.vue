@@ -24,6 +24,7 @@ import PopAlert from '@/components/PopAlert.vue'
 const axios = require('axios');
 let urlApi = "http://localhost:3000"
 
+//alerte
 
 
 export default {
@@ -50,10 +51,12 @@ export default {
             };
             axios.post(urlApi + '/api/user/login', user)
                 .then(function (response) {
-                    let userlogged = response.data
-                    localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
-                    localStorage.setItem('userId', JSON.stringify(userlogged.userId))
-                    window.location.href = '/mainBis';
+                    console.log(response)
+                        let userlogged = response.data
+                        localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
+                        localStorage.setItem('userId', JSON.stringify(userlogged.userId))
+                        window.location.href = '/main';
+                    
                 })
         },
     }

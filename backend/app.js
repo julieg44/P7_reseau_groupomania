@@ -1,9 +1,15 @@
 const express = require('express');
 const Sequelize = require('sequelize');
+const dotenv = require('dotenv').config()
 const userRoutes = require('./routes/user');
 const messageRoutes = require('./routes/message');
 const commentRoutes = require('./routes/comment');
 const likeRoutes = require('./routes/like');
+
+
+const userDB = process.env.DB_USER;
+const pass = process.env.DB_PASS;
+const token = process.env.DB_TOKEN
 
 
 const bodyParser = require('body-parser');
@@ -12,7 +18,7 @@ const path = require('path');
 
 const app = express();
 
-const sequelize = new Sequelize ('groupomania_development', 'julie','marty',{
+const sequelize = new Sequelize ('groupomania_development', userDB, pass,{
    host:'localhost',
    dialect: 'mysql'
  });

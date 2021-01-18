@@ -8,7 +8,7 @@
                 <input class="contentpost" placeholder="écrivez-ici" type="text" v-model="content">
                 <div class="align-boutons">
                     <input class="inputPost" type="file" @change="onFileSelected"/>
-                    <BtnRouge @click.prevent="poster()" label="Envoyer"/>
+                    <BtnRouge @click="poster()"  label="Envoyer"/>
                 </div>
             </form>
         </div>
@@ -59,6 +59,11 @@ export default {
    onFileSelected(event){
             this.selectedFile = event.target.files[0]
         },
+
+
+        // trash(){
+        //     this.$emit('trash')
+        // },
 
     // poster() {
     //     let fd = new FormData()
@@ -115,11 +120,10 @@ export default {
                         }
                         console.log(LikeDefault)
                         axios.post(urlApi + '/api/like/message/' + response.data.data.id, LikeDefault)
-                            .then(function (response) {
-                                console.log(response)
-                            })
-
-                        window.location.href = '/main'
+                            // .then(function () {
+                                
+                            // })
+                            window.location.href = '/main'
                     })
             } else {
                 let Newmess = {
@@ -143,10 +147,10 @@ export default {
                         }
                         console.log(LikeDefault)
                         axios.post(urlApi + '/api/like/message/' + response.data.data.id, LikeDefault)
-                            .then(function (response) {
-                                console.log(response)
-                            })
+                            // .then(function () {
+                            // })
                         window.location.href = '/main'
+
                     })
             }
 

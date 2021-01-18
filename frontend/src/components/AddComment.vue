@@ -1,6 +1,6 @@
 <template>
     <form class="post-comment" enctype="multipart/form-data">
-        <div class="commentaire">
+        <div class="commentaire" v-if="userConnected">
             <div class="positionPhoto">
                 <img v-if="userConnected.photo !== null" :src="userConnected.photo" />
                 <img v-else src="../assets/avatar.png" />
@@ -35,11 +35,8 @@ export default {
           type: Number,
       },
 
-    //   UserId: {
-    //       type: Number
-    //   },
-
       userConnected: { type: Object }
+      
 
   },
 
@@ -65,7 +62,7 @@ export default {
             let Newcomment = {
                UserId: this.userConnected.id,
                UserUsername: this.userConnected.username,               
-              UserPhoto: this.userConnected.photo,               
+               UserPhoto: this.userConnected.photo,               
                MessageId: this.MessageId,
                content: this.content,
             }
@@ -78,11 +75,7 @@ export default {
                    console.log(response)
                })
                window.location.href="/main"
-           }
-           // console.log(this.user.id)
-           
-
-         
+           }  
        },
 
 

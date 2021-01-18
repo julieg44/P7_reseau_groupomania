@@ -1,8 +1,11 @@
 const Models = require('../models/');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+// const dotenv = require('dotenv').config()
 const MaskData = require('maskdata');
 const fs = require('fs');
+
+const token = process.env.DB_TOKEN
 
 //   /** Default Options
 //     maskWith: "*"
@@ -76,7 +79,7 @@ exports.login = (req, res, next) => {
             userId: user.id,
             token: jwt.sign(
               { userId: user.id },
-              'RANDOM_TOKEN_SECRET',
+              token,
               { expiresIn: '8h' }
             )
           });

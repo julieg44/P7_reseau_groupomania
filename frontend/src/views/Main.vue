@@ -2,7 +2,12 @@
   <div id="global">
     <!-- <PopAlert /> -->
     <Entete />
-    <Nav :userConnected="userConnected" :admin="admin" @affichageUser="showUserOpen()"/>
+    <Nav :userConnected="userConnected" :admin="admin" @affichageUser="showUserOpen()" @input="input()"/>
+    <div class="search-input" v-show="showInput">
+        <input class="input-search" type="text" placeholder="Rechercher un nom" v-model="searchName" />
+        <BtnRouge class="search-btn" @click="search()" label="Chercher" />
+        <div class="closeSearch" @click="closeInput()"><img src="../assets/close.svg"/></div>
+    </div>
     <div id="section-user" v-show="showUser">
       <div id='content-user'>
         <EncartProfil :userConnected="userConnected" />
@@ -11,19 +16,13 @@
             <div class="message-accueil" v-if="userConnected">
               <h1>Bonjour {{ userConnected.username }} !</h1>
             </div>
-            <div class="iconPerso" v-show="showIcon">
-              <Search @click="input()" />
+            <div class="iconPerso">
+              <!-- <Search @click="input()" /> -->
               <div class="closeUser" @click="showUserClose()"></div> 
             </div>
-            <div class="search-input" v-show="showInput">
-              <!-- <div><img src="../assets/close.svg"/></div> -->
-                <input class="input-search" type="text" placeholder="Rechercher un nom" v-model="searchName" />
-                <BtnRouge class="search-btn" @click="search()" label="Chercher" />
-                <!-- <div class="close">XXX</div> -->
-                <div class="closeSearch" @click="closeInput()"><img src="../assets/close.svg"/></div>
-            </div>
+
           </div>
-          <EncartPost :userConnected="userConnected" />
+          <EncartPost :userConnected="userConnected"/>
         </div>
       </div>
     </div>
@@ -74,7 +73,6 @@
 
   </div>
 </template>
-          :DecompteLike="item.Likes"
 
 <script>
 // @ is an alias to /src
@@ -83,7 +81,7 @@ import Entete from '@/components/Entete.vue'
 import Nav from '@/components/Nav.vue'
 
 import EncartProfil from '@/components/EncartProfil.vue'
-import Search from '@/components/UI/Search.vue'
+// import Search from '@/components/UI/Search.vue'
 import Admin from '@/components/Admin.vue'
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 
@@ -92,16 +90,16 @@ import Post from '@/components/Post.vue'
 import Service from '@/services/service.js'
 
 
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 
 export default {
   name: 'Main',
 
   components: {
-    Entete, Nav, EncartProfil, EncartPost, Search, BtnRouge, Post, Admin
+    Entete, Nav, EncartProfil, EncartPost, Post, Admin, BtnRouge
   },
 
-  props:['id'],
+  // props:['id'],
         
 
   data() {
@@ -115,13 +113,15 @@ export default {
       showUser:false,
       showIcon:true , 
       admin:false,
+      // proprietaireMessage: false
       // listeUser:null
     }
   },
 
-  computed:{
-    ...mapState(["selectedUser"])
-  },
+  // computed:{
+  //   ...mapState(["selectedUser"])
+
+  // },
   
      methods: {
 
@@ -150,6 +150,8 @@ export default {
    },
 
 
+
+
          async search() {
        let nomrecherche = this.searchName
        await Service.getAllUsers()
@@ -169,17 +171,19 @@ export default {
      },
 
      created(){
-        Service.getUser(this.selectedUser)
+       let selectedUser=localStorage.getItem('userId')
+        Service.getUser(selectedUser)
         .then (response => {
           this.userConnected = response.data
           if ( response.data.isAdmin === true){
             this.admin = true
-          }
-        }),
+          } 
+        })
+        
 
         Service.getMessages()
         .then (response => {
-         this.messages = response.data
+         this.messages = response.data        
         })
      }, 
 
@@ -204,10 +208,62 @@ export default {
   padding-bottom: 2%;
   top: 115px;
 
-  @include tablette_ecran {
+  @include tablette {
     background-color: $gris1;
-    top: 70px;
+    top: 104px;
   }
+  @include ecran{
+    background-color: $gris1;
+    top: 104px;
+  }
+}
+.search-input {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  padding: 3%;
+  margin: auto;
+  background-color: $gris1;
+  align-items: center;
+  margin-top: 40%;
+  margin-bottom: -30%;
+
+  @include tablette{
+  width: 60%;
+  margin-top: 18%;
+  margin-bottom: -14%;
+  }
+  @include ecran{
+      width: 60%;
+  max-width: 480px;
+  margin-top: 8%;
+  margin-bottom: -7%;
+  padding: 1%;
+  }
+
+  .input-search {
+    height: 30px;
+    width: 70%;
+    border: none;
+  }
+
+  .search-btn {
+    width: 40%;
+    height: 30px;
+    margin-right: 2%;
+  }
+
+  .closeSearch {
+    width: 20px;
+    height: 20px;
+    background-color: $groupomania-rouge;
+
+    img {
+      width: 40%;
+      margin-top: 30%;
+    }
+  }
+
 }
 
 #content-user {
@@ -272,7 +328,7 @@ export default {
       .iconPerso {
         width: 15%;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         margin-right: 3%;
         margin-top: 3%;
       }
@@ -296,38 +352,6 @@ export default {
       }
     }
   }
-.search-input{
-display: flex;
-flex-direction: row;
-width: 100%;
-align-items: center;
-margin-top: 3%;
-
-  .input-search {
-  height: 30px;
-  width: 70%;
-  border: none;
-}
-
-.search-btn{
-  width: 40%;
-  height: 30px;
-  margin-right: 2%;
-}
-
-.closeSearch{
-    width: 20px;
-height: 20px;
-background-color: $groupomania-rouge;
-img{
-  width: 40%;
-  margin-top: 30%;
-}
-}
-
-}
-
-
 }
 
 
@@ -342,7 +366,7 @@ img{
       margin-top: 20%;
     }
     @include ecran{
-      margin-top: 12%;
+      margin-top: 10%;
     }
 }
 

@@ -21,7 +21,7 @@
                 :aVotelike="aVotelike"
                 :aVotedislike="aVotedislike"
                 />
-                <BtnSup v-if= proprietaireMessage @click="supMessage()"/>
+                <BtnSup v-if="proprietaireMessage" @click="supMessage()"/>
             </div>
             <Comments v-for="item in commentaires" 
             :content="item.content" 
@@ -35,14 +35,7 @@
 </template>
 
 
-// v-for="item in decompteLikes"
-//                 :toto="item.like"
-//                 :tata="item.dislike"
-//                 :MessageId="item.MessageId"
-//                 :userDislikes="item.userDislikes"
-//                 :userLikes="item.userLikes"
-//                 :userConnected="userConnected"
-//                 :key="item.id"
+
 
 <script>
 // @ is an alias to /src
@@ -108,8 +101,13 @@ export default {
         // Decomptelikes:{
         //     type:Array
         // },
+        // proprietaireMessage:{
+        //     type: Boolean
+        // },
         
         userConnected:{ type: Object},
+
+
         
     },
 
@@ -122,19 +120,15 @@ export default {
       aVotelike: false,
       aVotedislike: false,
       decompteDislikes:null,
-      proprietaireMessage:false
+      proprietaireMessage: null
     }
   },
 
 
-    // computed: {
-    //     ...mapState({
-    //         users: "users",
-    //         selectedUser: "selectedUser",
-    //         token: "token",
-    //     }),
+    computed: {
+
   
-    // },
+    },
 
     filters: {
         formatedDate: function (value) {
@@ -144,28 +138,18 @@ export default {
         }
     },
 
-    watch:{
-        // Trash(){
-        //     if (this.userConnected.id === this.UserId){
-        //         return this.proprietaireMessage = false
-        //     } else {
-        //         return this.proprietaireMessage = true
-        //     }
-        // },
 
-        // proprietaireMessageTrue: function(){
-        //     if (this.userConnected.id === this.UserId){
-        //         return this.proprietaireMessage = false
-        //     } else {
-        //         return this.proprietaireMessage = true
-        //     }
-        // }
-    },
 
 
    methods: {
 
-    //    ...mapActions(['loadMessages']),
+        //    affTrash(){ 
+		// if (this.userConnected.id === this.UserId){
+        //         return this.proprietaireMessage = true
+        //     } else {
+        //         return this.proprietaireMessage
+        //     }
+        // },
 
 
        supMessage() {
@@ -256,10 +240,14 @@ export default {
     //    }
    },
 
-
+    beforeMounted(){
+        this.userConnected
+    },
 
     created() {
-           Service.getComments(this.id)
+
+
+        Service.getComments(this.id)
         .then (response => {
           this.commentaires = response.data
         })
@@ -299,11 +287,11 @@ export default {
         //     }
     },
 
-    beforeMount() {
+    updated() {
 		if (this.userConnected.id === this.UserId){
                 return this.proprietaireMessage = true
             } else {
-                return this.proprietaireMessage
+                return this.proprietaireMessage = false
             }
 	},
 
