@@ -15,6 +15,29 @@ exports.allMessage = (req, res, next) => {
       })
 }
 
+exports.paginerAllMessage = (req, res, next) => {
+    let limit = 3;   // numbre de message par page
+    let offset = 0;
+    Models.Message.findAndCountAll()
+    .then((data) => {
+      let page = req.params.page;      // nombre de la page
+      let pages = Math.ceil(data.count / limit);
+          offset = limit * (page - 1);
+      Models.Message.findAll({
+        include:[Models.Comment, Models.Like, Models.User],
+        limit: limit,
+        offset: offset,
+        order: [['createdAt', 'DESC']]  
+      })
+      .then((messages) => {
+        res.status(200).json({'result': messages, 'count': data.count, 'pages': pages});
+      });
+    })
+    .catch(function (error) {
+          res.status(500).send('Internal Server Error');
+    });
+}
+
 exports.oneMessage = (req, res, next) => {
     Models.Message.findOne({ 
         where: { id: req.params.id },
@@ -27,8 +50,7 @@ exports.oneMessage = (req, res, next) => {
 exports.deleteMessage = (req, res, next) => {
     Models.Message.findOne({ where: { id: req.params.id } })
     .then (message => {
-    if (message.attachment == !null) {
-        (message => {
+    if (message.attachment !== null) {
           const filename = message.attachment.split('/images/')[1];
           fs.unlink(`images/${filename}`, () => {
             Models.Message.destroy({
@@ -36,8 +58,7 @@ exports.deleteMessage = (req, res, next) => {
               })
               .then(() => res.status(200).json({ message: 'Message supprimé !'}))
               .catch(error => res.status(400).json({ error }));
-          });
-        })
+          });    
       } else {
         Models.Message.destroy({
           where: { id: req.params.id }
@@ -49,26 +70,12 @@ exports.deleteMessage = (req, res, next) => {
 }
 
 
-
-exports.modifyMessage = (req, res, next) => {
-    Models.Message.update({...req.body},{where: { id: req.params.id } })
-    .then (function(){
-        Models.Message.findOne({ where: { id: req.params.id } })
-        .then (message => res.status (200).json({data: message, message: 'message modifié !'}))
-        })
-      .catch(error => res.status(400).json({ error }));
-}
-
 exports.createMessage = (req, res, next) => {
-    console.log(req.body)
-    console.log(req.file)
     if(req.file === undefined){
         Models.Message.create({
             UserId: req.body.UserId,
             title: req.body.title,
             content: req.body.content,
-            // nbLikes: req.body.nbLikes,
-            // nbDislikes: req.body.nbDislikes,
         })
         .then(Message => res.status(201).json({
             message:'Post créé',
@@ -79,8 +86,6 @@ exports.createMessage = (req, res, next) => {
             UserId: req.body.UserId,
             title: req.body.title,
             content: req.body.content,
-            // nbLikes: req.body.nbLikes,
-            // nbDislikes: req.body.nbDislikes,
             attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         })
         .then(Message => res.status(201).json({
@@ -92,12 +97,11 @@ exports.createMessage = (req, res, next) => {
 }
 
 exports.getUserMessage = (req, res, next) => {
-    console.log(req.params.id);
     Models.Message.findAll({ 
         where: { UserId: req.params.id} ,
         include:[Models.Comment, Models.Like, Models.User],
         order:[
-            ['id', 'DESC']
+            ['createdAt', 'DESC']
         ]
     })
     .then (message => res.status (200).json(message))
@@ -105,17 +109,4 @@ exports.getUserMessage = (req, res, next) => {
 }
 
 
-exports.getLike = (req, res, next) => {
-    Models.Message.findOne ({where: { id: req.params.id}})
-    .then (message => res.status (200).json(message.likes))
-    .catch(error => res.status (404).json ({error}))
-}
-
-exports.addLike = (req, res, next) => {
-    Models.Message.update({...req.body},{where: { id: req.params.id } })
-    .then (function(){
-        Models.Message.findOne({ where: { id: req.params.id } })
-        .then (message => res.status (200).json({data: message, message: 'message modifié !'}))
-        })
-      .catch(error => res.status(400).json({ error }));}
 

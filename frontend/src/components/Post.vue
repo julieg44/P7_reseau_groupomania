@@ -38,35 +38,29 @@
 
 
 <script>
-// @ is an alias to /src
-// const axios = require('axios');
-// let urlApi = "http://localhost:3000"
 
 import moment from 'moment';
-
 import Comments from '@/components/Comments.vue'
 import Likes from '@/components/Likes.vue'
 import AddComment from '@/components/AddComment.vue'
 import BtnSup from '@/components/UI/Btn/BtnSup.vue'
-
-
-// import { mapState } from 'vuex';
-// import { mapActions } from 'vuex';
-
 import Service from '@/services/service.js'
 
 
 export default {
-  name: 'Post',
-  components: {
-      Comments, Likes, AddComment, BtnSup
-  },
+    name: 'Post',
+    components: {
+        Comments,
+        Likes,
+        AddComment,
+        BtnSup
+    },
 
-      props: {
+    props: {
 
         id: {
             type: Number,
-        },    
+        },
         title: {
             type: String,
         },
@@ -76,59 +70,33 @@ export default {
         createdAt: {
             type: String,
         },
-        attachment:{
+        attachment: {
             type: String,
         },
-        // comments:{
-        //     type: Array,
-        // },
-        // commentaires:{
-        //     type:Array
-        // },
-
         UserId: {
             type: Number,
         },
-
-        // MessageId:{
-        //     type: Number,
-        // },
-
-        user:{
+        user: {
             type: Object
         },
-
-        // Decomptelikes:{
-        //     type:Array
-        // },
-        // proprietaireMessage:{
-        //     type: Boolean
-        // },
-        
-        userConnected:{ type: Object},
-
-
-        
+        userConnected: {
+            type: Object
+        },
     },
 
 
-  data() {
-      
-    return {
-      commentaires: null,
-      decompteLikes: null,
-      aVotelike: false,
-      aVotedislike: false,
-      decompteDislikes:null,
-      proprietaireMessage: null
-    }
-  },
-
-
-    computed: {
-
-  
+    data() {
+        return {
+            commentaires: null,
+            decompteLikes: null,
+            aVotelike: false,
+            aVotedislike: false,
+            decompteDislikes: null,
+            proprietaireMessage: null
+        }
     },
+
+
 
     filters: {
         formatedDate: function (value) {
@@ -138,136 +106,34 @@ export default {
         }
     },
 
+    methods: {
+        supMessage() {
+            Service.supMessage(this.id)
+            .then(() => {
+            window.location.href = '/main'
+            })
+        },
+    },
 
-
-
-   methods: {
-
-        //    affTrash(){ 
-		// if (this.userConnected.id === this.UserId){
-        //         return this.proprietaireMessage = true
-        //     } else {
-        //         return this.proprietaireMessage
-        //     }
-        // },
-
-
-       supMessage() {
-        Service.supMessage(this.id)
-        .then (response => {
-          console.log(response)
-          window.location.href='/main'
-        })
-       }, 
-
-
-
-    //    async loadComments() {
-    //        let comments = await this.$store.dispatch('loadComments')
-    //            .then(function (response) {
-    //                console.log(response)
-    //                return response;
-    //            })
-    //        return this.comments = comments;
-    //    }
-    //    async loadMessages() {
-    //        let messages = await this.$store.dispatch('loadMessages')
-    //            .then(function (response) {
-    //                console.log(response)
-    //                return response;
-    //            })
-    //        return this.messages = messages;
-    //    },
-
-    //    async loadComments(){
-    //         let token = JSON.parse(localStorage.getItem('usertoken'))
-    //             let messages = await axios.get(urlApi + '/api/message/3',{
-    //                 headers: { 'Authorization': token }}
-    //             )
-    //            .then(function (response) {
-    //                console.log(response.data.Comments)
-    //                return response.data.Comments;
-    //            })
-    //         return this.commentaires = messages.Comments 
-    //    }
-
-    //        async loadComments(){
-    //         let token = 'Bearer '+ JSON.parse(localStorage.getItem('usertoken'));
-    //             let commentaires = await axios.get(urlApi + '/api/message/',{
-    //                 headers: { 'Authorization': token }}
-    //             )
-    //            .then(function (response) {
-    //                let allmessage = response.data
-    //                 console.log("youpi")
-    //                for(let i = 0; i<allmessage.length; i++){
-    //                    console.log("un comment")
-    //                    console.log(allmessage[i].Comments)
-    //                    let Onemessage = allmessage[i].Comments
-    //                    for(let i = 0; i<Onemessage.length; i++){ 
-    //                         console.log(Onemessage[i])
-    //                         if (allmessage[i].id === Onemessage[i].MessageId){
-    //                             console.log("yes")
-    //                             return this.commentaires = "caca"
-    //                         }
-    //                    }
-    //                }                   
-    //            })
-    //         return this.commentaires = commentaires 
-    //    }
-
-    //     async loadComments(){
-    //         let token = 'Bearer '+ JSON.parse(localStorage.getItem('usertoken'));
-    //             let commentaires = await axios.get(urlApi + '/api/message/',{
-    //                 headers: { 'Authorization': token }}
-    //             )
-    //            .then(function (response) {
-    //                let allmessage = response.data
-    //                 console.log("youpi")
-    //                for(let i = 0; i<allmessage.length; i++){
-    //                    console.log("un comment")
-    //                    console.log(allmessage[i].Comments)
-    //                    let Onemessage = allmessage[i].Comments
-    //                    for(let i = 0; i<Onemessage.length; i++){ 
-    //                         console.log(Onemessage[i])
-    //                         if (allmessage[i].id === Onemessage[i].MessageId){
-    //                             console.log("yes")
-    //                             return this.commentaires = "caca"
-    //                         }
-    //                    }
-    //                }                   
-    //            })
-    //         return this.commentaires = commentaires 
-    //    }
-   },
-
-    beforeMounted(){
+    beforeMounted() {
         this.userConnected
     },
 
     created() {
-
-
         Service.getComments(this.id)
-        .then (response => {
-          this.commentaires = response.data
-        })
-
+            .then(response => {
+                this.commentaires = response.data
+            })
 
         Service.getLike(this.id)
             .then(response => {
-                
+
                 this.decompteLikes = response.data.length
                 for (let i = 0; i < response.data.length; i++) {
                     if (response.data[i].UserId === this.userConnected.id && response.data[i].like === 1) {
                         return this.aVotelike = true
                     }
                 }
-                // for (let i = 0; i < response.data.length; i++) {
-                //     if (response.data[i].UserId === this.userConnected.id && response.data[i].like === 1) {
-                //         console.log(response.data[i])
-                //         return this.likeId = response.data[i].id 
-                //     }
-                // }
             })
         Service.getDislike(this.id)
             .then(response => {
@@ -279,21 +145,15 @@ export default {
                     }
                 }
             })
-        
-        // if (this.userConnected.id === this.UserId){
-        //         return this.proprietaireMessage = true
-        //     } else {
-        //         return this.proprietaireMessage
-        //     }
     },
 
     updated() {
-		if (this.userConnected.id === this.UserId){
-                return this.proprietaireMessage = true
-            } else {
-                return this.proprietaireMessage = false
-            }
-	},
+        if (this.userConnected.id === this.UserId) {
+            return this.proprietaireMessage = true
+        } else {
+            return this.proprietaireMessage = false
+        }
+    },
 
 }
 
@@ -311,11 +171,10 @@ export default {
         margin-top: 5%;
         z-index: 0;
 
-
-    @include tablette_ecran {
+        @include tablette_ecran {
             width: 80%;
             padding: 4%;
-    }
+        }
 
         .message-top {
             display: flex;
@@ -328,25 +187,26 @@ export default {
                 width: 20%;
                 text-align: left;
                 margin-right: 2%;
+
                 @include tablette {
                     width: 11%;
                     margin-right: 2%;
                 }
+
                 @include ecran {
                     width: 8%;
                     margin-right: 2%;
                 }
 
-
                 img {
                     width: 100%;
                     height: 38px;
-                    clip-path:ellipse(50% 50%);
-                    @include tablette_ecran{
+                    clip-path: ellipse(50% 50%);
+
+                    @include tablette_ecran {
                         margin-right: 5%;
                         height: 48px;
                     }
-                    
                 }
             }
 
@@ -359,11 +219,13 @@ export default {
                 // margin-left: 13%;
                 width: 80%;
                 color: $groupomania_bleu;
-                @include tablette{
+
+                @include tablette {
                     // margin-left: 10%;
                     font-size: 1rem;
                 }
-                @include ecran{
+
+                @include ecran {
                     // margin-left: 8%;
                     font-size: 1rem;
                 }
@@ -372,10 +234,11 @@ export default {
             .date {
                 text-align: right;
                 width: 50%;
-                font-size:0.7rem;
-                @include tablette_ecran{
-                    font-size:0.9rem;
-                     width: 30%;
+                font-size: 0.7rem;
+
+                @include tablette_ecran {
+                    font-size: 0.9rem;
+                    width: 30%;
                 }
             }
         }
@@ -383,6 +246,7 @@ export default {
         .attachment-post {
             width: 80%;
             margin: auto;
+
             .image-post {
                 width: 100%;
             }
@@ -401,47 +265,52 @@ export default {
             font-weight: 700;
             margin-bottom: 2%;
             color: $groupomania_bleu;
-            @include tablette{
+
+            @include tablette {
                 font-size: 1rem;
             }
-            @include ecran{
+
+            @include ecran {
                 font-size: 1rem;
                 margin-bottom: 2%;
             }
         }
-        .message-bottom{
+
+        .message-bottom {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-content: center;
-                margin-top: 8%;
-    margin-bottom: 8%;
-    @include tablette_ecran{
-        margin-top: 3%;
-    margin-bottom: 3%;
-    }
-        }
-    }
-
-
-
-    .button-user {
-            background-color: $groupomania_bleu_clair;
-            width: 12%;
-            margin: 0;
+            margin-top: 8%;
+            margin-bottom: 8%;
 
             @include tablette_ecran {
-                background-color: none;
-                width: 5%;
-            }
-
-            .destroy-icon {
-                background-color: $groupomania_bleu;
-                width: 85%;
-                height: 30px;
-
+                margin-top: 3%;
+                margin-bottom: 3%;
             }
         }
+    }
 
+    .button-user {
+        background-color: $groupomania_bleu_clair;
+        width: 12%;
+        margin: 0;
+
+        @include tablette {
+            background-color: none;
+            width: 7%;
+        }
+
+        @include ecran {
+            background-color: none;
+            width: 5%;
+        }
+
+        .destroy-icon {
+            background-color: $groupomania_bleu;
+            width: 85%;
+            height: 30px;
+        }
+    }
 
 </style>

@@ -1,24 +1,20 @@
 <template>
   <div>
-    <PopAlert/>
-    <!-- <header> -->
-      <Entete/>
-    <!-- </header> -->
+    <Entete />
     <section id="login">
-      <Login/>
+      <Login />
     </section>
-  </div>  
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Entete from '@/components/Entete.vue'
 import Login from '@/components/Login.vue'
-import PopAlert from '@/components/PopAlert.vue'
 export default {
   name: 'Home',
   components: {
-    Entete, Login, PopAlert
+    Entete, Login
   }
 }
 </script>

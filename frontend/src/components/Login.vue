@@ -3,7 +3,6 @@
     <PopAlert/>
     <h1> Connectez-vous</h1>
     <form>
-        <!-- <div id="username"><input placeholder="Votre nom d'utilisateur" v-model="username"></div> -->
         <div id="email"><input placeholder="Votre email" v-model="email"></div>
         <div id="password"><input type="password" placeholder="Votre mot de passe" v-model="password"></div>
         <div id="connectEcran">
@@ -19,44 +18,33 @@
 <script>
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
 import PopAlert from '@/components/PopAlert.vue'
-
-// import { mapActions } from 'vuex';
-const axios = require('axios');
-let urlApi = "http://localhost:3000"
-
-//alerte
-
+import Service from '@/services/service.js'
 
 export default {
-    name:'login',
-    components: { 
-        BtnRouge, PopAlert
+    name: 'login',
+    components: {
+        BtnRouge,
+        PopAlert
     },
-    data(){
-    return {email:"", password:""}
+    data() {
+        return {
+            email: "",
+            password: ""
+        }
     },
     methods: {
-        // ...mapActions(['login']),
-        // login(){
-        //     this.$store.dispatch('login', {
-        //         email:this.email,
-        //         password:this.password
-        //     })
-        // },
 
         login() {
             let user = {
                 email: this.email,
                 password: this.password
             };
-            axios.post(urlApi + '/api/user/login', user)
+            Service.login(user)
                 .then(function (response) {
-                    console.log(response)
-                        let userlogged = response.data
-                        localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
-                        localStorage.setItem('userId', JSON.stringify(userlogged.userId))
-                        window.location.href = '/main';
-                    
+                    let userlogged = response.data
+                    localStorage.setItem('usertoken', JSON.stringify(userlogged.token));
+                    localStorage.setItem('userId', JSON.stringify(userlogged.userId))
+                    window.location.href = '/main';
                 })
         },
     }

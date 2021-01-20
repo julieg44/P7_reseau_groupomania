@@ -23,66 +23,51 @@
 <script>
 
 import Explain from '@/components/UI/Explication.vue'
-import Service from '@/services/service.js'
-
-
 
 export default {
-  name: 'Nav',
+    name: 'Nav',
 
-  components:{
-      Explain
-  },
-
-  data(){
-      return{
-          post: false,
-          profil:false,
-          deconnection:false,
-          chercher:false
-      }
-  },
-
-
-   props: {
-        userConnected:{ 
-            type:Object
-        },
-        admin:{
-            type: Boolean
-        }    
+    components: {
+        Explain
     },
 
-    methods:{
-        affUser(){
+    data() {
+        return {
+            post: false,
+            profil: false,
+            deconnection: false,
+            chercher: false
+        }
+    },
+
+
+    props: {
+        userConnected: {
+            type: Object
+        },
+        admin: {
+            type: Boolean
+        }
+    },
+
+    methods: {
+        affUser() {
             this.$emit('affichageUser')
         },
-         openInput(){
-             this.$emit('input')
-         },
-
-        deconnect(){
-            localStorage.clear()
-            window.location.href="/"
+        openInput() {
+            this.$emit('input')
         },
 
-        input(){
-        this.showInput = true
-        this.showIcon = false
-        this.$emit('nonAffichageUser')
-   },
-   
-   closeInput(){
-     this.showInput = false
-     Service.getMessages()
-        .then (response => {
-         this.messages = response.data
-         this.messagesUser = null
-         this.showIcon = true
-          })
-   },
+        deconnect() {
+            localStorage.clear()
+            window.location.href = "/"
+        },
+
+        input() {
+            this.showInput = true
+            this.showIcon = false
+        },
     }
-  
 }
 
  </script> 
@@ -91,7 +76,7 @@ export default {
 
 @import "../sass/main.scss";
 
-nav{
+nav {
     background-color: $groupomania-rouge;
     position: fixed;
     width: 100%;
@@ -99,91 +84,106 @@ nav{
     top: 57px;
     z-index: 10;
 
-    #flexNav{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 12px;
-    @include tablette_ecran{
-        top: 70px;
-        justify-content: center;
-        margin-top: 5px;
-    }
+    #flexNav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 12px;
+
+        @include tablette_ecran {
+            top: 70px;
+            justify-content: center;
+            margin-top: 5px;
+        }
     }
 
-    h1{
+    h1 {
         color: $blanc;
         margin-bottom: 0;
         font-weight: 400;
         margin-right: 2%;
         font-size: 1.3rem;
-        @include tablette_ecran{
+
+        @include tablette_ecran {
             font-size: 2rem;
             font-weight: 200;
         }
     }
-        #admin{
+
+    #admin {
         font-size: 0.9rem;
-        @include tablette_ecran{
+
+        @include tablette_ecran {
             font-size: 1.2rem;
             font-weight: 400;
         }
     }
 
-    .icons{ 
+    .icons {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-content: center;
 
 
-    #bulle, #profil, #deconnection, #search{
-        width: 40px;
-        height: 27px;
-        background-color: $blanc;
-        margin-left: 5%;
-        margin-right: 5%;
-        @include tablette_ecran{
-            width: 60px;
-           margin-left: 7%;
-           margin-right: 7%; 
+        #bulle,
+        #profil,
+        #deconnection,
+        #search {
+            width: 40px;
+            height: 27px;
+            background-color: $blanc;
+            margin-left: 5%;
+            margin-right: 5%;
+
+            @include tablette_ecran {
+                width: 60px;
+                margin-left: 7%;
+                margin-right: 7%;
+            }
+
+            &:hover {
+                transform: scale(1.4);
+            }
         }
-        &:hover{
-        transform: scale(1.4);        
+
+        #bulle {
+            -webkit-mask: url(../assets/bulle-rond.svg);
+            mask: url(../assets/bulle-rond.svg);
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size: 100%;
         }
+
+        #profil {
+            -webkit-mask: url(../assets/user-solid-rond.svg);
+            mask: url(../assets/user-solid-rond.svg);
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size: 100%;
+        }
+
+        #deconnection {
+            -webkit-mask: url(../assets/deconnect-rond.svg);
+            mask: url(../assets/deconnect-rond.svg);
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size: 100%;
+        }
+
     }
 
-    #bulle{
-        -webkit-mask: url(../assets/bulle-rond.svg);
-        mask: url(../assets/bulle-rond.svg);
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 100%;
-    }
-    #profil {
-        -webkit-mask: url(../assets/user-solid-rond.svg);
-        mask: url(../assets/user-solid-rond.svg);
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 100%;
-    }
-    #deconnection{
-        -webkit-mask: url(../assets/deconnect-rond.svg);
-        mask: url(../assets/deconnect-rond.svg);
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 100%;
-    }
-
-    }
-    #search{
+    #search {
         -webkit-mask: url(../assets/search.svg);
         mask: url(../assets/search.svg);
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: 100%;
     }
+
     #powerOff {
         width: 20%;
+
         p {
             display: none;
+
             @include tablette_ecran {
                 display: block;
                 color: $blanc;
@@ -191,11 +191,14 @@ nav{
                 cursor: pointer;
             }
         }
+
         .deconnectIcon {
             width: 10%;
+
             img {
                 width: 40%;
             }
+
             @include tablette_ecran {
                 display: none;
             }

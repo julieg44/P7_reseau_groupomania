@@ -17,24 +17,16 @@ import moment from 'moment';
 import Service from '@/services/service.js'
 
 
-
 export default {
-  name: 'CommentAdmin',
-  components: {
-
-  },
-
+    name: 'CommentAdmin',
 
     props: {
-  
-
-     content:{
-         type:String
-     },
-     idComment:{
-         type:Number
-     },
-
+        content: {
+            type: String
+        },
+        idComment: {
+            type: Number
+        },
     },
 
     filters: {
@@ -45,22 +37,13 @@ export default {
         }
     },
 
+    methods: {
+        supComment() {
+            Service.supComment(this.idComment)
+            window.location.href = '/main'
+        }
+    },
 
-  computed: {
- 
-  },
-
-
-   methods: {
-       supComment(){
-           Service.supComment(this.idComment)
-           window.location.href='/main'
-       }
-  },
-
-    created(){
-        
-  },
 }
 
 
@@ -68,7 +51,7 @@ export default {
 
 <style lang="scss">@import "../sass/main.scss";
 
-.unCommentaire{
+.unCommentaire {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -76,18 +59,18 @@ export default {
     margin-top: 1%;
     margin-bottom: 1%;
     text-align: left;
-    // background-color: $gris0;
-    .case{
+
+    .case {
         width: 25%;
         font-size: 0.7rem;
         text-align: left;
-        @include tablette_ecran{
+
+        @include tablette_ecran {
             font-size: 1rem;
             width: 75%;
 
         }
     }
-
 }
 
 </style>

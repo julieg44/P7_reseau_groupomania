@@ -28,14 +28,14 @@ $breakpoints: (
     @media screen and (min-width : map-get($breakpoints, mobile)){
       @content
     }
-  }  
+  };  
 
 
 @mixin ecran {
   @media screen and (min-width : map-get($breakpoints, tablette)){
     @content
   }
-}
+};
 
 @mixin tablette {
   @media screen and (min-width : map-get($breakpoints, mobile))and(max-width : map-get($breakpoints, tablette )){

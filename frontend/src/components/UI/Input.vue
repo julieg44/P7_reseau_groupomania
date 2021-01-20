@@ -36,11 +36,6 @@ flex-direction: row;
 
 .input-search {
   height: 30px;
-//   background-color: $groupomania_rouge;
-//   -webkit-mask: url(../../assets/search.svg);
-//   mask: url(../../assets/search.svg);
-//   -webkit-mask-repeat: no-repeat;
-//   -webkit-mask-size: 100%;
 }
 
 .close{

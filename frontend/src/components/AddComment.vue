@@ -15,89 +15,45 @@
 <script>
 // @ is an alias to /src
 
-
 import BtnPlus from '@/components/UI/Btn/BtnPlus.vue'
-// import { mapState } from 'vuex';
 import Service from '@/services/service.js'
 
-
-// const axios = require('axios');
-// let urlApi = "http://localhost:3000"
-
-
 export default {
-  name: 'AddComment',
-  components: {
-      BtnPlus
-  },
-  props: {
-      MessageId: {
-          type: Number,
-      },
+    name: 'AddComment',
+    components: {
+        BtnPlus
+    },
+    props: {
+        MessageId: {
+            type: Number,
+        },
 
-      userConnected: { type: Object }
-      
+        userConnected: {
+            type: Object
+        }
+    },
 
-  },
+    data() {
+        return {
+            messages: null,
+            content: "",
 
-  data(){
-      return {
-          messages: null,
-          content:"", 
+        }
+    },
 
-      }
-  },
-
-    // computed: {
-    //     ...mapState({
-    //         users: "users",
-    //         selectedUser: "selectedUser",
-    //         token: "token",
-    //     }),
-    // },
-
-
-   methods: {
-       PostComment() {
+    methods: {
+        PostComment() {
             let Newcomment = {
-               UserId: this.userConnected.id,
-               UserUsername: this.userConnected.username,               
-               UserPhoto: this.userConnected.photo,               
-               MessageId: this.MessageId,
-               content: this.content,
+                UserId: this.userConnected.id,
+                UserUsername: this.userConnected.username,
+                UserPhoto: this.userConnected.photo,
+                MessageId: this.MessageId,
+                content: this.content,
             }
-            // axios.post(urlApi + '/api/comment/message/' + this.MessageId, Newcomment)
-            //    .then(function (response) {
-            //        console.log(response)
-            //    })
             Service.postComment(this.MessageId, Newcomment)
-            .then(function (response) {
-                   console.log(response)
-               })
-               window.location.href="/main"
-           }  
-       },
-
-
-    //     async loadMessages(){
-    //         let message = await this.$store.dispatch('loadMessages')
-    //         .then(function (response) {
-    //                return response;
-    //            })
-    //        return this.messages = message;
-    //     },
-
-    //    async loadProfil() {
-    //        let user = await this.$store.dispatch('loadUser', {
-    //                id: this.$route.params.id
-    //            })
-    //            .then(function (response) {
-    //                return response;
-    //            })
-    //        return this.user = user;
-    //    },
-
-   
+            window.location.href = "/main"
+        }
+    },
 }
 
 
@@ -108,10 +64,7 @@ export default {
 
 .post-comment {
     width: 100%;
-    // margin-top: 3%;
     background-color: $blanc;
-    // height: 40px;
-
 }
 
 .commentaire {
@@ -127,34 +80,37 @@ export default {
     }
 
     .positionPhoto {
-                width: 11%;
-                text-align: left;
-                margin-right: 2%;
-                @include tablette {
-                    width: 6%;
-                    margin-right: 2%;
-                }
-                @include ecran {
-                    width: 6%;
-                    margin-right: 2%;
-                }
+        width: 11%;
+        text-align: left;
+        margin-right: 2%;
+
+        @include tablette {
+            width: 6%;
+            margin-right: 2%;
+        }
+
+        @include ecran {
+            width: 6%;
+            margin-right: 2%;
+        }
 
 
-                img {
-                    width: 100%;
-                    height: 30px;
-                    clip-path:ellipse(50% 50%);
-                    @include tablette{
-                        margin-right: 5%;
-                        height: 30px;
-                    }
-                    @include ecran{
-                        margin-right: 5%;
-                        height: 40px;
-                    }
-                    
-                }
+        img {
+            width: 100%;
+            height: 30px;
+            clip-path: ellipse(50% 50%);
+
+            @include tablette {
+                margin-right: 5%;
+                height: 30px;
             }
+
+            @include ecran {
+                margin-right: 5%;
+                height: 40px;
+            }
+        }
+    }
 
     .addcomment {
         text-align: left;
@@ -162,7 +118,8 @@ export default {
         border: none;
         width: 87%;
         height: 30px;
-        @include tablette_ecran{
+
+        @include tablette_ecran {
             font-size: 0.9rem;
         }
     }

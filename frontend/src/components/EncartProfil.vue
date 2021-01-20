@@ -4,7 +4,6 @@
             <div class="taille-photo">
                 <img id="principale" v-if="userConnected.photo !==null" :src="userConnected.photo" alt="photo de profil" />
                 <img id="principale"  v-else src="../assets/avatar.png" alt="photo de profil" />
-
             </div>
         </div>
         <div class="closeProfil"><a href="#" id="closeProfil"><img src="../assets/close.svg"/></a></div>
@@ -21,20 +20,12 @@
 </template>
 
 <script>
-// const axios = require('axios');
-// let urlApi = "http://localhost:3000"
 
 // @ is an alias to /src
 import BtnSup from '@/components/UI/Btn/BtnSup.vue'
 import BtnDeconnect from '@/components/UI/Btn/BtnDeconnect.vue'
 import BtnModifyUser from '@/components/UI/Btn/BtnModifyUser.vue'
 import Service from '@/services/service.js'
-
-// import { mapState } from "vuex";
-// import { mapActions } from 'vuex';
-
-
-
 
 export default {
     name: 'EncartProfil',
@@ -45,22 +36,12 @@ export default {
     },
 
     props: {
-
-        userConnected:{ type:Object}
+        userConnected: {
+            type: Object
+        }
     },
 
-    // data() {
-    //     return {
-    //         user: null
-    //     }
-    // },
-
     computed: {
-        // ...mapState({
-        //     users: "users",
-        //     selectedUser: "selectedUser",
-        //     token: "token",
-        // }),
         _modify() {
             return '/modifyUser';
         }
@@ -68,51 +49,19 @@ export default {
 
 
     methods: {
-        // ...mapActions(['supUser', 'deconnect']),
-
-        // async loadProfil() {
-        //         let user = await this.$store.dispatch('loadUser', {
-        //                 id: this.$route.params.id
-        //             })
-        //             .then(function (response) {
-        //                 return response;
-        //             })
-        //         return this.user = user;
-        //     },
-
-
-
-
-
-
         deconnect() {
             localStorage.clear()
             window.location.href = '/';
         },
         supUser() {
-            //@todo  => alert sure ??
-            // let token = 'Bearer ' + JSON.parse(localStorage.getItem('usertoken'));
-            // axios.delete(urlApi + '/api/user/' + this.userConnected.id, {
-            //         headers: {
-            //             'Authorization': token
-            //         }
-            //     })
-        Service.supUser(this.userConnected.id)
+            Service.supUser(this.userConnected.id)
                 .then(function () {
                     window.location.href = '/'
                 })
         },
     },
-
-    created() {
-        // this.loadProfil()
-        // console.log(this.user)
-        
-    },
-
-
-
 }
+
 </script>
 
 <style lang="scss">

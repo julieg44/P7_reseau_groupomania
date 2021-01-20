@@ -17,28 +17,24 @@ import Service from '@/services/service.js'
 
 
 export default {
-  name: 'User',
-  components: {
-
-  },
-
+    name: 'User',
 
     props: {
-     listeUser:{
-         type:Array
-     },
-     username:{
-         type:String
-     },
-     email:{
-         type:String
-     },
-     creation:{
-         type:String
-     },
-     idUser:{
-         type:Number
-     },
+        listeUser: {
+            type: Array
+        },
+        username: {
+            type: String
+        },
+        email: {
+            type: String
+        },
+        creation: {
+            type: String
+        },
+        idUser: {
+            type: Number
+        },
     },
 
     filters: {
@@ -49,22 +45,12 @@ export default {
         }
     },
 
-
-  computed: {
- 
-  },
-
-
-   methods: {
-       supUser(){
-           Service.supUser(this.idUser)
-           window.location.href="/main"
-       }
-  },
-
-    created(){
-        
-  },
+    methods: {
+        supUser() {
+            Service.supUser(this.idUser)
+            window.location.href = "/main"
+        }
+    },
 }
 
 
@@ -72,7 +58,7 @@ export default {
 
 <style lang="scss">@import "../sass/main.scss";
 
-.listeUser{
+.listeUser {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -80,10 +66,12 @@ export default {
     padding: 1%;
     text-align: left;
     border-bottom: 1px solid $gris3;
-        .case{
+
+    .case {
         width: 25%;
         font-size: 0.7rem;
-        @include tablette_ecran{
+
+        @include tablette_ecran {
             font-size: 1rem;
         }
     }

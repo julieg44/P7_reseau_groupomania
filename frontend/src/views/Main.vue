@@ -1,13 +1,15 @@
 <template>
   <div id="global">
-    <!-- <PopAlert /> -->
     <Entete />
     <Nav :userConnected="userConnected" :admin="admin" @affichageUser="showUserOpen()" @input="input()"/>
+    <!-- champs de recherche d'un utilisateur -->
     <div class="search-input" v-show="showInput">
         <input class="input-search" type="text" placeholder="Rechercher un nom" v-model="searchName" />
         <BtnRouge class="search-btn" @click="search()" label="Chercher" />
         <div class="closeSearch" @click="closeInput()"><img src="../assets/close.svg"/></div>
     </div>
+
+    <!-- Première partie utilisateur -->
     <div id="section-user" v-show="showUser">
       <div id='content-user'>
         <EncartProfil :userConnected="userConnected" />
@@ -17,10 +19,8 @@
               <h1>Bonjour {{ userConnected.username }} !</h1>
             </div>
             <div class="iconPerso">
-              <!-- <Search @click="input()" /> -->
               <div class="closeUser" @click="showUserClose()"></div> 
             </div>
-
           </div>
           <EncartPost :userConnected="userConnected"/>
         </div>
@@ -28,7 +28,7 @@
     </div>
 
 
-    <!--messages -->
+    <!--Seconde partie messages -->
     <div id="section-post" v-if="admin===false">
         <div class="filPost" v-if="messagesUser">
           <Post v-for="item in messagesUser"
@@ -43,7 +43,6 @@
           :key="item.id" 
           :userConnected="userConnected"
           :admin="admin"
-  
           />
         </div>
 
@@ -60,12 +59,17 @@
           :key="item.id" 
           :userConnected="userConnected"
           :admin="admin"
-
-
           />
+        </div>
+
+        <!--Si l'utilisateur recherché n'a pas posté -->
+        <div id="noPost" v-if="noMessage">
+          <h3>Cet utilisateur n'a pas posté de messages</h3>
+          <div class="closeSearch" @click="closeInput()"><img src="../assets/close.svg"/></div>
         </div>
     </div>
 
+  <!-- si utilisateur connecté est admin -->
   <div id="administrateur" v-else>
     <Admin :messages="messages"/>
   </div>
@@ -77,116 +81,101 @@
 <script>
 // @ is an alias to /src
 import Entete from '@/components/Entete.vue'
-// import PopAlert from '@/components/PopAlert.vue'
 import Nav from '@/components/Nav.vue'
-
 import EncartProfil from '@/components/EncartProfil.vue'
-// import Search from '@/components/UI/Search.vue'
 import Admin from '@/components/Admin.vue'
 import BtnRouge from '@/components/UI/Btn/BtnRouge.vue'
-
 import EncartPost from '@/components/EncartPost.vue'
 import Post from '@/components/Post.vue'
 import Service from '@/services/service.js'
 
 
-// import { mapState } from "vuex";
 
 export default {
   name: 'Main',
 
   components: {
-    Entete, Nav, EncartProfil, EncartPost, Post, Admin, BtnRouge
+    Entete,
+    Nav,
+    EncartProfil,
+    EncartPost,
+    Post,
+    Admin,
+    BtnRouge
   },
-
-  // props:['id'],
-        
 
   data() {
     return {
       messages: null,
-      // commentaires:null,
-      userConnected:null,
-      messagesUser:null,
-      showInput: false, 
-      searchName:"",
-      showUser:false,
-      showIcon:true , 
-      admin:false,
-      // proprietaireMessage: false
-      // listeUser:null
+      userConnected: null,
+      messagesUser: null,
+      showInput: false,
+      searchName: "",
+      showUser: false,
+      showIcon: true,
+      admin: false,
+      noMessage: false
     }
   },
 
-  // computed:{
-  //   ...mapState(["selectedUser"])
-
-  // },
-  
-     methods: {
 
 
-  input(){
-        this.showInput = true
-        this.showIcon = false
-   },
-   
-   closeInput(){
-     this.showInput = false
-     Service.getMessages()
-        .then (response => {
-         this.messages = response.data
-         this.messagesUser = null
-         this.showIcon = true
-          })
-   },
+  methods: {
 
-   showUserOpen(){  
-     this.showUser = true
-   },
+    input() {
+      this.showInput = true
+      this.showIcon = false
+    },
 
-   showUserClose(){
-     this.showUser = false
-   },
-
-
-
-
-         async search() {
-       let nomrecherche = this.searchName
-       await Service.getAllUsers()
-           .then(response => {
-               for (let i = 0; i < response.data.length; i++) {
-                   if (response.data[i].username === nomrecherche) {
-                       let idRecherche = response.data[i].id
-                       Service.getMessagesOneUser(idRecherche)
-                           .then(response2 => {
-                               return this.messagesUser = response2.data, this.messages = null
-                           })
-                   }
-               }
-           })
-   }
-
-     },
-
-     created(){
-       let selectedUser=localStorage.getItem('userId')
-        Service.getUser(selectedUser)
-        .then (response => {
-          this.userConnected = response.data
-          if ( response.data.isAdmin === true){
-            this.admin = true
-          } 
+    closeInput() {
+      this.showInput = false
+      Service.getMessages()
+        .then(response => {
+          this.messages = response.data
+          this.messagesUser = null
+          this.showIcon = true
         })
-        
+    },
 
-        Service.getMessages()
-        .then (response => {
-         this.messages = response.data        
+    showUserOpen() {
+      this.showUser = true
+    },
+
+    showUserClose() {
+      this.showUser = false
+    },
+
+    async search() {
+      await Service.getUserFiltre(this.searchName)
+        .then(response => {
+          let idRecherche = response.data.id
+          Service.getMessagesOneUser(idRecherche)
+            .then(response2 => {
+              if (response2.data.length === 0) {
+                return this.noMessage = true, this.messages = null
+              } else {
+                return this.messagesUser = response2.data, this.messages = null
+              }
+            })
         })
-     }, 
+    }
+  },
 
+  created() {
+    let selectedUser = localStorage.getItem('userId')
+    Service.getUser(selectedUser)
+      .then(response => {
+        this.userConnected = response.data
+        if (response.data.isAdmin === true) {
+          this.admin = true
+        }
+      })
+
+    Service.getMessages()
+      .then(response => {
+        this.messages = response.data
+      })
+  },
 }
 
 </script>
@@ -263,7 +252,6 @@ export default {
       margin-top: 30%;
     }
   }
-
 }
 
 #content-user {
@@ -358,16 +346,40 @@ export default {
 ////// LES POST /////
 
 
-#section-post{
-    z-index: 0;
-    width: 100%;
-    margin-top: 40%;
-    @include tablette{
-      margin-top: 20%;
+#section-post {
+  z-index: 0;
+  width: 100%;
+  margin-top: 40%;
+
+  @include tablette {
+    margin-top: 20%;
+  }
+
+  @include ecran {
+    margin-top: 10%;
+  }
+
+  #noPost {
+    margin-top: 20%;
+
+    h3 {
+      color: $groupomania_bleu;
+      font-size: 1.5rem;
     }
-    @include ecran{
-      margin-top: 10%;
+
+    .closeSearch {
+      width: 20px;
+      height: 20px;
+      margin: auto;
+      margin-top: 2%;
+      background-color: $groupomania-rouge;
+
+      img {
+        width: 40%;
+        margin-top: 30%;
+      }
     }
+  }
 }
 
 
@@ -384,12 +396,9 @@ export default {
   @include ecran{
     max-width: 980px;
     margin: auto;
-    // margin-top: 10%;
-    // display: flex;
-    // flex-wrap: wrap;
-    // flex-direction: row;
   } 
 }
+
 
 #administrateur{
   
@@ -400,9 +409,8 @@ export default {
       margin-top: 20%;
     }
     @include ecran{
-      margin-top: 15%;
+      margin-top: 10%;
     }
-
 }
 
 </style>

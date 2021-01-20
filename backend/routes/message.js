@@ -7,13 +7,11 @@ const multer = require('../middleware/multer-config');
 const messageCtrl = require('../controllers/message');
 
 router.get('/', auth, messageCtrl.allMessage);
-router.get('/:id', messageCtrl.oneMessage);
-router.delete('/:id', messageCtrl.deleteMessage);
-router.put ('/:id', messageCtrl.modifyMessage);
-router.post('/', multer, messageCtrl.createMessage);
-router.get('/user/:id', messageCtrl.getUserMessage);
-// router.get('/:id/like', messageCtrl.getLike);
-// router.post('/:id/like', messageCtrl.addLike);
+router.get('/tri/:page', auth, messageCtrl.paginerAllMessage);
+router.get('/:id', auth, messageCtrl.oneMessage);
+router.delete('/:id',auth, multer, messageCtrl.deleteMessage);
+router.post('/', auth, multer, messageCtrl.createMessage);
+router.get('/user/:id', auth, messageCtrl.getUserMessage);
 
 
 module.exports = router;
