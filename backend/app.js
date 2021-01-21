@@ -8,7 +8,9 @@ const likeRoutes = require('./routes/like');
 
 
 const userDB = process.env.DB_USER;
+const host = process.env.DB_HOST
 const pass = process.env.DB_PASS;
+const nameDB = process.env.DB_NAME
 const token = process.env.DB_TOKEN
 
 
@@ -18,8 +20,8 @@ const path = require('path');
 
 const app = express();
 
-const sequelize = new Sequelize ('groupomania_development', userDB, pass,{
-   host:'localhost',
+const sequelize = new Sequelize (nameDB, userDB, pass,{
+   host:host,
    dialect: 'mysql'
  });
 
