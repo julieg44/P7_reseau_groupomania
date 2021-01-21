@@ -15,9 +15,9 @@
             :key="item.id"/>
         </div>
         <div class="pagination">
-            <div class="num" @click="userPage(1)"><p>1</p></div>
-            <div class="num" @click="userPage(2)"><p>2</p></div>
-            <div class="num" @click="userPage(3)"><p>3</p></div>
+            <div v-if="nbrPagesUser > 1" class="num" @click="userPage(1)"><p>1</p></div>
+            <div v-if="nbrPagesUser >= 2" class="num" @click="userPage(2)"><p>2</p></div>
+            <div v-if="nbrPagesUser >= 3" class="num" @click="userPage(3)"><p>3</p></div>
         </div>
         <div id="blocMessages">
             <h2 class="titleAdmin">Liste des {{ nbrMessage }} messages</h2>
@@ -35,9 +35,9 @@
             :key="item.id"/>
         </div>
         <div class="pagination">
-            <div class="num" @click="messagePage(1)"><p>1</p></div>
-            <div class="num" @click="messagePage(2)"><p>2</p></div>
-            <div class="num" @click="messagePage(3)"><p>3</p></div>
+            <div v-if="nbrPagesMessages > 1" class="num" @click="messagePage(1)"><p>1</p></div>
+            <div v-if="nbrPagesMessages >= 2" class="num" @click="messagePage(2)"><p>2</p></div>
+            <div v-if="nbrPagesMessages >= 3" class="num" @click="messagePage(3)"><p>3</p></div>
         </div>
     </div>
 </template>
@@ -64,6 +64,8 @@ export default {
             listeMessage: null,
             nbrMessage: null,
             nbrUser: null,
+            nbrPagesMessages: null,
+            nbrPagesUser: null
         }
     },
 
@@ -85,13 +87,16 @@ export default {
     created() {
         Service.getAllUsersAdmin(1)
             .then(response => {
+                console.log(response)
                 this.listeUser = response.data.result
                 this.nbrUser = response.data.count
+                this.nbrPagesUser = response.data.pages
             })
         Service.getAllMessagesAdmin(1)
             .then(response => {
                 this.listeMessage = response.data.result
                 this.nbrMessage = response.data.count
+                this.nbrPagesMessages = response.data.pages
             })
     },
 }

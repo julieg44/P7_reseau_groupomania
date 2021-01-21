@@ -40,7 +40,9 @@ export default {
     methods: {
         supComment() {
             Service.supComment(this.idComment)
+            .then(()=>{
             window.location.href = '/main'
+            })
         }
     },
 

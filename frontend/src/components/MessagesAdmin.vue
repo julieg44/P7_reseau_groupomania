@@ -70,7 +70,9 @@ export default {
     methods: {
         supMess() {
             Service.supMessage(this.idMessage)
+            .then(()=>{
             window.location.href = '/main'
+            })
         }
     },
 }

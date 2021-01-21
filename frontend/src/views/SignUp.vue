@@ -86,23 +86,31 @@ export default {
         },
 
         signup() {
+            let validInput = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+
             const fd = new FormData()
             if (this.selectedFile !== null) {
                 fd.append('image', this.selectedFile, this.selectedFile.name)
             }
             fd.append('username', this.username)
             fd.append('email', this.email)
-            fd.append('password', this.password)
-
+            if (validInput.test(this.password) === true){
+                fd.append('password', this.password)
+            } else {
+               let alert = new customAlert();
+                alert.render("Erreur ! </br> <span id='pluspetit'>" + "le mot de passe doit contenir 8 caractères, 1 Majuscule et 1 chiffre" + "</span>") 
+            }
+            
             Service.createUser(fd)
                 .then(function (response) {
                     if (response.status !== 201) {
                         let erreur = response.data.error
                         let alert = new customAlert();
                         alert.render("Erreur ! </br> <span id='pluspetit'>" + erreur + "</span>")
-                    }
+                    } else { 
                     let alert = new customAlert();
                     alert.render("Bienvenue " + response.data.user.username + " ! <span id='pluspetit'> </br> Votre compte à été créé, vous pouvez désormais vous connecter</span>")
+                    }              
                 })
         },
     },

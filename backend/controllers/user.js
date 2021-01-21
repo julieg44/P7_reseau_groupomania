@@ -28,7 +28,8 @@ exports.signup = (req, res, next) => {
             error: "Cet email est déjà utilisé"
           }));
       });
-  } else {
+  }
+  else {
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
         Models.User.create({
@@ -132,14 +133,14 @@ exports.deleteUser = (req, res, next) => {
   Models.User.findOne({
       where: { id: req.params.id }})
     .then (user => {
-  if (req.params.photo !== null) {
+    if (user.photo !== null) {
     
       const filename = user.photo.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {
         Models.User.destroy({
             where: { id: req.params.id }
           })
-          .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+          .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
           .catch(error => res.status(400).json({ error }));
       });
     
@@ -147,7 +148,7 @@ exports.deleteUser = (req, res, next) => {
     Models.User.destroy({
       where: { id: req.params.id }
     })
-    .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+    .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
     .catch(error => res.status(400).json({ error }));
   }
 })

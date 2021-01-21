@@ -199,11 +199,11 @@ export default {
 
   @include tablette {
     background-color: $gris1;
-    top: 104px;
+    top: 119px;
   }
   @include ecran{
     background-color: $gris1;
-    top: 104px;
+    top: 119px;
   }
 }
 .search-input {

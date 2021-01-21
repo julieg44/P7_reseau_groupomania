@@ -5,7 +5,7 @@
             <form class="post-form" enctype="multipart/form-data">
                 <div class="closePost"><a href="#" id="closePost"><img src="../assets/close.svg"/></a></div>
                 <input class="titrepost" placeholder="Titre" type="text" v-model="title">
-                <input class="contentpost" placeholder="écrivez-ici" type="text" v-model="content">
+                <textarea class="contentpost" placeholder="écrivez-ici" type="text" v-model="content"/>
                 <div class="align-boutons">
                     <input class="inputPost" type="file" @change="onFileSelected"/>
                     <BtnRouge @click.prevent="poster()"  label="Envoyer"/>
@@ -61,11 +61,11 @@ export default {
                         UserId: response.data.data.UserId,
                         MessageId: response.data.data.id,
                         like: 0,
-                    }
+                    } 
                     Service.postFirstLike(response.data.data.id, LikeDefault)
-                    .then(()=>{
-                    window.location.href = '/main'
-                    })
+                        .then(function () {
+                        window.location.href = '/main'
+                        })
                 })
         },
     },
@@ -139,6 +139,7 @@ export default {
             width: 100%;
             margin-top: 3%;
             margin-bottom: 3%;
+            overflow: auto;
 
             @include tablette_ecran {
                 height: 80px;

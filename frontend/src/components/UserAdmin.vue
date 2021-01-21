@@ -48,7 +48,9 @@ export default {
     methods: {
         supUser() {
             Service.supUser(this.idUser)
-            window.location.href = "/main"
+            
+            window.location.href = '/main'
+          
         }
     },
 }

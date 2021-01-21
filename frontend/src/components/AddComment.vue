@@ -42,7 +42,7 @@ export default {
     },
 
     methods: {
-        PostComment() {
+        async PostComment() {
             let Newcomment = {
                 UserId: this.userConnected.id,
                 UserUsername: this.userConnected.username,
@@ -50,8 +50,10 @@ export default {
                 MessageId: this.MessageId,
                 content: this.content,
             }
-            Service.postComment(this.MessageId, Newcomment)
-            window.location.href = "/main"
+            await Service.postComment(this.MessageId, Newcomment)
+            .then(()=>{
+            window.location.href = '/main'
+            })
         }
     },
 }

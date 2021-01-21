@@ -81,7 +81,7 @@ nav {
     position: fixed;
     width: 100%;
     height: 49px;
-    top: 57px;
+    top: 70px;
     z-index: 10;
 
     #flexNav {

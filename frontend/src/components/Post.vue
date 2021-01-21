@@ -163,107 +163,60 @@ export default {
 <style lang="scss">@import "../sass/variables.scss";
 
 
-    #message {
-        width: 95%;
-        margin: auto;
-        background-color: $groupomania_bleu_clair;
-        padding: 3%;
-        margin-top: 5%;
-        z-index: 0;
+#message {
+    width: 95%;
+    margin: auto;
+    background-color: $groupomania_bleu_clair;
+    padding: 3%;
+    margin-top: 5%;
+    z-index: 0;
 
-        @include tablette_ecran {
-            width: 80%;
-            padding: 4%;
-        }
+    @include tablette_ecran {
+        width: 80%;
+        padding: 4%;
+    }
 
-        .message-top {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            margin-bottom: 5%;
+    .message-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 5%;
 
-            .positionPhoto {
-                width: 20%;
-                text-align: left;
+        .positionPhoto {
+            width: 20%;
+            text-align: left;
+            margin-right: 2%;
+
+            @include tablette {
+                width: 11%;
                 margin-right: 2%;
-
-                @include tablette {
-                    width: 11%;
-                    margin-right: 2%;
-                }
-
-                @include ecran {
-                    width: 8%;
-                    margin-right: 2%;
-                }
-
-                img {
-                    width: 100%;
-                    height: 38px;
-                    clip-path: ellipse(50% 50%);
-
-                    @include tablette_ecran {
-                        margin-right: 5%;
-                        height: 48px;
-                    }
-                }
             }
 
-            .usernamePost {
-                font-size: $textpetit;
-                text-align: left;
-                font-weight: 700;
-                text-decoration: underline;
-                margin-bottom: 0;
-                // margin-left: 13%;
-                width: 80%;
-                color: $groupomania_bleu;
-
-                @include tablette {
-                    // margin-left: 10%;
-                    font-size: 1rem;
-                }
-
-                @include ecran {
-                    // margin-left: 8%;
-                    font-size: 1rem;
-                }
+            @include ecran {
+                width: 8%;
+                margin-right: 2%;
             }
 
-            .date {
-                text-align: right;
-                width: 50%;
-                font-size: 0.7rem;
+            img {
+                width: 100%;
+                height: 38px;
+                clip-path: ellipse(50% 50%);
 
                 @include tablette_ecran {
-                    font-size: 0.9rem;
-                    width: 30%;
+                    margin-right: 5%;
+                    height: 48px;
                 }
             }
         }
 
-        .attachment-post {
-            width: 80%;
-            margin: auto;
-
-            .image-post {
-                width: 100%;
-            }
-        }
-
-        .contenuComment {
+        .usernamePost {
             font-size: $textpetit;
-            text-align: justify;
-            margin-top: 4%;
-            margin-bottom: 4%;
-        }
-
-        #title {
-            font-size: $textpetit;
-            text-align: center;
+            text-align: left;
             font-weight: 700;
-            margin-bottom: 2%;
+            text-decoration: underline;
+            margin-bottom: 0;
+            width: 80%;
             color: $groupomania_bleu;
 
             @include tablette {
@@ -272,45 +225,89 @@ export default {
 
             @include ecran {
                 font-size: 1rem;
-                margin-bottom: 2%;
             }
         }
 
-        .message-bottom {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-content: center;
-            margin-top: 8%;
-            margin-bottom: 8%;
+        .date {
+            text-align: right;
+            width: 50%;
+            font-size: 0.7rem;
 
             @include tablette_ecran {
-                margin-top: 3%;
-                margin-bottom: 3%;
+                font-size: 0.9rem;
+                width: 30%;
             }
         }
     }
 
-    .button-user {
-        background-color: $groupomania_bleu_clair;
-        width: 12%;
-        margin: 0;
+    .attachment-post {
+        width: 80%;
+        margin: auto;
+
+        .image-post {
+            width: 100%;
+        }
+    }
+
+    .contenuComment {
+        font-size: $textpetit;
+        text-align: justify;
+        margin-top: 4%;
+        margin-bottom: 4%;
+    }
+
+    #title {
+        font-size: $textpetit;
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 2%;
+        color: $groupomania_bleu;
 
         @include tablette {
-            background-color: none;
-            width: 7%;
+            font-size: 1rem;
         }
 
         @include ecran {
-            background-color: none;
-            width: 5%;
-        }
-
-        .destroy-icon {
-            background-color: $groupomania_bleu;
-            width: 85%;
-            height: 30px;
+            font-size: 1rem;
+            margin-bottom: 2%;
         }
     }
+
+    .message-bottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+        margin-top: 8%;
+        margin-bottom: 8%;
+
+        @include tablette_ecran {
+            margin-top: 3%;
+            margin-bottom: 3%;
+        }
+    }
+}
+
+.button-user {
+    background-color: $groupomania_bleu_clair;
+    width: 12%;
+    margin: 0;
+
+    @include tablette {
+        background-color: none;
+        width: 7%;
+    }
+
+    @include ecran {
+        background-color: none;
+        width: 5%;
+    }
+
+    .destroy-icon {
+        background-color: $groupomania_bleu;
+        width: 85%;
+        height: 30px;
+    }
+}
 
 </style>

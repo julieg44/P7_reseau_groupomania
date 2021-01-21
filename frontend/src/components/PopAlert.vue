@@ -47,10 +47,15 @@ export default {
   height: 230px;
   width: 270px;
   z-index: 10;
-
-  @include tablette_ecran {
+  @include tablette {
     width: 500px;
-    height: 300px;
+    height: 350px;
+    top: 200px;
+  }
+
+  @include ecran {
+    width: 500px;
+    height: 370px;
     top: 200px;
   }
 

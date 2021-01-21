@@ -37,7 +37,7 @@ import BtnBleu from '@/components/UI/Btn/BtnBleu.vue'
 import Service from '@/services/service.js'
 
 
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 
 
 export default {
@@ -49,11 +49,11 @@ export default {
     },
 
     computed: {
-        ...mapState({
-            users: "users",
-            selectedUser: "selectedUser",
-            token: "token",
-        }),
+        // ...mapState({
+        //     users: "users",
+        //     selectedUser: "selectedUser",
+        //     token: "token",
+        // }),
         _goBack() {
             return '/main';
         }
@@ -66,7 +66,8 @@ export default {
             password: "",
             photo: "",
             selectedFile: null,
-            user: null
+            user: null,
+            selectedUser:localStorage.getItem('userId')
         }
     },
     methods: {
@@ -75,12 +76,14 @@ export default {
             this.selectedFile = event.target.files[0]
         },
 
-        supPhoto() {
-            Service.supPhotoUser(this.selectedUser)
-            window.location.href = '/main';
+        async supPhoto() {
+            await Service.supPhotoUser(this.selectedUser)
+            .then(()=>{
+            window.location.href = '/main'
+            })
         },
 
-        modifyUser() {
+        async modifyUser() {
             if (this.username === "") {
                 this.username = this.user.username
             }
@@ -94,8 +97,10 @@ export default {
             fd.append('username', this.username)
             fd.append('email', this.email)
 
-            Service.putUser(this.selectedUser, fd)
+            await Service.putUser(this.selectedUser, fd)
+            .then(()=>{
             window.location.href = '/main'
+            })
         },
     },
 
