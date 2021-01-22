@@ -4,7 +4,7 @@
             <div class="case">
                 <p>{{ userUsername }}</p>
             </div>
-            <div class="case">
+            <div class="case textMessage">
                 <p>{{ content }}</p>
             </div>
             <div class="case date">
@@ -103,6 +103,12 @@ export default {
 
         @include tablette_ecran {
             font-size: 1rem;
+        }
+    }
+    .textMessage{
+        @include tablette_ecran{
+        width: 55%;
+        margin-right: 5%;
         }
     }
 }

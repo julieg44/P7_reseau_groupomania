@@ -23,7 +23,7 @@
             <h2 class="titleAdmin">Liste des {{ nbrMessage }} messages</h2>
             <div class="listeEntete">
                 <div class="case"><p>Nom</p></div> 
-                <div class="case"><p>Contenu</p></div> 
+                <div class="case textMessage"><p>Contenu</p></div> 
                 <div class="case date"><p>Date de création</p></div>
             </div>
             <Messages v-for="item in listeMessage"
@@ -148,6 +148,13 @@ export default {
             @include tablette_ecran {
                 font-size: 1rem;
                 width: 25%;
+            }
+        }
+        .textMessage {
+            @include tablette_ecran {
+                width: 34%;
+                margin-right: 10%;
+                margin-left: -6%;
             }
         }
     }
