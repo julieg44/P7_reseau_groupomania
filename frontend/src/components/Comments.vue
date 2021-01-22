@@ -44,7 +44,8 @@ export default {
     margin-bottom: 2%;
 
     .positionPhoto {
-        width: 11%;
+        width: 30px;
+        height: 30px;
         text-align: left;
         margin-right: 2%;
 
@@ -59,18 +60,20 @@ export default {
         }
 
         img {
-            width: 100%;
+            width: 30px;
             height: 30px;
             clip-path: ellipse(50% 50%);
 
             @include tablette {
+                width: 100%;
                 margin-right: 5%;
                 height: 30px;
             }
 
             @include ecran {
+                width: 35px;
+                height: 35px;
                 margin-right: 5%;
-                height: 40px;
             }
 
         }

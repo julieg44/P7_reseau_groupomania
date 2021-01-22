@@ -2,7 +2,6 @@
 #cartoucheProfil, #cartouchePost {
     z-index: 10;
     transition: transform .4s cubic-bezier(.25, .1, .25, 1);
-    // transition: transform ;
     @include tablette_ecran{
         transform: none;
     }
@@ -59,10 +58,6 @@
       }
   }
   
-  // #cartoucheProfil:target #open,
-  // #cartouchepost:target #open {
-  //   display: none;
-  // }
   
 
 

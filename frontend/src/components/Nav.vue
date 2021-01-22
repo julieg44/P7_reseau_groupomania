@@ -80,21 +80,26 @@ nav {
     background-color: $groupomania-rouge;
     position: fixed;
     width: 100%;
-    height: 49px;
-    top: 70px;
+    // height: 49px;
+    top: 55px;
     z-index: 10;
+    @include tablette_ecran{
+        top: 70px
+    }
 
     #flexNav {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-        margin-top: 12px;
+        margin-top: 7px;
+        margin-bottom: 7px;
 
         @include tablette_ecran {
             top: 70px;
             justify-content: center;
             margin-top: 5px;
+            margin-bottom: 5px;
         }
     }
 
